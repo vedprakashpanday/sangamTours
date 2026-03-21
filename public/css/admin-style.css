@@ -1,0 +1,250 @@
+/* ========================================================= */
+/* admin-style.css - Custom Logic for Admin Layout */
+/* ========================================================= */
+
+/* 1. Base Variables & Logic */
+:root {
+    --sidebar-width: 260px;
+    --sidebar-bg: #1A1A2E; /* Dark MMT shade */
+    --sidebar-hover: #16213E;
+    --active-link: #4A69FF; /* Accent color */
+    --text-color: #E6E6E6;
+    --header-height: 70px;
+    --footer-height: 60px;
+    --body-bg: #F5F7FF;
+}
+
+body {
+    font-family: 'Inter', sans-serif; /* Add Google font Inter if possible */
+    background-color: var(--body-bg);
+    overflow-x: hidden;
+}
+
+/* 2. Main Wrapper Logic (Flexbox) */
+.main-wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+/* 3. SIDE PANEL (Sidebar) Styling */
+.sidebar {
+    min-width: var(--sidebar-width);
+    max-width: var(--sidebar-width);
+    background: var(--sidebar-bg);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    min-height: 100vh;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    z-index: 1001; /* Must be on top in mobile */
+}
+
+.sidebar.active {
+    margin-left: calc(-1 * var(--sidebar-width));
+}
+
+.sidebar-header {
+    padding: 20px 15px;
+    background: rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand-link {
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+.brand-text {
+    margin-left: 10px;
+}
+
+.nav-label {
+    padding: 0 25px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #6C757D;
+    font-weight: 600;
+}
+
+.sidebar ul.components {
+    padding: 15px 0;
+}
+
+.sidebar ul li a {
+    padding: 12px 25px;
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    border-left: 4px solid transparent; /* Logic for active border */
+}
+
+.sidebar ul li a i {
+    font-size: 1.25rem;
+    margin-right: 15px;
+    color: #888;
+}
+
+.sidebar ul li a:hover {
+    background: var(--sidebar-hover);
+    color: #fff;
+}
+
+.sidebar ul li.active > a {
+    color: #fff;
+    background: rgba(74, 105, 255, 0.15); /* Soft Blue bg */
+    border-left-color: var(--active-link);
+}
+
+.sidebar ul li.active > a i {
+    color: var(--active-link);
+}
+
+/* 4. CONTENT WRAPPER Logic */
+.content-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column; /* Logic for Sticky Footer */
+}
+
+/* Header (Top Nav) */
+.header {
+    height: var(--header-height);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+    z-index: 1000;
+}
+
+/* Page Content (Main Body) */
+.page-content {
+    flex: 1; /* Pushes footer down */
+    background-color: var(--body-bg);
+}
+
+/* 5. USER AVATAR & DROPDOWN Styling (Requested Logic) */
+.user-avatar-dropdown {
+    color: #333;
+}
+
+.user-avatar-dropdown::after {
+    display: none; /* Hide standard arrow */
+}
+
+.avatar-circle {
+    width: 40px;
+    height: 40px;
+    background-color: var(--active-link);
+    color: #fff;
+    font-size: 1.3rem;
+    font-weight: 700;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    box-shadow: 0 2px 5px rgba(74, 105, 255, 0.3);
+}
+
+.user-info {
+    font-size: 0.85rem;
+}
+
+.user-name {
+    display: block;
+    font-weight: 600;
+}
+
+.user-role {
+    color: #888;
+    font-size: 0.75rem;
+}
+
+.dropdown-menu-header {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 8px 15px;
+    letter-spacing: 0.5px;
+}
+
+.dropdown-item {
+    font-size: 0.9rem;
+    padding: 10px 15px;
+}
+/* Images ke upar cross button ko sahi position pe rakhne ke liye */
+    .image-preview-wrapper {
+        position: relative;
+        display: inline-block;
+        margin: 5px;
+    }
+    .image-preview-wrapper img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+    .remove-img-btn {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: #ff0000;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        text-align: center;
+        cursor: pointer;
+        font-size: 14px;
+        line-height: 18px;
+        border: 1px solid #fff;
+        z-index: 100;
+    }
+
+    /* Pagination buttons ko right align fix karne ke liye */
+    .dataTables_paginate {
+        margin-top: 15px !important;
+    }
+    
+    /* Search box alignment fix */
+    .dataTables_filter {
+        text-align: right;
+    }
+
+    /* Excel button ka color aur spacing */
+    .dt-buttons .btn-success {
+        background-color: #198754 !important;
+        padding: 5px 15px;
+    }
+
+    /* Table info text size */
+    .dataTables_info {
+        font-size: 0.875rem;
+        color: #6c757d;
+    }
+
+/* 6. RESPONSIVE MEDIA QUERIES (Logic for Mobile) */
+@media (max-width: 991.98px) {
+    .sidebar {
+        margin-left: calc(-1 * var(--sidebar-width)); /* Logic: Hide on mobile by default */
+        position: fixed;
+    }
+    
+    .sidebar.active {
+        margin-left: 0;
+    }
+
+    .content-wrapper.active {
+        pointer-events: none; /* Add backdrop logic */
+        opacity: 0.5;
+    }
+}
