@@ -15,7 +15,7 @@
                         <th>Vehicle/Flight #</th>
                         <th>Vendor (Type)</th>
                         <th>Seats</th>
-                        <th>Base Fare</th>
+                        <th>Charges per/KM</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -29,7 +29,7 @@
                             <span class="badge bg-light text-dark border ms-1">{{ $v->type }}</span>
                         </td>
                         <td><span class="badge bg-info">{{ $v->total_seats }} Seats</span></td>
-                        <td class="fw-bold text-success">₹{{ number_format($v->base_fare) }}</td>
+                        <td class="fw-bold text-success">₹{{ number_format($v->	charges_per_km) }}</td>
                         <td>
                             <span class="badge {{ $v->status ? 'bg-success' : 'bg-danger' }}">
                                 {{ $v->status ? 'Active' : 'Inactive' }}
@@ -111,19 +111,20 @@
                             <label class="form-label fw-bold">Total Seats</label>
                             <input type="number" name="total_seats" class="form-control" required>
                         </div>
-                        <div class="col-md-3">
-                            <label class="form-label fw-bold">Base Fare (₹)</label>
-                            <input type="number" name="base_fare" class="form-control" required>
-                        </div>
+                       <div class="col-md-3">
+    <label class="form-label fw-bold">Charges per/KM (₹)</label>
+    <input type="number" name="base_fare" id="charges_per_km" class="form-control" required placeholder="e.g. 15">
+</div>
                         <div class="col-md-6">
-                            <label class="form-label fw-bold">Seat Category</label>
-                            <select name="seat_type" class="form-select">
-                                <option value="Economy">Economy</option>
-                                <option value="Business">Business</option>
-                                <option value="Sleeper">Sleeper</option>
-                                <option value="Seater (AC)">Seater (AC)</option>
-                            </select>
-                        </div>
+    <label class="form-label fw-bold">Seat Category</label>
+    <input list="seat_category_list" name="seat_type" id="seat_type_input" class="form-control" placeholder="Type or select category..." required>
+    
+    <datalist id="seat_category_list">
+        @foreach($seatCategories as $cat)
+            <option value="{{ $cat->category_name }}">
+        @endforeach
+    </datalist>
+</div>
                         <div class="col-md-12 mt-3">
                             <label class="form-label fw-bold d-block">Available Amenities</label>
                             <div class="d-flex flex-wrap gap-3 p-3 border rounded bg-light">
@@ -191,13 +192,17 @@
 
     $(document).on('click', '.edit-vehicle', function() {
         let id = $(this).data('id');
-        $.get("{{ url('admin/vehicles') }}/" + id + "/edit", function(v) {
-            $('#vehicle_id').val(v.id);
-            $('#vendor_select').val(v.vendor_id).trigger('change');
-            $('input[name="vehicle_number"]').val(v.vehicle_number);
-            $('input[name="total_seats"]').val(v.total_seats);
-            $('input[name="base_fare"]').val(v.base_fare);
-            $('select[name="seat_type"]').val(v.seat_type);
+    $.get("{{ url('admin/vehicles') }}/" + id + "/edit", function(v) {
+        $('#vehicle_id').val(v.id);
+        $('#vendor_select').val(v.vendor_id).trigger('change');
+        $('input[name="vehicle_number"]').val(v.vehicle_number);
+        $('input[name="total_seats"]').val(v.total_seats);
+        
+       
+$('input[name="base_fare"]').val(v.charges_per_km); 
+        
+        // Seat Category input load karein
+        $('#seat_type_input').val(v.seat_type);
 
             $('.form-check-input').prop('checked', false);
             if(v.amenities) {

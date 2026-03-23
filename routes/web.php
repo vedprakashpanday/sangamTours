@@ -11,7 +11,7 @@ use App\Http\Controllers\VehicleController; // 🔥 Naya (Inventory ke liye)
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\OfferController;
-
+use App\Http\Controllers\ScheduleController;
 
 
 
@@ -82,8 +82,17 @@ Route::resource('routes', RouteController::class);
     Route::get('bookings/restore/{id}', [BookingController::class, 'restore']);
     Route::delete('bookings/force-delete/{id}', [BookingController::class, 'forceDelete']);
     Route::resource('bookings', BookingController::class);
+    Route::get('check-route', [BookingController::class, 'checkRoute'])->name('admin.bookings.checkRoute');
+
+ // Ye route humne availability check karne ke liye banaya hai
+    Route::get('check-availability', [BookingController::class, 'checkAvailability'])->name('bookings.checkAvailability');
 
     // --- 10. Offers/Discounts Management ---
 Route::resource('offers', OfferController::class);
 Route::get('offers/get-items/{category}', [OfferController::class, 'getItemsByCategory']);
+
+// --- 11. Schedule Management ---
+    Route::resource('schedules', ScheduleController::class);
+
+
 });

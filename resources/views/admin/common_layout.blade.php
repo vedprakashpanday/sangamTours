@@ -29,83 +29,83 @@
                 </button>
             </div>
 
-      <ul class="list-unstyled components">
+    <ul class="list-unstyled components">
     <li class="{{ Request::is('admin/dashboard') ? 'active' : '' }}">
-        <a href="{{ route('admin.dashboard') }}"><i class='bx bx-grid-alt'></i> <span>Dashboard</span></a>
+        <a href="{{ route('admin.dashboard') }}">
+            <i class='bx bx-grid-alt'></i> <span>Dashboard</span>
+        </a>
     </li>
-    <li class="{{ Request::is('admin/packages*') ? 'active' : '' }}">
-        <a href="{{ route('admin.packages.index') }}"><i class='bx bx-briefcase-alt-2'></i> <span>Tour Packages</span></a>
-    </li>
+
+    <li class="nav-label mt-3 small uppercase" style="color: #0dcaf0;">Operations</li>
     
-    <li class="{{ Request::is('admin/locations*') ? 'active' : '' }}">
-        <a href="{{ route('admin.locations.index') }}"><i class='bx bx-map-alt'></i> <span>Locations</span></a>
+    <li class="{{ Request::is('admin/bookings*') ? 'active' : '' }}">
+        <a href="{{ route('admin.bookings.index') }}">
+            <i class='bx bx-receipt'></i> <span>All Bookings</span>
+        </a>
+    </li>
+
+    <li class="{{ Request::is('admin/schedules*') ? 'active' : '' }}">
+        <a href="{{ route('admin.schedules.index') }}">
+            <i class='bx bx-calendar-event'></i> <span>Schedules / Time-Table</span>
+        </a>
+    </li>
+
+    <li class="{{ Request::is('admin/offers*') ? 'active' : '' }}">
+        <a href="{{ route('admin.offers.index') }}">
+            <i class='bx bxs-discount'></i> <span>Offers & Discounts</span>
+        </a>
+    </li>
+
+    <li class="nav-label mt-3 smalluppercase" style="color: #0dcaf0;">Masters</li>
+    
+    <li class="{{ Request::is('admin/packages*') ? 'active' : '' }}">
+        <a href="{{ route('admin.packages.index') }}">
+            <i class='bx bx-briefcase-alt-2'></i> <span>Tour Packages</span>
+        </a>
     </li>
 
     <li class="{{ Request::is('admin/accommodations*') ? 'active' : '' }}">
         <a href="{{ route('admin.accommodations.index') }}">
-            <i class='bx bx-hotel'></i> 
-            <span>Accommodations</span>
+            <i class='bx bx-hotel'></i> <span>Accommodations</span>
         </a>
     </li>
 
-    <li class="{{ Request::is('admin/customers*') ? 'active' : '' }}">
-        <a href="{{ route('admin.customers.index') }}">
-            <i class='bx bx-group'></i> 
-            <span>Customers</span>
+    <li class="{{ Request::is('admin/locations*') ? 'active' : '' }}">
+        <a href="{{ route('admin.locations.index') }}">
+            <i class='bx bx-map-alt'></i> <span>Locations</span>
+        </a>
+    </li>
+
+    <li class="nav-label mt-3 small uppercase" style="color: #0dcaf0;">Inventory & Logistics</li>
+
+    <li class="{{ Request::is('admin/vehicles*') ? 'active' : '' }}">
+        <a href="{{ route('admin.vehicles.index') }}">
+            <i class='bx bx-bus'></i> <span>Inventory / Vehicles</span>
+        </a>
+    </li>
+
+    <li class="{{ Request::is('admin/routes*') ? 'active' : '' }}">
+        <a href="{{ route('admin.routes.index') }}">
+            <i class='bx bx-directions'></i> <span>Route Management</span>
         </a>
     </li>
 
     <li class="{{ Request::is('admin/vendors*') ? 'active' : '' }}">
         <a href="{{ route('admin.vendors.index') }}">
-            <i class='bx bx-store-alt'></i> 
-            <span>Vendors</span>
+            <i class='bx bx-store-alt'></i> <span>Vendors</span>
         </a>
     </li>
 
-    <li class="{{ Request::is('admin/vehicles*') ? 'active' : '' }}">
-        <a href="{{ route('admin.vehicles.index') }}">
-            <i class='bx bx-list-check'></i> 
-            <span>Inventory / Vehicles</span>
+    <li class="nav-label mt-3 small  uppercase" style="color: #0dcaf0;">People</li>
+    
+    <li class="{{ Request::is('admin/customers*') ? 'active' : '' }}">
+        <a href="{{ route('admin.customers.index') }}">
+            <i class='bx bx-group'></i> <span>Customers</span>
         </a>
     </li>
 
-    <li class="{{ Request::is('admin/routes*') ? 'active' : '' }}">
-    <a href="{{ route('admin.routes.index') }}">
-        <i class='bx bx-directions'></i> 
-        <span>Route Management</span>
-    </a>
-</li>
-<li class="{{ Request::is('admin/bookings*') ? 'active' : '' }}">
-    <a href="{{ route('admin.bookings.index') }}">
-        <i class='bx bx-receipt'></i> 
-        <span>All Bookings</span>
-    </a>
-</li>
-    <li>
-        <a href="#"><i class='bx bx-file'></i> <span>Visa Services</span></a>
-    </li>
-    <li>
-        <a href="#"><i class='bx bx-book-content'></i> <span>CMS</span></a>
-    </li>
-    <li class="{{ Request::is('admin/offers*') ? 'active' : '' }}">
-    <a href="{{ route('admin.offers.index') }}">
-        <i class='bx bxs-discount'></i> 
-        <span>Offers & Discounts</span>
-    </a>
-</li>
+    <li class="nav-label mt-3 small uppercase" style="color: #0dcaf0;">Configuration</li>
     
-    <li class="nav-label mt-3">Bookings</li>
-    <li>
-        <a href="#"><i class='bx bxs-plane-alt'></i> <span>Flights</span></a>
-    </li>
-    <li>
-        <a href="#"><i class='bx bx-train'></i> <span>Trains</span></a>
-    </li>
-    
-    <li class="nav-label mt-3">Settings</li>
-    <li>
-        <a href="#"><i class='bx bx-money-withdraw'></i> <span>Forex Rules</span></a>
-    </li>
     <li>
         <a href="#"><i class='bx bx-cog'></i> <span>Global Settings</span></a>
     </li>

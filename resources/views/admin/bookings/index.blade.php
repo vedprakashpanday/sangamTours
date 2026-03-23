@@ -64,7 +64,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg">
             <div class="modal-header bg-primary text-white py-3">
-                <h5 class="modal-title fw-bold"><i class='bx bxs-plane-take-off me-2'></i> <span id="modalTitle">Create New Booking</span></h5>
+                <h5 class="modal-title fw-bold"><i class='bx bxs-edit-location me-2'></i> New Booking Search</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
 
@@ -74,170 +74,127 @@
                 <div class="modal-body p-4">
                     
                     <div class="row g-3 mb-4">
-                       <div class="col-md-7">
-    <label class="form-label fw-bold text-secondary small">CUSTOMER DETAILS</label>
-    <div class="input-group flex-nowrap"> <span class="input-group-text bg-light border-end-0"><i class='bx bx-user'></i></span>
-        <div class="flex-grow-1"> <select name="customer_id" class="form-select select2-modal" required>
-                <option value="">Search Customer...</option>
-                @foreach($customers as $c)
-                    <option value="{{ $c->id }}">{{ $c->name }} ({{ $c->phone }})</option>
-                @endforeach
-            </select>
-        </div>
-    </div>
-</div>
-                        <div class="col-md-5">
-                            <label class="form-label fw-bold text-secondary small">SERVICE TYPE</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light"><i class='bx bx-category'></i></span>
-                                <select name="service_type" id="service_type" class="form-select fw-bold text-primary" required>
-                                    <option value="">-- Choose --</option>
-                                    <option value="Flight">Flight</option>
-                                    <option value="Bus">Bus</option>
-                                    <option value="Train">Train</option>
-                                    <option value="Tour Package">Tour Package</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="p-3 rounded-3 bg-light border mb-4">
-                        <h6 class="fw-bold mb-3 text-dark small"><i class='bx bx-map-pin me-1'></i> JOURNEY DETAILS</h6>
-                        
-                        <div id="transportFields" class="row g-3 d-none">
-                            <div class="col-md-6">
-                                <label class="form-label small fw-bold">Select Route</label>
-                                <select name="route_id" class="form-select select2-modal">
-                                    <option value="">-- Choose Route --</option>
-                                    @foreach($routes as $r)
-                                        <option value="{{ $r->id }}">{{ $r->fromCity->city_location }} to {{ $r->toCity->city_location }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label small fw-bold">Service/Vehicle</label>
-                                <select name="vehicle_id" id="vehicle_id" class="form-select select2-modal">
-                                    <option value="">-- Select Service --</option>
-                                    @foreach($vehicles as $veh)
-                                       <option value="{{ $veh->id }}" data-type="{{ $veh->type }}" data-fare="{{ $veh->base_fare }}">
-                                            {{ $veh->vendor->name }} - {{ $veh->vehicle_number }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div id="packageFields" class="row g-3 d-none">
-                            <div class="col-md-12">
-                                <label class="form-label small fw-bold">Select Tour Package</label>
-                                <select name="package_id" class="form-select select2-modal">
-                                    <option value="">-- Choose Package --</option>
-                                    @foreach($packages as $p)
-                                        <option value="{{ $p->id }}" data-price="{{ $p->price }}">{{ $p->title }} (₹{{ number_format($p->price) }})</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="row g-3 mt-1">
-                            <div class="col-md-6">
-                                <label class="form-label small fw-bold">Travel Date</label>
-                                <input type="date" name="travel_date" class="form-control" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label small fw-bold">No. of Passengers (PAX)</label>
-                                <input type="number" name="pax_count" class="form-control" value="1" min="1">
-                            </div>
-
-                            <div id="passengerSection" class="p-3 rounded-3 bg-white border mb-4">
-    <h6 class="fw-bold mb-3 text-primary small"><i class='bx bx-group me-1'></i> PASSENGER DETAILS</h6>
-    <div id="passengerInputs">
-        <div class="row g-2 mb-2 p-2 border rounded bg-light align-items-center">
-            <div class="col-md-5">
-                <input type="text" name="p_name[]" class="form-control form-control-sm" placeholder="Full Name" required>
-            </div>
-            <div class="col-md-3">
-                <input type="number" name="p_age[]" class="form-control form-control-sm" placeholder="Age" required>
-            </div>
-            <div class="col-md-4">
-                <select name="p_gender[]" class="form-select form-select-sm" required>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                </select>
-            </div>
-        </div>
-    </div>
-</div>
-                        </div>
-                    </div>
-
-                    <div class="card border-dashed border-primary bg-light mb-4">
-                        <div class="card-body p-3">
-                            <div class="row align-items-center">
-                                <div class="col-md-7">
-                                    <label class="form-label fw-bold text-primary small"><i class='bx bxs-offer me-1'></i> APPLY OFFER / COUPON</label>
-                                    <select name="offer_id" id="offer_select" class="form-select select2-modal">
-                                        <option value="" data-apply-to="All" data-content-id="" data-val="0">No Offer / Skip</option>
-                                        @foreach($offers as $off)
-                                            <option value="{{ $off->id }}" 
-                                                    data-type="{{ $off->discount_type }}" 
-                                                    data-val="{{ $off->discount_value }}"
-                                                    data-min="{{ $off->min_booking_amount }}"
-                                                    data-apply-to="{{ $off->apply_to }}" 
-                                                    data-content-id="{{ $off->content_id }}">
-                                                {{ $off->offer_code }} - ({{ $off->discount_type == 'Percentage' ? $off->discount_value.'%' : '₹'.$off->discount_value }} OFF)
-                                            </option>
+                        <div class="col-md-7">
+                            <label class="form-label fw-bold text-secondary small">CUSTOMER / PRIMARY PASSENGER</label>
+                            <div class="input-group flex-nowrap">
+                                <span class="input-group-text bg-light"><i class='bx bx-user'></i></span>
+                                <div class="flex-grow-1">
+                                    <select name="customer_id" class="form-select select2-modal" required>
+                                        <option value="">Search Registered Customer...</option>
+                                        @foreach($customers as $c)
+                                            <option value="{{ $c->id }}">{{ $c->name }} ({{ $c->phone }})</option>
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-md-5 text-end">
-                                    <span class="text-muted small d-block">Base Price</span>
-                                    <h5 class="fw-bold mb-0">₹ <span id="display_base_price">0.00</span></h5>
-                                    <input type="hidden" id="base_price_hidden" value="0">
-                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label fw-bold text-secondary small">SERVICE TYPE</label>
+                            <select name="service_type" id="service_type" class="form-select fw-bold border-primary" required>
+                                <option value="Flight">Flight</option>
+                                <option value="Bus" selected>Bus</option>
+                                <option value="Train">Train</option>
+                                <option value="Tour Package">Tour Package</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="bg-light p-3 rounded-3 border mb-4">
+                        <h6 class="fw-bold mb-3 text-dark small"><i class='bx bx-search-alt me-1'></i> SEARCH AVAILABILITY</h6>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold">From</label>
+                                <select id="boarding_from" name="boarding_from" class="form-select select2-modal">
+                                    <option value="">Select Origin</option>
+                                    @foreach($locations as $loc)
+                                        <option value="{{ $loc->id }}">{{ $loc->city_location }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold">To</label>
+                                <select id="destination_to" name="destination_to" class="form-select select2-modal">
+                                    <option value="">Select Destination</option>
+                                    @foreach($locations as $loc)
+                                        <option value="{{ $loc->id }}">{{ $loc->city_location }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold">Travel Date</label>
+                                <input type="date" name="travel_date" id="travel_date" class="form-control border-primary" required>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row g-3 bg-white p-3 rounded shadow-sm border">
-                        <div class="col-md-4">
-                            <label class="form-label fw-bold text-dark small">FINAL AMOUNT</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-primary text-white border-primary">₹</span>
-                                <input type="number" name="total_amount" id="total_amount" class="form-control fw-bold border-primary bg-white" readonly>
+                    <div id="availabilitySection" class="mb-4 d-none">
+                        <label class="form-label fw-bold text-primary small">AVAILABLE SERVICES & FARES</label>
+                        <div id="scheduleResults" class="list-group shadow-sm">
                             </div>
-                            <small class="text-success small"><i class='bx bx-check-circle'></i> Discount Applied</small>
+                        <div id="noServiceMsg" class="alert alert-warning py-2 small d-none">
+                            <i class='bx bx-info-circle'></i> No services found for this route and date.
                         </div>
-                        <div class="col-md-4">
-                            <label class="form-label fw-bold text-dark small">PAID AMOUNT</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-success text-white border-success">₹</span>
-                                <input type="number" name="paid_amount" id="paid_amount" class="form-control fw-bold border-success" value="0">
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <label class="fw-bold text-secondary small">CO-PASSENGERS DETAILS</label>
+                        <button type="button" class="btn btn-sm btn-outline-primary" id="addPaxBtn"><i class='bx bx-plus'></i> Add More</button>
+                    </div>
+                    <div id="passengerSection" class="p-3 bg-white border rounded mb-4 d-none">
+                        <div id="passengerInputs"></div>
+                    </div>
+
+                    <div class="row align-items-center mb-4">
+                        <div class="col-md-6">
+                            <div class="p-2 bg-light rounded border text-center">
+                                <span class="small text-muted">Total Pax: </span>
+                                <span class="fw-bold text-primary" id="pax_display">1</span>
+                                <input type="hidden" name="pax_count" id="pax_count" value="1">
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <label class="form-label fw-bold text-dark small">BALANCE DUE</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-danger text-white border-danger">₹</span>
-                                <input type="number" name="due_amount" id="due_amount" class="form-control fw-bold border-danger bg-light" readonly>
-                            </div>
+                        <div class="col-md-6">
+                            <label class="small fw-bold text-primary">APPLY OFFER</label>
+                            <select name="offer_id" id="offer_select" class="form-select select2-modal">
+                                <option value="">No Offer / Remove Offer</option>
+                                @foreach($offers as $off)
+                                    <option value="{{ $off->id }}" data-type="{{ $off->discount_type }}" data-val="{{ $off->discount_value }}">
+                                        {{ $off->offer_code }} (-{{ $off->discount_type == 'Percentage' ? $off->discount_value.'%' : '₹'.$off->discount_value }})
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row g-0 bg-dark text-white p-3 rounded shadow">
+                        <div class="col-md-6 border-end border-secondary text-center">
+                            <small class="text-secondary d-block">TOTAL PAYABLE</small>
+                            <h3 class="fw-bold mb-0">₹ <span id="display_final_amount">0.00</span></h3>
+                            <input type="hidden" name="total_amount" id="total_amount">
+                            <input type="hidden" id="base_price_hidden" value="0">
+                        </div>
+                        <div class="col-md-6 ps-4">
+                            <label class="small text-secondary fw-bold mb-1">CASH RECEIVED</label>
+                            <input type="number" name="paid_amount" id="paid_amount" class="form-control form-control-lg bg-transparent text-white border-secondary fw-bold" placeholder="0.00">
                         </div>
                     </div>
 
                 </div>
                 
-                <div class="modal-footer bg-light p-3">
-                    <button type="button" class="btn btn-link text-muted fw-bold text-decoration-none" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary px-5 fw-bold shadow-sm" id="saveBtn">
-                        <i class='bx bx-check-double me-1'></i> Confirm & Generate Invoice
+                <div class="modal-footer bg-light">
+                    <button type="submit" class="btn btn-primary px-5 fw-bold w-100" id="saveBtn">
+                        <i class='bx bx-check-double me-1'></i> Confirm Booking
                     </button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
+<style>
+    .list-group-item-action { cursor: pointer; transition: 0.2s; }
+    .list-group-item-action:hover { background-color: #f8f9fa; border-left: 4px solid #0d6efd; }
+    .form-check-input:checked + .fw-bold { color: #0d6efd; }
+    #paid_amount::placeholder { color: #6c757d; }
+</style>
 <style>
     .border-dashed { border-style: dashed !important; border-width: 2px !important; }
     .select2-container--bootstrap-5 .select2-selection { border-radius: 0.375rem; }
@@ -259,119 +216,175 @@
 </style>
 @endsection
 
+
 @push('scripts')
 <script>
-    $(document).ready(function() {
-    // 1. Initialize DataTables
-    $('#bookingTable').DataTable({ "dom": '<"d-flex justify-content-between mb-3"Bf>rtip' });
-
-    // 2. Initialize Select2 for Modal (Special fix for Bootstrap Modals)
-    $('.select2-modal').select2({
-    dropdownParent: $('#bookingModal'),
-    width: '100%' // Ye bachi hui poori width cover kar lega
-});
-
-    $('#service_type').on('change', function() {
-    let type = $(this).val(); // e.g., Flight, Bus, or Train
-    $('#transportFields, #packageFields').addClass('d-none');
+$(document).ready(function() {
     
-    if(type === 'Tour Package') {
-        $('#packageFields').removeClass('d-none');
-    } else if(['Flight', 'Bus', 'Train'].includes(type)) {
-        $('#transportFields').removeClass('d-none');
+    // --- 1. INITIALIZATION ---
+    $('#bookingTable').DataTable({ 
+        "dom": '<"d-flex justify-content-between mb-3"Bf>rtip',
+        "buttons": ['excel', 'pdf', 'print']
+    });
 
-        // 🔥 Magic Filtering Logic
-        // Pehle dropdown ko reset karo
-        $('#vehicle_id option').hide(); // Saare options chhupao
-        $('#vehicle_id option[value=""]').show(); // Default dikhao
+    // Master Function: Select2 ko initialize karne ke liye
+    function initSelect2() {
+        // Pehle check karo agar pehle se init hai toh destroy karo
+        if ($('.select2-modal').data('select2')) {
+            $('.select2-modal').select2('destroy');
+        }
 
-        // Sirf wahi dikhao jo selected Service Type se match karein
-        $(`#vehicle_id option[data-type="${type}"]`).show();
+        $('.select2-modal').select2({
+            dropdownParent: $('#bookingModal'),
+            width: '100%',
+            placeholder: "Search..."
+        });
+    }
+
+    // Modal fully open hone par hi Select2 load hoga
+    $('#bookingModal').on('shown.bs.modal', function () {
+        initSelect2();
+    });
+
+// --- 1. SEARCH & AVAILABILITY ENGINE ---
+$('#boarding_from, #destination_to, #travel_date, #service_type').on('change', function() {
+    let from = $('#boarding_from').val();
+    let to = $('#destination_to').val();
+    let date = $('#travel_date').val();
+    let type = $('#service_type').val();
+
+    if(from && to && date) {
+        $('#availabilitySection').removeClass('d-none');
+        $('#scheduleResults').html('<div class="text-center p-3 small text-muted"><div class="spinner-border spinner-border-sm me-2 text-primary"></div>Calculating Route Distance...</div>');
         
-        // Dropdown ko reset karke Select2 refresh karo
-        $('#vehicle_id').val('').trigger('change');
+        $.ajax({
+            url: "{{ url('admin/check-availability') }}",
+            method: "GET",
+            data: {from: from, to: to, date: date, type: type},
+            success: function(res) {
+            console.table(res);
+                let container = $('#scheduleResults').empty();
+                if(res.schedules && res.schedules.length > 0) {
+                    $('#noServiceMsg').addClass('d-none');
+                    
+                  // AJAX Success ke andar loop wala part
+res.schedules.forEach(function(s) {
+    // Agar fare 0 hai toh red warning, warna green price
+    let fareStatus = s.fare > 0 ? 'text-success' : 'text-danger';
+    let distVal = s.distance > 0 ? s.distance + ' km' : 'API Pending';
+
+    container.append(`
+        <label class="list-group-item list-group-item-action p-3 mb-2 border rounded shadow-sm">
+            <div class="row align-items-center">
+                <div class="col-md-1">
+                    <input type="radio" name="schedule_id" value="${s.id}" data-fare="${s.fare}" class="form-check-input schedule-radio" required>
+                </div>
+                <div class="col-md-8 border-start">
+                    <div class="d-flex justify-content-between">
+                        <span class="fw-bold">${s.vendor} <small class="text-muted">(${s.vehicle_name})</small></span>
+                        <span class="badge bg-light text-dark border">Distance: ${distVal}</span>
+                    </div>
+                    <div class="mt-2 bg-light p-2 rounded d-flex justify-content-between align-items-center">
+                        <div class="small"><b>${s.from_name}</b><br><span class="text-muted">${s.departure}</span></div>
+                        <i class='bx bx-right-arrow-alt fs-4 text-secondary'></i>
+                        <div class="text-end small"><b>${s.to_name}</b><br><span class="text-muted">${s.arrival}</span></div>
+                    </div>
+                    <div class="mt-1 small italic text-muted">Rate: ₹${s.per_km}/km</div>
+                </div>
+                <div class="col-md-3 text-end">
+                    <div class="text-muted small">COST PER HEAD</div>
+                    <div class="h4 fw-bold ${fareStatus} mb-0">₹${s.fare}</div>
+                </div>
+            </div>
+        </label>
+    `);
+});
+                } else {
+                    $('#noServiceMsg').removeClass('d-none');
+                }
+            }
+        });
     }
 });
 
-    // 4. Automatic Due Calculation
-    $('#total_amount, #paid_amount').on('input', function() {
-        let total = parseFloat($('#total_amount').val()) || 0;
-        let paid = parseFloat($('#paid_amount').val()) || 0;
-        let due = total - paid;
-        $('#due_amount').val(due.toFixed(2));
-    });
+function calculateFinalPrice() {
+    let pax = parseInt($('#pax_count').val()) || 1;
+    let selectedRadio = $('input[name="schedule_id"]:checked');
+    let farePerPerson = parseFloat(selectedRadio.data('fare')) || 0;
+    
+    let totalBase = farePerPerson * pax;
 
-    // 5. Package selection se price auto-fill
-    $('select[name="package_id"]').on('change', function() {
-        let price = $(this).find(':selected').data('price');
-        if(price) {
-            $('#total_amount').val(price).trigger('input');
+    let selectedOffer = $('#offer_select').find(':selected');
+    let discType = selectedOffer.data('type');
+    let discVal = parseFloat(selectedOffer.data('val')) || 0;
+
+    let finalAmount = totalBase;
+    if (discVal > 0) {
+        if (discType === 'Percentage') {
+            finalAmount = totalBase - (totalBase * (discVal / 100));
+        } else {
+            finalAmount = totalBase - discVal;
         }
-    });
-
-    // 1. Function to Calculate Final Price
-    function calculateFinalPrice() {
-        let basePrice = parseFloat($('#base_price_hidden').val()) || 0;
-        let selectedOffer = $('#offer_select').find(':selected');
-        let discType = selectedOffer.data('type');
-        let discVal = parseFloat(selectedOffer.data('val')) || 0;
-        let minAmt = parseFloat(selectedOffer.data('min')) || 0;
-
-        let finalAmount = basePrice;
-
-        if (basePrice >= minAmt) {
-            if (discType === 'Percentage') {
-                finalAmount = basePrice - (basePrice * (discVal / 100));
-            } else {
-                finalAmount = basePrice - discVal;
-            }
-        } else if (discVal > 0) {
-            alert('This offer requires a minimum booking of ₹' + minAmt);
-            $('#offer_select').val('').trigger('change');
-            return;
-        }
-
-        $('#total_amount').val(finalAmount.toFixed(2)).trigger('input');
-        $('#display_base_price').text(basePrice.toLocaleString());
     }
 
-    // 2. Fetch Base Price when Vehicle/Flight is selected
-    $('#vehicle_id').on('change', function() {
-        // Option mein fare data add karna hoga: data-fare="{{ $veh->base_fare }}"
-        let fare = $(this).find(':selected').data('fare') || 0;
-        $('#base_price_hidden').val(fare);
-        calculateFinalPrice();
-    });
+    $('#total_amount').val(finalAmount.toFixed(2));
+    $('#display_final_amount').text(finalAmount.toLocaleString('en-IN', {minimumFractionDigits: 2}));
+}
 
-    // 3. Fetch Base Price when Package is selected
-    $('select[name="package_id"]').on('change', function() {
-        let price = $(this).find(':selected').data('price') || 0;
-        $('#base_price_hidden').val(price);
-        calculateFinalPrice();
-    });
+// Ye trigger ensures calculation happens immediately after radio select
+$(document).on('change', '.schedule-radio', function() {
+    calculateFinalPrice();
+});
 
-    // 4. Trigger calculation when Offer is changed
-    $('#offer_select').on('change', function() {
-        calculateFinalPrice();
-    });
+// B. Jab passenger add ya remove ho (Aapke updatePaxCount function ke andar)
+function updatePaxCount() {
+    let count = 1 + $('#passengerInputs .row').length; 
+    $('#pax_count').val(count);
+    $('#pax_display').text(count);
+    
+    // 🔥 Automatic recalculate when pax count changes
+    calculateFinalPrice(); 
+}
 
-    // 5. Due Amount calculation (Purana wala logic)
-    $('#total_amount, #paid_amount').on('input', function() {
-        let total = parseFloat($('#total_amount').val()) || 0;
-        let paid = parseFloat($('#paid_amount').val()) || 0;
-        $('#due_amount').val((total - paid).toFixed(2));
-    });
+// C. Jab promo code select ya clear ho
+$('#offer_select').on('change', function() {
+    calculateFinalPrice();
+});
 
-    // 6. Add Booking
+// D. Jab Cash Received change ho (Due amount nikalne ke liye agar zaroorat ho)
+$('#paid_amount').on('input', function() {
+    // Yahan aap Due calculation ka logic bhi daal sakte hain
+});
+
+// --- 3. SELECT2 WITH CLEAR OPTION ---
+function initSelect2() {
+    $('.select2-modal').select2({
+        dropdownParent: $('#bookingModal'),
+        width: '100%',
+        placeholder: "Select an option",
+        allowClear: true // Ye promo code remove karne ke liye 'x' button dega
+    });
+}
+
+    // --- 5. MODAL & FORM CONTROL ---
     $('#addBookingBtn').click(function() {
         $('#bookingForm')[0].reset();
         $('#booking_id').val('');
-        $('.select2-modal').val(null).trigger('change');
-        $('#modalTitle').text('Create New Booking');
+        
+        // Select2 ko destroy karo taaki Fresh modal pe reset ho
+        if ($('.select2-modal').data('select2')) {
+            $('.select2-modal').val(null).trigger('change');
+        }
+
+        $('#availabilitySection, #passengerSection').addClass('d-none');
+        $('#passengerInputs').empty();
+        $('#pax_count').val(1);
+        $('#pax_display').text(1);
+        
+        $('#modalTitle').text('New Booking Search');
         $('#bookingModal').modal('show');
     });
 
-    // 7. Form Submit Logic
     $('#bookingForm').on('submit', function(e) {
         e.preventDefault();
         let id = $('#booking_id').val();
@@ -387,161 +400,11 @@
                 alert(res.message); 
                 location.reload(); 
             },
-            error: function(xhr) { alert('Error processing booking!'); }
+            error: function(xhr) { 
+                let err = xhr.responseJSON ? xhr.responseJSON.message : 'Error processing booking!';
+                alert(err); 
+            }
         });
-    });
-
-   $('#service_type').on('change', function() {
-    let selectedService = $(this).val(); // Jaise 'Flight' ya 'Bus'
-    
-    // 1. Offer dropdown ko reset karo
-    $('#offer_select').val('').trigger('change');
-    
-    // 2. Loop chalao saare options par
-    $('#offer_select option').each(function() {
-        let applyTo = $(this).data('apply-to'); // Offer ki category
-        
-        // Logic: Agar category 'All' hai YA selected service se match karti hai
-        if (applyTo === 'All' || applyTo === selectedService) {
-            $(this).prop('disabled', false); // Show/Enable
-            $(this).show(); 
-        } else {
-            $(this).prop('disabled', true); // Hide/Disable
-            $(this).hide();
-        }
-    });
-
-    // Select2 ko refresh karna zaroori hai taaki changes dikhen
-    $('#offer_select').select2({
-        dropdownParent: $('#bookingModal'),
-        width: '100%'
-    });
-});
-
-function validateSpecificOffer() {
-    let selectedOffer = $('#offer_select').find(':selected');
-    let restrictedId = selectedOffer.data('content-id'); // Offer kis ID ke liye hai
-    let applyTo = selectedOffer.data('apply-to');
-    
-    let currentItemId = "";
-    if(applyTo === 'Tour Package') {
-        currentItemId = $('select[name="package_id"]').val();
-    } else {
-        currentItemId = $('#vehicle_id').val();
-    }
-
-    // Agar offer kisi specific item ke liye hai aur wo match nahi kar raha
-    if (restrictedId && restrictedId != currentItemId) {
-        alert("Sorry! This offer is only valid for a specific service/package.");
-        $('#offer_select').val('').trigger('change');
-        return false;
-    }
-    return true;
-}
-
-// Jab bhi offer badle, ye check chalao
-$('#offer_select').on('change', function() {
-    if($(this).val() != "") {
-        validateSpecificOffer();
-        calculateFinalPrice(); // Price update karne wala purana function
-    }
-});
-
-// 1. Function: Passenger Fields Update Karna
-    function updatePassengerFields() {
-        let pax = parseInt($('input[name="pax_count"]').val()) || 1;
-        let container = $('#passengerInputs');
-        let currentRows = container.find('.row').length;
-
-        if (pax > currentRows) {
-            // Nayi rows add karo
-            for (let i = currentRows; i < pax; i++) {
-                container.append(`
-                    <div class="row g-2 mb-2 p-2 border rounded bg-light align-items-center animate__animated animate__fadeIn">
-                        <div class="col-md-5">
-                            <input type="text" name="p_name[]" class="form-control form-control-sm" placeholder="Full Name" required>
-                        </div>
-                        <div class="col-md-3">
-                            <input type="number" name="p_age[]" class="form-control form-control-sm" placeholder="Age" required>
-                        </div>
-                        <div class="col-md-4">
-                            <select name="p_gender[]" class="form-select form-select-sm" required>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                    </div>
-                `);
-            }
-        } else if (pax < currentRows) {
-            // Extra rows hatao
-            for (let i = currentRows; i > pax; i--) {
-                container.find('.row').last().remove();
-            }
-        }
-    }
-
-    // 2. Function: Master Price Calculation
-    function calculateFinalPrice() {
-        let pax = parseInt($('input[name="pax_count"]').val()) || 1;
-        let basePricePerPax = parseFloat($('#base_price_hidden').val()) || 0;
-        
-        // Total Base Price (Price * People)
-        let totalBasePrice = basePricePerPax * pax;
-        $('#display_base_price').text(totalBasePrice.toLocaleString('en-IN'));
-
-        // Offer Logic
-        let selectedOffer = $('#offer_select').find(':selected');
-        let discType = selectedOffer.data('type');
-        let discVal = parseFloat(selectedOffer.data('val')) || 0;
-        let minAmt = parseFloat(selectedOffer.data('min')) || 0;
-
-        let finalAmount = totalBasePrice;
-
-        if (totalBasePrice >= minAmt) {
-            if (discType === 'Percentage') {
-                finalAmount = totalBasePrice - (totalBasePrice * (discVal / 100));
-            } else {
-                finalAmount = totalBasePrice - discVal;
-            }
-        }
-
-        $('#total_amount').val(finalAmount.toFixed(2)).trigger('input');
-    }
-
-    // --- Triggers ---
-
-    // PAX change hone par
-    $('input[name="pax_count"]').on('input change', function() {
-        updatePassengerFields();
-        calculateFinalPrice();
-    });
-
-    // Vehicle select hone par
-    $('#vehicle_id').on('change', function() {
-        let fare = $(this).find(':selected').data('fare') || 0;
-        $('#base_price_hidden').val(fare);
-        calculateFinalPrice();
-    });
-
-    // Package select hone par
-    $('select[name="package_id"]').on('change', function() {
-        let price = $(this).find(':selected').data('price') || 0;
-        $('#base_price_hidden').val(price);
-        calculateFinalPrice();
-    });
-
-    // Offer select hone par
-    $('#offer_select').on('change', function() {
-        calculateFinalPrice();
-    });
-
-    // Due calculation
-    $('#total_amount, #paid_amount').on('input', function() {
-        let total = parseFloat($('#total_amount').val()) || 0;
-        let paid = parseFloat($('#paid_amount').val()) || 0;
-        $('#due_amount').val((total - paid).toFixed(2));
     });
 });
 </script>
