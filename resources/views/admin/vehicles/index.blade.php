@@ -113,7 +113,7 @@
                         </div>
                        <div class="col-md-3">
     <label class="form-label fw-bold">Charges per/KM (₹)</label>
-    <input type="number" name="base_fare" id="charges_per_km" class="form-control" required placeholder="e.g. 15">
+    <input type="number" name="base_fare" id="charges_per_km" class="form-control" required placeholder="e.g. 15" step="0.01">
 </div>
                         <div class="col-md-6">
     <label class="form-label fw-bold">Seat Category</label>

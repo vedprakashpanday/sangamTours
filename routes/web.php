@@ -1,98 +1,137 @@
 <?php
 
-use App\Http\Controllers\AccommodationController;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\LocationController;
-use App\Http\Controllers\TourPackageController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\RouteController;
-use App\Http\Controllers\VendorController; // 🔥 Naya
-use App\Http\Controllers\VehicleController; // 🔥 Naya (Inventory ke liye)
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BookingController;
-use App\Http\Controllers\OfferController;
-use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\{
+    DashboardController, TourPackageController, LocationController, 
+    AccommodationController, CustomerController, VendorController, 
+    VehicleController, RouteController, BookingController, 
+    OfferController, ScheduleController, AuthController, 
+    ForgotPasswordController,
+    HomeController // 🔥 Naya Controller User Panel ke liye
+};
 
+/*
+|--------------------------------------------------------------------------
+| 1. PUBLIC / USER PANEL ROUTES
+|--------------------------------------------------------------------------
+*/
 
+// 🔥 Root route ab redirect nahi karega, Landing Page dikhayega
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Home redirect
-Route::get('/', function () {
-    return redirect()->route('admin.dashboard');
+// User side search aur browse ke liye
+Route::prefix('tours')->name('tours.')->group(function () {
+    Route::get('/', [HomeController::class, 'allPackages'])->name('index');
+    Route::get('/{slug}', [HomeController::class, 'packageDetail'])->name('detail');
 });
 
+// Bus Search (Public Access)
+Route::get('/search-bus', [HomeController::class, 'searchBus'])->name('bus.search');
+
+
+/*
+|--------------------------------------------------------------------------
+| 2. ADMIN AUTH / FORGOT PASSWORD (Group ke bahar)
+|--------------------------------------------------------------------------
+*/
+Route::get('admin/reset-password/{token}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('admin/reset-password', [ForgotPasswordController::class, 'reset'])->name('admin.password.update');
+
+/*
+|--------------------------------------------------------------------------
+| 3. ADMIN ROUTES GROUP
+|--------------------------------------------------------------------------
+*/
+
+
+
+
+// 2. Admin Routes Group
 Route::prefix('admin')->name('admin.')->group(function () {
-    
-    // --- 0. Dashboard ---
-    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // --- 1. Tour Packages Management ---
-    Route::get('packages/restore-all', [TourPackageController::class, 'restoreAll']);
-    Route::delete('packages/empty-trash', [TourPackageController::class, 'emptyTrash']);
-    Route::get('packages/restore/{id}', [TourPackageController::class, 'restore']);
-    Route::delete('packages/force-delete/{id}', [TourPackageController::class, 'forceDelete']);
-    Route::resource('packages', TourPackageController::class);
+    // --- GUEST ROUTES (Bina login ke jo dikhenge) ---
+    Route::middleware('guest')->group(function () {
+        Route::get('login', [AuthController::class, 'showLogin'])->name('login');
+        Route::post('login', [AuthController::class, 'login']);
+        
+        // Forget Password Flow
+        Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+        Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+        // Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
+        // Route::post('reset-password', [ForgotPasswordController::class, 'reset'])->name('password.update');
+    });
 
-    // --- 2. Dependency Dropdowns ---
-    Route::get('get-states-by-country/{country}', [TourPackageController::class, 'getStatesByCountry']);
-    Route::get('get-cities-by-state/{state}', [TourPackageController::class, 'getCitiesByState']);
+    // --- AUTH ROUTES (Sirf Login ke baad access honge) ---
+    Route::middleware('auth')->group(function () {
+        
+        // Logout
+        Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
-    // --- 3. Locations Management ---
-    Route::resource('locations', LocationController::class)->except(['create', 'show']); 
-    // Note: Agar aapne manual routes likhe hain toh wahi rehne dein, resource clean rehta hai.
+        // Dashboard
+        Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // --- 4. Accommodations Management ---
-    Route::get('accommodations/restore-all', [AccommodationController::class, 'restoreAll']);
-    Route::delete('accommodations/empty-trash', [AccommodationController::class, 'emptyTrash']);
-    Route::get('accommodations/restore/{id}', [AccommodationController::class, 'restore']);
-    Route::delete('accommodations/force-delete/{id}', [AccommodationController::class, 'forceDelete']);
-    Route::resource('accommodations', AccommodationController::class);
+        // Tour Packages
+        Route::get('packages/restore-all', [TourPackageController::class, 'restoreAll']);
+        Route::delete('packages/empty-trash', [TourPackageController::class, 'emptyTrash']);
+        Route::get('packages/restore/{id}', [TourPackageController::class, 'restore']);
+        Route::delete('packages/force-delete/{id}', [TourPackageController::class, 'forceDelete']);
+        Route::resource('packages', TourPackageController::class);
 
-    // --- 5. Customer Management ---
-    Route::get('customers/restore-all', [CustomerController::class, 'restoreAll']);
-    Route::delete('customers/empty-trash', [CustomerController::class, 'emptyTrash']);
-    Route::get('customers/restore/{id}', [CustomerController::class, 'restore']);
-    Route::delete('customers/force-delete/{id}', [CustomerController::class, 'forceDelete']);
-    Route::post('customers/update-status', [CustomerController::class, 'updateStatus']); 
-    Route::resource('customers', CustomerController::class);
+        // Dependency Dropdowns
+        Route::get('get-states-by-country/{country}', [TourPackageController::class, 'getStatesByCountry']);
+        Route::get('get-cities-by-state/{state}', [TourPackageController::class, 'getCitiesByState']);
 
-    // --- 6. Vendor Management (NEW) ---
-    Route::get('vendors/restore-all', [VendorController::class, 'restoreAll']);
-    Route::delete('vendors/empty-trash', [VendorController::class, 'emptyTrash']);
-    Route::get('vendors/restore/{id}', [VendorController::class, 'restore']);
-    Route::delete('vendors/force-delete/{id}', [VendorController::class, 'forceDelete']);
-    Route::resource('vendors', VendorController::class);
+        // Locations
+        Route::resource('locations', LocationController::class)->except(['create', 'show']);
 
-    // --- 7. Vehicle/Inventory Management (NEW) ---
-    Route::get('vehicles/restore-all', [VehicleController::class, 'restoreAll']);
-    Route::delete('vehicles/empty-trash', [VehicleController::class, 'emptyTrash']);
-    Route::get('vehicles/restore/{id}', [VehicleController::class, 'restore']);
-    Route::delete('vehicles/force-delete/{id}', [VehicleController::class, 'forceDelete']);
-    Route::resource('vehicles', VehicleController::class);
+        // Accommodations
+        Route::get('accommodations/restore-all', [AccommodationController::class, 'restoreAll']);
+        Route::delete('accommodations/empty-trash', [AccommodationController::class, 'emptyTrash']);
+        Route::get('accommodations/restore/{id}', [AccommodationController::class, 'restore']);
+        Route::delete('accommodations/force-delete/{id}', [AccommodationController::class, 'forceDelete']);
+        Route::resource('accommodations', AccommodationController::class);
 
-    // --- 8. Route Management ---
-Route::get('routes/restore-all', [RouteController::class, 'restoreAll']);
-Route::delete('routes/empty-trash', [RouteController::class, 'emptyTrash']);
-Route::get('routes/restore/{id}', [RouteController::class, 'restore']);
-Route::delete('routes/force-delete/{id}', [RouteController::class, 'forceDelete']);
-Route::resource('routes', RouteController::class);
+        // Customers
+        Route::get('customers/restore-all', [CustomerController::class, 'restoreAll']);
+        Route::delete('customers/empty-trash', [CustomerController::class, 'emptyTrash']);
+        Route::get('customers/restore/{id}', [CustomerController::class, 'restore']);
+        Route::delete('customers/force-delete/{id}', [CustomerController::class, 'forceDelete']);
+        Route::post('customers/update-status', [CustomerController::class, 'updateStatus']); 
+        Route::resource('customers', CustomerController::class);
 
-// --- 9. Booking Management ---
-    Route::get('bookings/restore-all', [BookingController::class, 'restoreAll']);
-    Route::delete('bookings/empty-trash', [BookingController::class, 'emptyTrash']);
-    Route::get('bookings/restore/{id}', [BookingController::class, 'restore']);
-    Route::delete('bookings/force-delete/{id}', [BookingController::class, 'forceDelete']);
-    Route::resource('bookings', BookingController::class);
-    Route::get('check-route', [BookingController::class, 'checkRoute'])->name('admin.bookings.checkRoute');
+        // Vendors
+        Route::get('vendors/restore-all', [VendorController::class, 'restoreAll']);
+        Route::delete('vendors/empty-trash', [VendorController::class, 'emptyTrash']);
+        Route::get('vendors/restore/{id}', [VendorController::class, 'restore']);
+        Route::delete('vendors/force-delete/{id}', [VendorController::class, 'forceDelete']);
+        Route::resource('vendors', VendorController::class);
 
- // Ye route humne availability check karne ke liye banaya hai
-    Route::get('check-availability', [BookingController::class, 'checkAvailability'])->name('bookings.checkAvailability');
+        // Vehicles / Inventory
+        Route::get('vehicles/restore-all', [VehicleController::class, 'restoreAll']);
+        Route::delete('vehicles/empty-trash', [VehicleController::class, 'emptyTrash']);
+        Route::get('vehicles/restore/{id}', [VehicleController::class, 'restore']);
+        Route::delete('vehicles/force-delete/{id}', [VehicleController::class, 'forceDelete']);
+        Route::resource('vehicles', VehicleController::class);
 
-    // --- 10. Offers/Discounts Management ---
-Route::resource('offers', OfferController::class);
-Route::get('offers/get-items/{category}', [OfferController::class, 'getItemsByCategory']);
+        // Routes
+        Route::get('routes/restore-all', [RouteController::class, 'restoreAll']);
+        Route::delete('routes/empty-trash', [RouteController::class, 'emptyTrash']);
+        Route::get('routes/restore/{id}', [RouteController::class, 'restore']);
+        Route::delete('routes/force-delete/{id}', [RouteController::class, 'forceDelete']);
+        Route::resource('routes', RouteController::class);
 
-// --- 11. Schedule Management ---
-    Route::resource('schedules', ScheduleController::class);
+        // Bookings
+        Route::resource('bookings', BookingController::class);
+        Route::get('check-route', [BookingController::class, 'checkRoute'])->name('bookings.checkRoute');
+        Route::get('check-availability', [BookingController::class, 'checkAvailability'])->name('bookings.checkAvailability');
+        Route::get('bookings/print/{id}', [BookingController::class, 'printReceipt'])->name('bookings.print');
 
+        
+        // Offers
+        Route::resource('offers', OfferController::class);
+        Route::get('offers/get-items/{category}', [OfferController::class, 'getItemsByCategory']);
 
+        // Schedules
+        Route::resource('schedules', ScheduleController::class);
+    });
 });

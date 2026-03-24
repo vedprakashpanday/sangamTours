@@ -46,4 +46,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function sendPasswordResetNotification($token)
+{
+    $url = url('/admin/reset-password/'.$token.'?email='.$this->email);
+    $this->notify(new \Illuminate\Auth\Notifications\ResetPassword($token));
+}
 }

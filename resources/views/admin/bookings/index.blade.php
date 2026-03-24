@@ -174,7 +174,7 @@
                         </div>
                         <div class="col-md-6 ps-4">
                             <label class="small text-secondary fw-bold mb-1">CASH RECEIVED</label>
-                            <input type="number" name="paid_amount" id="paid_amount" class="form-control form-control-lg bg-transparent text-white border-secondary fw-bold" placeholder="0.00">
+                            <input type="number" name="paid_amount" id="paid_amount" class="form-control form-control-lg bg-transparent text-white border-secondary fw-bold" placeholder="0.00" step="0.01">
                         </div>
                     </div>
 
@@ -214,6 +214,29 @@
     border-bottom-right-radius: 0 !important;
 }
 </style>
+
+
+<div class="modal fade" id="viewBookingModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title fw-bold"><i class='bx bx-receipt me-2'></i> Booking Details</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4" id="viewBookingContent">
+                <div class="text-center py-5">
+                    <div class="spinner-border text-info"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary print-btn" ><i class='bx bx-printer'></i> Print Receipt</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @endsection
 
 
@@ -277,7 +300,9 @@ res.schedules.forEach(function(s) {
         <label class="list-group-item list-group-item-action p-3 mb-2 border rounded shadow-sm">
             <div class="row align-items-center">
                 <div class="col-md-1">
-                    <input type="radio" name="schedule_id" value="${s.id}" data-fare="${s.fare}" class="form-check-input schedule-radio" required>
+                    <input type="radio" name="schedule_id" value="${s.id}" 
+       data-fare="${s.fare}" 
+       data-route="${s.route_id}" class="form-check-input schedule-radio" required>
                 </div>
                 <div class="col-md-8 border-start">
                     <div class="d-flex justify-content-between">
@@ -331,8 +356,19 @@ function calculateFinalPrice() {
     $('#display_final_amount').text(finalAmount.toLocaleString('en-IN', {minimumFractionDigits: 2}));
 }
 
-// Ye trigger ensures calculation happens immediately after radio select
 $(document).on('change', '.schedule-radio', function() {
+    let routeId = $(this).data('route');
+    
+    // Hidden input select karein
+    let hiddenInput = $('#hidden_route_id');
+    if(hiddenInput.length == 0) {
+        $('#bookingForm').append(`<input type="hidden" name="route_id" id="hidden_route_id">`);
+        hiddenInput = $('#hidden_route_id');
+    }
+
+    // 🔥 JS Safety: Agar value nahi hai toh khali string bhejo, "null" nahi
+    hiddenInput.val(routeId && routeId !== "null" ? routeId : "");
+    
     calculateFinalPrice();
 });
 
@@ -406,6 +442,95 @@ function initSelect2() {
             }
         });
     });
+
+
+// --- 1. VIEW BOOKING ---
+$(document).on('click', '.view-booking', function() {
+    let id = $(this).data('id');
+    $('#viewBookingModal').modal('show');
+    $('#viewBookingContent').html('<div class="text-center py-5"><div class="spinner-border text-info"></div><br>Loading...</div>');
+
+    $.get("{{ url('admin/bookings') }}/" + id)
+    .done(function(res) {
+        let b = res.booking;
+        if(!b) { $('#viewBookingContent').html('Data not found!'); return; }
+
+        let passengers = '';
+        if(b.passengers && b.passengers.length > 0) {
+            b.passengers.forEach(p => {
+                passengers += `<li class="mb-1">${p.name} (${p.age} yrs) - <span class="badge bg-light text-dark">${p.gender}</span></li>`;
+            });
+        } else { passengers = '<li class="text-muted">No co-passengers added.</li>'; }
+
+        let html = `
+            <div class="p-2">
+                <div class="d-flex justify-content-between mb-3 border-bottom pb-2">
+                    <span class="text-muted small">BOOKING NO</span>
+                    <span class="fw-bold text-primary" id="booking_id_for_view">${b.booking_no}</span>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6"><small class="text-muted">Customer</small><br><strong>${b.customer.name}</strong></div>
+                    <div class="col-6 text-end"><small class="text-muted">Phone</small><br><strong>${b.customer.phone}</strong></div>
+                </div>
+                <div class="bg-light p-3 rounded mb-3 border-dashed">
+                    <h6 class="fw-bold small mb-2 text-primary">CO-PASSENGERS</h6>
+                    <ul class="mb-0 small list-unstyled">${passengers}</ul>
+                </div>
+                <div class="row g-2 text-center bg-dark text-white p-3 rounded">
+                    <div class="col-4 border-end border-secondary"><small class="d-block opacity-75">Total</small><b>₹${b.total_amount}</b></div>
+                    <div class="col-4 border-end border-secondary"><small class="d-block opacity-75">Paid</small><b class="text-success">₹${b.paid_amount}</b></div>
+                    <div class="col-4"><small class="d-block opacity-75">Due</small><b class="text-danger">₹${b.due_amount}</b></div>
+                </div>
+            </div>`;
+        $('#viewBookingContent').html(html);
+    })
+    .fail(function() {
+        $('#viewBookingContent').html('<div class="alert alert-danger">Bhai, data load nahi ho paya. URL check karo!</div>');
+    });
+});
+
+// --- 2. DELETE BOOKING ---
+$(document).on('click', '.delete-booking', function() {
+    let id = $(this).data('id');
+    if(confirm('Bhai, kya aap sach mein ye booking delete karna chahte ho?')) {
+        $.ajax({
+            url: "{{ url('admin/bookings') }}/" + id,
+            method: "DELETE",
+            data: {_token: "{{ csrf_token() }}"},
+            success: function(res) {
+                alert(res.message);
+                location.reload();
+            }
+        });
+    }
+});
+
+// --- 3. EDIT BOOKING (Populate Form) ---
+$(document).on('click', '.edit-booking', function() {
+    let id = $(this).data('id');
+    $('#saveBtn').text('Update Booking');
+    $('.modal-title').html("<i class='bx bx-edit-alt me-2'></i> Edit Booking");
+    
+    $.get("{{ url('admin/bookings') }}/" + id + "/edit", function(res) {
+        let b = res.booking;
+        $('#booking_id').val(b.id);
+        $('select[name="customer_id"]').val(b.customer_id).trigger('change');
+        $('#service_type').val(b.service_type);
+        $('#travel_date').val(b.travel_date);
+        $('#paid_amount').val(b.paid_amount);
+        
+        // Note: Route aur Fare Edit thoda complex hai kyunki wo AJAX se calculate hota hai.
+        // Filhaal hum basic fields populate kar rahe hain.
+        
+        $('#bookingModal').modal('show');
+    });
+});
+
+$(document).on('click', '.print-btn', function() {
+    let id = $('#booking_id_for_view').text(); // Jo ID aapne view modal mein set ki hogi
+    window.open("{{ url('admin/bookings/print') }}/" + id, '_blank');
+});
+
 });
 </script>
 @endpush

@@ -106,65 +106,44 @@ private function getDistanceBetweenCities($fromLoc, $toLoc) {
 
 public function checkAvailability(Request $request) {
     $fromLocId = $request->from; 
-    $toLocId = $request->to;     
-    $type = $request->type;      
+    $toLocId   = $request->to;     
+    $type      = $request->type;      
 
+    // Distance & Locations Fetching
     $fromLoc = \App\Models\Location::find($fromLocId);
-    $toLoc = \App\Models\Location::find($toLocId);
-
+    $toLoc   = \App\Models\Location::find($toLocId);
     if(!$fromLoc || !$toLoc) return response()->json(['schedules' => []]);
 
-    // --- STEP 1: DISTANCE LOGIC (With Manual Fallback) ---
-    $dist = $this->getDistanceBetweenCities($fromLoc, $toLoc);
+    $dist = $this->getDistanceBetweenCities($fromLoc, $toLoc); // Aapka existing distance function
 
-    // 🔥 JUGAD: Agar API 0 de rahi hai, toh Bihar ke common routes yahan manually handle kar lo
-    if ($dist <= 0) {
-        $manualRoutes = [
-            'Hajipur-Sonpur' => 6.0,
-            'Sonpur-Hajipur' => 6.0,
-            'Patna-Hajipur' => 21.0,
-            'Hajipur-Patna' => 21.0,
-            'Hajipur-Darbhanga' => 145.0,
-            'Sonpur-Darbhanga' => 150.0,
-        ];
-        
-        $routeKey = $fromLoc->city_location . '-' . $toLoc->city_location;
-        $dist = $manualRoutes[$routeKey] ?? 0;
-    }
+    // --- 🔥 FIND ROUTE ID (From Routes Table) ---
+    $route = \App\Models\Route::where('from_city_id', $fromLocId)
+                              ->where('to_city_id', $toLocId)
+                              ->first();
+    $routeId = $route ? $route->id : null;
 
-    // --- STEP 2: FETCH SCHEDULES ---
+    // Fetch Schedules
     $schedules = Schedule::with(['vehicle.vendor', 'stoppages'])
-        ->whereHas('vehicle', function($q) use ($type) {
-            $q->where('type', $type);
-        })
-        ->whereHas('stoppages', function($q) use ($fromLocId) {
-            $q->where('location_id', $fromLocId);
-        })
-        ->whereHas('stoppages', function($q) use ($toLocId) {
-            $q->where('location_id', $toLocId);
-        })
+        ->whereHas('vehicle', function($q) use ($type) { $q->where('type', $type); })
+        ->whereHas('stoppages', function($q) use ($fromLocId) { $q->where('location_id', $fromLocId); })
+        ->whereHas('stoppages', function($q) use ($toLocId) { $q->where('location_id', $toLocId); })
         ->get();
 
     $availableOptions = [];
 
-    // --- STEP 3: ORDER & FARE CALCULATION ---
     foreach ($schedules as $s) {
         $stoppages = $s->stoppages;
-
         $boardingData = $stoppages->where('location_id', $fromLocId)->first();
         $destinationData = $stoppages->where('location_id', $toLocId)->first();
 
-        // Direction Check: Boarding order destination se kam hona chahiye
         if ($boardingData && $destinationData && $boardingData->stop_order < $destinationData->stop_order) {
             
             $perKm = (float)($s->vehicle->charges_per_km ?? 0);
-            
-            // 🔥 TOTAL FARE CALCULATION
-            // Agar distance abhi bhi 0 hai, toh fare bhi 0 dikhega (Manual update warning ke liye)
             $farePerPerson = ($dist > 0) ? ($dist * $perKm) : 0;
 
             $availableOptions[] = [
                 'id'           => $s->id,
+                'route_id'     => $routeId, // 🔥 Send route_id from the lookup above
                 'vehicle_name' => $s->vehicle->vehicle_number,
                 'vendor'       => $s->vehicle->vendor->name,
                 'distance'     => round($dist, 2),
@@ -180,36 +159,111 @@ public function checkAvailability(Request $request) {
 
     return response()->json(['schedules' => $availableOptions]);
 }
-
 public function store(Request $request)
 {
-    // 1. Auto-generate Booking Number (e.g., ST-2026-0001)
-    $year = date('Y');
-    $lastBooking = \App\Models\Booking::latest()->first();
-    $nextId = $lastBooking ? ($lastBooking->id + 1) : 1;
-    $bookingNo = "ST-" . $year . "-" . str_pad($nextId, 4, '0', STR_PAD_LEFT);
-
-    // 2. Data save logic
-    \App\Models\Booking::create([
-        'booking_no'    => $bookingNo,
-        'customer_id'   => $request->customer_id,
-        'service_type'  => $request->service_type,
-        'vehicle_id'    => $request->vehicle_id,
-        'route_id'      => $request->route_id,
-        'package_id'    => $request->package_id,
-        'travel_date'   => $request->travel_date,
-        'pax_count'     => $request->pax_count,
-        'total_amount'  => $request->total_amount,
-        'paid_amount'   => $request->paid_amount,
-        'due_amount'    => $request->due_amount,
-        'payment_status'=> ($request->due_amount <= 0) ? 'Paid' : (($request->paid_amount > 0) ? 'Partial' : 'Pending'),
-        'booking_status'=> 'Upcoming',
+    // 1. Validation
+    $request->validate([
+        'customer_id'   => 'required',
+        'total_amount'  => 'required|numeric',
+        'paid_amount'   => 'required|numeric',
+        'boarding_from' => 'required', // Ye locations hona zaroori hai
+        'destination_to'=> 'required',
     ]);
 
-    return response()->json([
-        'status'  => 'success', 
-        'message' => 'Booking Confirmed! Booking No: ' . $bookingNo
-    ]);
+    try {
+        // 2. Booking Number Generation (Soft Delete Safe)
+        $year = date('Y');
+        $lastBooking = \App\Models\Booking::withTrashed()->whereYear('created_at', $year)->latest('id')->first();
+        $nextId = $lastBooking ? ($lastBooking->id + 1) : 1;
+        $bookingNo = "ST-" . $year . "-" . str_pad($nextId, 4, '0', STR_PAD_LEFT);
+
+        while (\App\Models\Booking::withTrashed()->where('booking_no', $bookingNo)->exists()) {
+            $nextId++;
+            $bookingNo = "ST-" . $year . "-" . str_pad($nextId, 4, '0', STR_PAD_LEFT);
+        }
+
+        // 3. 🔥 Route & Vehicle Discovery Logic
+        $schedule = Schedule::find($request->schedule_id);
+        
+        // Pehle direct lookup: Agar Routes table mein ye 'From' aur 'To' ka combination hai
+        $route = \App\Models\Route::where('from_city_id', $request->boarding_from)
+                                  ->where('to_city_id', $request->destination_to)
+                                  ->first();
+        
+        $route_id = $route ? $route->id : ($schedule ? $schedule->route_id : null);
+        $vehicle_id = $schedule ? $schedule->vehicle_id : $request->vehicle_id;
+
+        // 4. Calculations
+        $total = (float)$request->total_amount;
+        $paid  = (float)$request->paid_amount;
+        $due   = max(0, $total - $paid);
+
+        // 5. Create Booking
+        $booking = Booking::create([
+            'booking_no'    => $bookingNo,
+            'customer_id'   => $request->customer_id,
+            'service_type'  => $request->service_type,
+            'route_id'      => $route_id, // Perfect Numeric ID
+            'vehicle_id'    => $vehicle_id,
+            'travel_date'   => $request->travel_date,
+            'pax_count'     => $request->pax_count ?? 1,
+            'total_amount'  => $total,
+            'paid_amount'   => $paid,
+            'due_amount'    => $due,
+            'payment_status'=> ($total <= $paid) ? 'Paid' : (($paid > 0) ? 'Partial' : 'Pending'),
+            'booking_status'=> 'Upcoming',
+        ]);
+
+        return response()->json([
+            'status'  => 'success', 
+            'message' => 'Booking Confirmed! No: ' . $bookingNo,
+            'booking_id' => $booking->id
+        ]);
+
+    } catch (\Exception $e) {
+        return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
+    }
+}
+
+// 1. Single Booking Fetch (For View Modal)
+public function show($id)
+{
+    // Eager loading zaroori hai taaki JS ko customer aur routes ka data mile
+    $booking = \App\Models\Booking::with([
+        'customer', 
+        'passengers', 
+        'route.fromCity', 
+        'route.toCity', 
+        'package', 
+        'vehicle'
+    ])->findOrFail($id);
+
+    return response()->json(['booking' => $booking]);
+}
+
+public function edit($id)
+{
+    $booking = \App\Models\Booking::with(['route', 'package'])->findOrFail($id);
+    return response()->json(['booking' => $booking]);
+}
+// 2. Edit Page (Optional, Show se bhi kaam chal sakta hai)
+
+// 3. Delete Logic
+public function destroy($id)
+{
+    $booking = Booking::findOrFail($id);
+    $booking->delete(); // Soft delete agar enabled hai
+    return response()->json(['status' => 'success', 'message' => 'Booking deleted successfully!']);
+}
+
+
+public function printReceipt($id)
+{
+    $booking = Booking::with(['customer', 'passengers', 'route.fromCity', 'route.toCity', 'vehicle', 'package'])
+       ->where('booking_no', $id)               
+    ->firstOrFail();
+        // dd($booking->toArray());              
+    return view('admin.bookings.print', compact('booking'));
 }
 
 

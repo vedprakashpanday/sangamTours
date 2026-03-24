@@ -12,11 +12,11 @@ class Route extends Model
     protected $guarded = [];
 
     // Relationship with Locations
-    public function fromCity() {
-        return $this->belongsTo(Location::class, 'from_city_id');
-    }
+   public function fromCity() {
+    return $this->belongsTo(Location::class, 'from_city_id'); // 'from_city_id' check karein
+}
 
-    public function toCity() {
-        return $this->belongsTo(Location::class, 'to_city_id');
-    }
+public function toCity() {
+    return $this->belongsTo(Location::class, 'to_city_id');
+}
 }
