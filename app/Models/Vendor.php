@@ -12,4 +12,9 @@ class Vendor extends Model {
     public function vehicles() {
         return $this->hasMany(Vehicle::class);
     }
+
+   public function vendorType() 
+{
+    return $this->belongsTo(VendorType::class, 'vendor_type_id');
+}
 }

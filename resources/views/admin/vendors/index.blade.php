@@ -31,7 +31,11 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td class="fw-bold text-primary">{{ $v->name }}</td>
-                            <td><span class="badge bg-light text-dark border">{{ $v->type }}</span></td>
+                            <td>
+    <span class="badge bg-light text-dark border">
+        {{ $v->vendorType->name ?? 'N/A' }} 
+    </span>
+</td>
                             <td>{{ $v->phone }}<br><small class="text-muted">{{ $v->email }}</small></td>
                             <td>
                                 <span class="badge {{ $v->is_api ? 'bg-info' : 'bg-secondary' }}">
@@ -79,7 +83,12 @@
                         @foreach($trashedVendors as $tv)
                         <tr>
                             <td>{{ $tv->name }}</td>
-                            <td>{{ $tv->type }}</td>
+                            {{-- Is line ko table ke andar update karein --}}
+<td>
+    <span class="badge bg-light text-dark border">
+        {{ $tv->vendorType->name ?? 'N/A' }} 
+    </span>
+</td>
                             <td>
                                 <button class="btn btn-sm btn-success restore-vendor" data-id="{{ $tv->id }}"><i class='bx bx-undo'></i></button>
                                 <button class="btn btn-sm btn-danger force-delete-vendor" data-id="{{ $tv->id }}"><i class='bx bx-x-circle'></i></button>
@@ -109,16 +118,15 @@
                             <label class="form-label fw-bold">Vendor Name</label>
                             <input type="text" name="name" class="form-control" required placeholder="e.g. Indigo, VRL Travels">
                         </div>
-                        <div class="col-md-12">
-                            <label class="form-label fw-bold">Vendor Type</label>
-                            <select name="type" class="form-select" required>
-                                <option value="">Select Type</option>
-                                <option value="Airline">Airline</option>
-                                <option value="Bus Operator">Bus Operator</option>
-                                <option value="Train Dept">Train Dept</option>
-                                <option value="Hotel Partner">Hotel Partner</option>
-                            </select>
-                        </div>
+                       <div class="col-md-12">
+    <label class="form-label fw-bold">Vendor Type</label>
+    <select name="vendor_type_id" class="form-select" required> {{-- Name change kiya hai ID ke liye --}}
+        <option value="">Select Type</option>
+        @foreach($vendorTypes as $type)
+            <option value="{{ $type->id }}">{{ $type->name }}</option>
+        @endforeach
+    </select>
+</div>
                         <div class="col-md-6">
                             <label class="form-label fw-bold">Phone Number</label>
                             <input type="text" name="phone" class="form-control" required>
@@ -191,7 +199,8 @@ $(document).ready(function() {
         $.get("{{ url('admin/vendors') }}/" + id + "/edit", function(v) {
             $('#vendor_id').val(v.id);
             $('input[name="name"]').val(v.name);
-            $('select[name="type"]').val(v.type);
+           // JS Edit Handler ke andar
+$('select[name="vendor_type_id"]').val(v.vendor_type_id); // 'type' ki jagah 'vendor_type_id'
             $('input[name="phone"]').val(v.phone);
             $('input[name="email"]').val(v.email);
             $('#isApi').prop('checked', v.is_api == 1);

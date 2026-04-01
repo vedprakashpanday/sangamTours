@@ -1,14 +1,24 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{
-    DashboardController, TourPackageController, LocationController, 
-    AccommodationController, CustomerController, VendorController, 
-    VehicleController, RouteController, BookingController, 
-    OfferController, ScheduleController, AuthController, 
-    ForgotPasswordController,
-    HomeController // 🔥 Naya Controller User Panel ke liye
-};
+
+// Controllers ko group karke import karne se spelling mistake pakdi jati hai
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TourPackageController;
+use App\Http\Controllers\LocationController;
+use App\Http\Controllers\AccommodationController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\VendorController;
+use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\RouteController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\OfferController;
+use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\VendorTypeController; // 🔥 Ye ensure karo ki ye file exists karti hai
 
 /*
 |--------------------------------------------------------------------------
@@ -16,22 +26,18 @@ use App\Http\Controllers\{
 |--------------------------------------------------------------------------
 */
 
-// 🔥 Root route ab redirect nahi karega, Landing Page dikhayega
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// User side search aur browse ke liye
 Route::prefix('tours')->name('tours.')->group(function () {
     Route::get('/', [HomeController::class, 'allPackages'])->name('index');
     Route::get('/{slug}', [HomeController::class, 'packageDetail'])->name('detail');
 });
 
-// Bus Search (Public Access)
 Route::get('/search-bus', [HomeController::class, 'searchBus'])->name('bus.search');
-
 
 /*
 |--------------------------------------------------------------------------
-| 2. ADMIN AUTH / FORGOT PASSWORD (Group ke bahar)
+| 2. ADMIN AUTH / FORGOT PASSWORD
 |--------------------------------------------------------------------------
 */
 Route::get('admin/reset-password/{token}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
@@ -43,31 +49,21 @@ Route::post('admin/reset-password', [ForgotPasswordController::class, 'reset'])-
 |--------------------------------------------------------------------------
 */
 
-
-
-
-// 2. Admin Routes Group
 Route::prefix('admin')->name('admin.')->group(function () {
 
-    // --- GUEST ROUTES (Bina login ke jo dikhenge) ---
+    // --- GUEST ROUTES ---
     Route::middleware('guest')->group(function () {
         Route::get('login', [AuthController::class, 'showLogin'])->name('login');
         Route::post('login', [AuthController::class, 'login']);
         
-        // Forget Password Flow
         Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
         Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-        // Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
-        // Route::post('reset-password', [ForgotPasswordController::class, 'reset'])->name('password.update');
     });
 
-    // --- AUTH ROUTES (Sirf Login ke baad access honge) ---
+    // --- AUTH ROUTES ---
     Route::middleware('auth')->group(function () {
         
-        // Logout
         Route::post('logout', [AuthController::class, 'logout'])->name('logout');
-
-        // Dashboard
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
         // Tour Packages
@@ -106,6 +102,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('vendors/force-delete/{id}', [VendorController::class, 'forceDelete']);
         Route::resource('vendors', VendorController::class);
 
+        // 🔥 Vendor Type (Simple Entry)
+        Route::get('vendor-types', [VendorTypeController::class, 'index'])->name('vendor-types.index');
+        Route::post('vendor-types', [VendorTypeController::class, 'store'])->name('vendor-types.store');
+        Route::put('vendor-types/{id}', [VendorTypeController::class, 'update'])->name('vendor-types.update');
+        Route::delete('vendor-types/{id}', [VendorTypeController::class, 'destroy'])->name('vendor-types.destroy');
+
         // Vehicles / Inventory
         Route::get('vehicles/restore-all', [VehicleController::class, 'restoreAll']);
         Route::delete('vehicles/empty-trash', [VehicleController::class, 'emptyTrash']);
@@ -125,7 +127,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('check-route', [BookingController::class, 'checkRoute'])->name('bookings.checkRoute');
         Route::get('check-availability', [BookingController::class, 'checkAvailability'])->name('bookings.checkAvailability');
         Route::get('bookings/print/{id}', [BookingController::class, 'printReceipt'])->name('bookings.print');
-
         
         // Offers
         Route::resource('offers', OfferController::class);
@@ -135,3 +136,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('schedules', ScheduleController::class);
     });
 });
+
+// Chatbot Route
+Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('chat.send');

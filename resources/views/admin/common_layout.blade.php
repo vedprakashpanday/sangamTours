@@ -91,11 +91,17 @@
         </a>
     </li>
 
-    <li class="{{ Request::is('admin/vendors*') ? 'active' : '' }}">
-        <a href="{{ route('admin.vendors.index') }}">
-            <i class='bx bx-store-alt'></i> <span>Vendors</span>
-        </a>
-    </li>
+    <li class="{{ Request::is('admin/vendor-types*') ? 'active' : '' }}">
+    <a href="{{ route('admin.vendor-types.index') }}">
+        <i class='bx bx-list-ul'></i> <span>Vendor Types</span>
+    </a>
+</li>
+
+<li class="{{ Request::is('admin/vendors*') ? 'active' : '' }}">
+    <a href="{{ route('admin.vendors.index') }}">
+        <i class='bx bx-store-alt'></i> <span>Vendor Management</span>
+    </a>
+</li>
 
     <li class="nav-label mt-3 small  uppercase" style="color: #0dcaf0;">People</li>
     

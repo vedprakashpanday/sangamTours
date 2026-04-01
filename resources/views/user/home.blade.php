@@ -10,26 +10,88 @@
         --brand-accent: #ff4e00;
     }
 
-    body { background-color: var(--mmt-bg); font-family: 'Inter', sans-serif; }
+    body {
+        background-color: var(--mmt-bg);
+        font-family: 'Inter', sans-serif;
+    }
 
     /* =========================================
        🔥 NAVBAR OVERRIDES (DARK/LIGHT FIXES) 🔥
        ========================================= */
-    .navbar .nav-link { color: #ffffff !important; font-weight: 600; padding: 8px 18px !important; border-radius: 25px; transition: all 0.3s ease; }
-    .navbar .nav-link:hover { background: #ffffff !important; color: var(--mmt-blue) !important; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
-    .navbar.scrolled .nav-link { color: var(--mmt-blue) !important; }
-    .navbar.scrolled .nav-link:hover { background: var(--mmt-blue) !important; color: #ffffff !important; }
-    
-    .navbar-toggler { background-color: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(5px); padding: 8px 12px; border-radius: 8px; }
-    .navbar-toggler-icon { filter: brightness(0) invert(1); }
-    .navbar.scrolled .navbar-toggler { border: 1px solid var(--mmt-blue); }
-    .navbar.scrolled .navbar-toggler-icon { filter: brightness(0); }
+    .navbar .nav-link {
+        color: #ffffff !important;
+        font-weight: 600;
+        padding: 8px 18px !important;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+    }
+
+    .navbar .nav-link:hover {
+        background: #ffffff !important;
+        color: var(--mmt-blue) !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .navbar.scrolled .nav-link {
+        color: var(--mmt-blue) !important;
+    }
+
+    .navbar.scrolled .nav-link:hover {
+        background: var(--mmt-blue) !important;
+        color: #ffffff !important;
+    }
+
+    .navbar-toggler {
+        background-color: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(5px);
+        padding: 8px 12px;
+        border-radius: 8px;
+    }
+
+    .navbar-toggler-icon {
+        filter: brightness(0) invert(1);
+    }
+
+    .navbar.scrolled .navbar-toggler {
+        border: 1px solid var(--mmt-blue);
+    }
+
+    .navbar.scrolled .navbar-toggler-icon {
+        filter: brightness(0);
+    }
 
     @media (max-width: 991px) {
-        .navbar-collapse { background: #fff; border-radius: 16px; padding: 15px; margin-top: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); position: absolute; width: 100%; left: 0; top: 100%; border: 1px solid #eee; }
-        .navbar-collapse .nav-link { color: var(--mmt-blue) !important; border-radius: 12px; padding: 12px 20px !important; margin-bottom: 5px; }
-        .navbar-collapse .nav-link:hover { background: rgba(0, 140, 255, 0.05) !important; color: var(--mmt-blue) !important; box-shadow: none; }
-        .main-footer .text-end { text-align: left !important; margin-top: 15px;}
+        .navbar-collapse {
+            background: #fff;
+            border-radius: 16px;
+            padding: 15px;
+            margin-top: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 100%;
+            border: 1px solid #eee;
+        }
+
+        .navbar-collapse .nav-link {
+            color: var(--mmt-blue) !important;
+            border-radius: 12px;
+            padding: 12px 20px !important;
+            margin-bottom: 5px;
+        }
+
+        .navbar-collapse .nav-link:hover {
+            background: rgba(0, 140, 255, 0.05) !important;
+            color: var(--mmt-blue) !important;
+            box-shadow: none;
+        }
+
+        .main-footer .text-end {
+            text-align: left !important;
+            margin-top: 15px;
+        }
     }
 
     /* --- 1. HERO SECTION (MMT STYLE DARK BACKGROUND) --- */
@@ -46,14 +108,24 @@
     }
 
     .hero-bg {
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         background: url('https://loremflickr.com/1920/1080/city,night') no-repeat center center;
-        background-size: cover; z-index: -2;
+        background-size: cover;
+        z-index: -2;
     }
-    
+
     .hero-overlay {
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0,0,0,0.4); z-index: -1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: -1;
     }
 
     /* --- 2. EXACT MMT WIDGET CONTAINER --- */
@@ -63,9 +135,9 @@
         max-width: 1200px;
         background: #ffffff;
         border-radius: 10px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
         z-index: 100;
-        margin-bottom: -50px; /* Overlaps below */
+        margin-bottom: -50px;
     }
 
     /* --- 3. MMT TABS (ALL 12 TABS) --- */
@@ -73,35 +145,93 @@
         background: #ffffff;
         border-radius: 10px 10px 0 0;
         padding: 5px 15px 0;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.03); /* Subtle separation */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
         display: flex;
         overflow-x: auto;
         scrollbar-width: none;
     }
-    .mmt-tabs-wrapper::-webkit-scrollbar { display: none; }
+
+    .mmt-tabs-wrapper::-webkit-scrollbar {
+        display: none;
+    }
 
     .mmt-tab {
-        display: flex; flex-direction: column; align-items: center; justify-content: center;
-        padding: 12px 18px; color: #4a4a4a; cursor: pointer; transition: 0.2s;
-        border-bottom: 3px solid transparent; min-width: 85px; text-align: center; opacity: 0.8;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 18px;
+        color: #4a4a4a;
+        cursor: pointer;
+        transition: 0.2s;
+        border-bottom: 3px solid transparent;
+        min-width: 85px;
+        text-align: center;
+        opacity: 0.8;
     }
-    .mmt-tab i { font-size: 26px; color: #888; margin-bottom: 5px; transition: 0.2s; }
-    .mmt-tab span { font-size: 13px; font-weight: 600; white-space: nowrap; }
-    
-    .mmt-tab:hover { opacity: 1; color: var(--mmt-blue); }
-    .mmt-tab:hover i { color: var(--mmt-blue); }
-    
-    .mmt-tab.active { border-bottom-color: var(--mmt-blue); color: var(--mmt-blue); opacity: 1; }
-    .mmt-tab.active i { color: var(--mmt-blue); }
+
+    .mmt-tab i {
+        font-size: 26px;
+        color: #888;
+        margin-bottom: 5px;
+        transition: 0.2s;
+    }
+
+    .mmt-tab span {
+        font-size: 13px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .mmt-tab:hover {
+        opacity: 1;
+        color: var(--mmt-blue);
+    }
+
+    .mmt-tab:hover i {
+        color: var(--mmt-blue);
+    }
+
+    .mmt-tab.active {
+        border-bottom-color: var(--mmt-blue);
+        color: var(--mmt-blue);
+        opacity: 1;
+    }
+
+    .mmt-tab.active i {
+        color: var(--mmt-blue);
+    }
 
     /* --- 4. FORM BODY & RADIOS --- */
-    .mmt-widget-body { padding: 30px 20px 45px 20px; }
+    .mmt-widget-body {
+        padding: 30px 20px 45px 20px;
+    }
 
-    .mmt-radios { display: flex; gap: 20px; margin-bottom: 20px; margin-left: 10px; }
-    .mmt-radio-item { display: flex; align-items: center; gap: 5px; font-size: 14px; font-weight: 600; color: #4a4a4a; cursor: pointer; }
-    .mmt-radio-item input[type="radio"] { accent-color: var(--mmt-blue); width: 16px; height: 16px; cursor: pointer; }
+    .mmt-radios {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 20px;
+        margin-left: 10px;
+    }
 
-    /* --- 5. THE MAIN INPUT GRID (EXACT MMT STYLE BORDERS) --- */
+    .mmt-radio-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #4a4a4a;
+        cursor: pointer;
+    }
+
+    .mmt-radio-item input[type="radio"] {
+        accent-color: var(--mmt-blue);
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+    }
+
+    /* --- 5. THE MAIN INPUT GRID --- */
     .mmt-input-grid {
         display: flex;
         border: 1px solid var(--mmt-light-grey);
@@ -115,56 +245,145 @@
         cursor: pointer;
         transition: 0.2s;
     }
-    .mmt-input-box:hover { background-color: #eaf5ff; }
-    .mmt-input-box:last-child { border-right: none; }
-    
-    /* Grid Flex Sizing */
+
+    .mmt-input-box:hover {
+        background-color: #eaf5ff;
+    }
+
+    .mmt-input-box:last-child {
+        border-right: none;
+    }
+
     .box-large { flex: 2; }
     .box-medium { flex: 1.5; }
 
-    /* Input Typography */
-    .mmt-label { display: block; font-size: 14px; font-weight: 600; color: #4a4a4a; margin-bottom: 5px; }
-    .mmt-value-input {
-        border: none; background: transparent; width: 100%; outline: none; padding: 0;
-        font-size: 32px; font-weight: 900; color: #000; line-height: 1.1; margin-bottom: 5px; cursor: pointer;
+    .mmt-label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        color: #4a4a4a;
+        margin-bottom: 5px;
     }
-    .mmt-sub-label { display: block; font-size: 13px; font-weight: 500; color: #777; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    /* The Swap Icon */
+    .mmt-value-input {
+        border: none;
+        background: transparent;
+        width: 100%;
+        outline: none;
+        padding: 0;
+        font-size: 32px;
+        font-weight: 900;
+        color: #000;
+        line-height: 1.1;
+        margin-bottom: 5px;
+        cursor: pointer;
+    }
+
+    .mmt-sub-label {
+        display: block;
+        font-size: 13px;
+        font-weight: 500;
+        color: #777;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
     .swap-icon {
         position: absolute;
-        left: 31%; /* Adjust based on flex */
+        left: 31%;
         top: 50%;
         transform: translate(-50%, -50%);
         background: #fff;
         border: 1px solid var(--mmt-light-grey);
         border-radius: 50%;
-        width: 36px; height: 36px;
-        display: flex; align-items: center; justify-content: center;
-        color: var(--mmt-blue); font-size: 20px; font-weight: bold;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        z-index: 5; cursor: pointer;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--mmt-blue);
+        font-size: 20px;
+        font-weight: bold;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        z-index: 5;
+        cursor: pointer;
     }
 
     /* --- 6. SPECIAL FARES SECTION --- */
-    .special-fares { margin-top: 20px; display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
-    .fare-title { font-size: 12px; font-weight: 800; color: #000; }
-    .fare-badge { padding: 5px 10px; border: 1px solid var(--mmt-light-grey); border-radius: 5px; font-size: 11px; font-weight: 600; color: #4a4a4a; cursor: pointer; background: #f9f9f9; }
-    .fare-badge.active { background: #eaf5ff; border-color: var(--mmt-blue); color: var(--mmt-blue); }
+    .special-fares {
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .fare-title {
+        font-size: 12px;
+        font-weight: 800;
+        color: #000;
+    }
+
+    .fare-badge {
+        padding: 5px 10px;
+        border: 1px solid var(--mmt-light-grey);
+        border-radius: 5px;
+        font-size: 11px;
+        font-weight: 600;
+        color: #4a4a4a;
+        cursor: pointer;
+        background: #f9f9f9;
+    }
+
+    .fare-badge.active {
+        background: #eaf5ff;
+        border-color: var(--mmt-blue);
+        color: var(--mmt-blue);
+    }
 
     /* --- 7. THE BIG SEARCH BUTTON --- */
-    .mmt-search-btn-wrapper { position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); width: 100%; text-align: center;}
+    .mmt-search-btn-wrapper {
+        position: absolute;
+        bottom: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        text-align: center;
+    }
+
     .mmt-search-btn {
         background: linear-gradient(90deg, #53b2fe, #065af3);
-        color: white; border: none; border-radius: 50px;
-        padding: 12px 65px; font-size: 24px; font-weight: 800;
-        text-transform: uppercase; cursor: pointer;
-        box-shadow: 0 4px 10px rgba(0, 140, 255, 0.4); transition: 0.3s;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        padding: 12px 65px;
+        font-size: 24px;
+        font-weight: 800;
+        text-transform: uppercase;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0, 140, 255, 0.4);
+        transition: 0.3s;
     }
-    .mmt-search-btn:hover { box-shadow: 0 6px 15px rgba(0, 140, 255, 0.6); transform: scale(1.02); }
 
-    /* Explore More dropdown */
-    .explore-more { position: absolute; bottom: -60px; left: 50%; transform: translateX(-50%); color: white; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 5px;}
+    .mmt-search-btn:hover {
+        box-shadow: 0 6px 15px rgba(0, 140, 255, 0.6);
+        transform: scale(1.02);
+    }
+
+    .explore-more {
+        position: absolute;
+        bottom: -60px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: white;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
 
     /* --- MOBILE RESPONSIVENESS --- */
     @media (max-width: 991px) {
@@ -172,18 +391,382 @@
         .mmt-input-box { border-right: none; border-bottom: 1px solid var(--mmt-light-grey); }
         .swap-icon { left: auto; right: 20px; top: 15%; transform: translateY(-50%); }
         .mmt-radios { flex-wrap: wrap; }
-        .hero-mmt { height: auto; padding: 100px 10px 100px 10px; min-height: 100vh;}
+        .hero-mmt { height: auto; padding: 100px 10px 100px 10px; min-height: 100vh; }
         .mmt-widget-container { margin-bottom: 0; }
         .explore-more { display: none; }
     }
 
-    /* --- OTHER SECTIONS --- */
-    .section-title { font-family: 'Poppins', sans-serif; font-weight: 900; font-size: clamp(1.8rem, 4vw, 2.2rem); color: #000; margin-bottom: 5px; }
-    .dest-card-pro { height: 320px; border-radius: 12px; overflow: hidden; position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.1); cursor: pointer; }
-    .dest-card-pro img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
-    .dest-card-pro:hover img { transform: scale(1.05); }
-    .dest-content { position: absolute; bottom: 0; width: 100%; padding: 20px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); color: white; text-align: left; }
-    .dest-content h3 { font-family: 'Poppins', sans-serif; font-size: 1.4rem; margin-bottom: 2px;}
+    /* =========================================
+       🔥 PREMIUM OFFERS SECTION STYLES 🔥
+       ========================================= */
+    .offers-section-bg {
+        background-color: #f8fafc; 
+        padding: 100px 0 60px 0; /* Increased top padding so Hero doesn't overlap it */
+    }
+
+    .offer-tabs {
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+        padding-bottom: 5px;
+        border: none;
+    }
+    .offer-tabs::-webkit-scrollbar { display: none; }
+    
+    .offer-tabs .nav-link {
+        background: #ffffff;
+        color: #64748b;
+        border-radius: 50px;
+        padding: 8px 24px;
+        font-weight: 600;
+        font-size: 14px;
+        border: 1px solid #e2e8f0;
+        white-space: nowrap;
+        transition: all 0.3s ease;
+    }
+
+    .offer-tabs .nav-link:hover {
+        background: #f1f5f9;
+        color: #0A2239;
+    }
+
+    .offer-tabs .nav-link.active {
+        background: rgba(255, 78, 0, 0.1);
+        color: #FF4E00 !important;
+        border-color: #FF4E00;
+    }
+
+    .offer-card {
+        border-radius: 16px;
+        border: 1px solid #f0f0f0;
+        background: #ffffff;
+        transition: all 0.3s ease;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        height: 100%;
+    }
+
+    .offer-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        border-color: transparent;
+    }
+
+    .offer-img-box {
+        overflow: hidden;
+        position: relative;
+        height: 100%;
+        min-height: 180px;
+    }
+
+    .offer-img-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .offer-card:hover .offer-img-box img {
+        transform: scale(1.1);
+    }
+
+    .offer-title {
+        font-weight: 800;
+        font-size: 1.15rem;
+        color: #0A2239;
+        margin-bottom: 10px;
+        line-height: 1.4;
+    }
+
+    .offer-btn {
+        color: #FF4E00;
+        font-weight: 800;
+        text-decoration: none;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: inline-flex;
+        align-items: center;
+        transition: 0.3s;
+    }
+
+    .offer-btn i {
+        margin-left: 5px;
+        font-size: 18px;
+        transition: transform 0.3s ease;
+    }
+
+    .offer-btn:hover { color: #d35400; }
+    .offer-btn:hover i { transform: translateX(5px); }
+
+    .section-heading {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 900;
+        font-size: clamp(1.8rem, 4vw, 2.2rem);
+        color: #000;
+        margin-bottom: 5px;
+    }
+
+    /* =========================================
+       🔥 ACCOMMODATION SECTION STYLES 🔥
+       ========================================= */
+    .custom-stay-tabs {
+        border-bottom: 2px solid #eaeaea;
+        gap: 15px;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-bottom: 5px;
+    }
+    .custom-stay-tabs::-webkit-scrollbar { display: none; } 
+    
+    .custom-stay-tabs .nav-link {
+        border: none;
+        color: #6c757d;
+        font-weight: 600;
+        padding: 10px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: transparent;
+        border-bottom: 3px solid transparent;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+    }
+
+    .custom-stay-tabs .nav-link i {
+        font-size: 28px;
+        margin-bottom: 5px;
+        color: #888;
+        transition: 0.3s;
+    }
+
+    .custom-stay-tabs .nav-link:hover { color: #0A2239; }
+    .custom-stay-tabs .nav-link.active {
+        color: #FF4E00;
+        border-bottom: 3px solid #FF4E00;
+        background: transparent;
+    }
+    .custom-stay-tabs .nav-link.active i { color: #FF4E00; }
+
+    .stay-card {
+        border-radius: 16px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .stay-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1) !important;
+    }
+    .stay-card-img { height: 220px; object-fit: cover; }
+    .star-rating i { color: #f39c12; font-size: 14px; }
+    
+    .btn-view-details {
+        background-color: #FF4E00;
+        color: white !important;
+        border-radius: 50px;
+        font-weight: 600;
+        padding: 8px 20px;
+        font-size: 14px;
+        transition: 0.3s;
+    }
+    .btn-view-details:hover {
+        background-color: #e64600;
+        transform: scale(1.05);
+    }
+
+    /* =========================================
+       🔥 RESTAURANT SECTION STYLES 🔥
+       ========================================= */
+    .food-section-bg {
+        background-color: #ffffff;
+        padding: 80px 0;
+        position: relative;
+    }
+
+    .food-card {
+        border-radius: 15px;
+        overflow: hidden;
+        background: #fff;
+        border: 1px solid #f0f0f0;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .food-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        border-color: transparent;
+    }
+
+    .food-img-wrapper { position: relative; height: 200px; overflow: hidden; }
+    .food-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .food-card:hover .food-img-wrapper img { transform: scale(1.1); }
+
+    .food-badge {
+        position: absolute; top: 15px; left: 15px; padding: 5px 12px; border-radius: 5px;
+        font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; z-index: 2;
+    }
+
+    .badge-top { background: #1cc88a; color: #fff; }
+    .badge-famous { background: #FF4E00; color: #fff; }
+    .badge-nearby { background: #008cff; color: #fff; }
+
+    .food-distance {
+        position: absolute; bottom: -15px; right: 20px; background: #fff; padding: 5px 15px;
+        border-radius: 20px; font-size: 12px; font-weight: 700; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        color: #FF4E00; z-index: 2;
+    }
+
+    .food-rating i { color: #f39c12; font-size: 15px; }
+    .food-rating span { font-weight: 700; color: #333; margin-left: 5px; font-size: 14px;}
+
+    .btn-reserve {
+        background: transparent; color: #FF4E00 !important; border: 2px solid #FF4E00;
+        border-radius: 50px; padding: 8px 20px; font-weight: 700; font-size: 13px;
+        transition: 0.3s; width: 100%; display: block; text-align: center; text-decoration: none;
+    }
+
+    .btn-reserve:hover { background: #FF4E00; color: #fff !important; }
+
+
+
+    /* =========================================
+           🔥 CAB / CAR RENTAL SECTION 🔥
+           ========================================= */
+        .car-card { 
+            border-radius: 16px; overflow: hidden; background: #fff; 
+            border: 1px solid #f0f0f0; transition: all 0.3s ease; height: 100%;
+        }
+        .car-card:hover { 
+            transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,0,0,0.08); 
+            border-color: #FF4E00; 
+        }
+        .car-img-wrapper { 
+            height: 180px; padding: 20px; background: #f8fafc; 
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+        }
+        .car-img-wrapper img { 
+            max-width: 100%; max-height: 100%; object-fit: cover; 
+            transition: transform 0.5s ease; mix-blend-mode: multiply; 
+        }
+        .car-card:hover .car-img-wrapper img { transform: scale(1.1); }
+        .car-features { 
+            display: flex; gap: 15px; font-size: 13px; color: #64748b; margin-bottom: 15px; 
+        }
+        .car-features i { color: #0A2239; font-size: 16px; margin-right: 4px; vertical-align: middle; }
+
+        /* =========================================
+           🔥 STATS / DATA COUNTER SECTION 🔥
+           ========================================= */
+        .stats-section { 
+            background: linear-gradient(135deg, #0A2239, #051424); 
+            padding: 60px 0; color: white; position: relative; 
+        }
+        .stat-item { text-align: center; }
+        .stat-icon { font-size: 50px; color: #FF4E00; margin-bottom: 15px; display: inline-block; }
+        .stat-number { 
+            font-size: 40px; font-weight: 900; font-family: 'Poppins', sans-serif; 
+            margin-bottom: 5px; line-height: 1;
+        }
+        .stat-text { 
+            font-size: 14px; color: #a0aec0; text-transform: uppercase; 
+            letter-spacing: 1.5px; font-weight: 600; 
+        }
+
+        /* =========================================
+           🔥 CUSTOMER REVIEWS SECTION 🔥
+           ========================================= */
+        .review-card { 
+            background: #fff; border-radius: 16px; padding: 30px 25px; 
+            border: 1px solid #f0f0f0; transition: 0.3s; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02); height: 100%; position: relative;
+        }
+        .review-card:hover { 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08); transform: translateY(-5px); 
+        }
+        .review-text { 
+            font-size: 14px; color: #4a4a4a; font-style: italic; 
+            line-height: 1.7; margin-bottom: 25px; position: relative; z-index: 1;
+        }
+        .reviewer-info { display: flex; align-items: center; gap: 15px; }
+        .reviewer-img { width: 55px; height: 55px; border-radius: 50%; object-fit: cover; }
+        .reviewer-name { font-weight: 800; color: #0A2239; font-size: 15px; margin-bottom: 2px; }
+        .reviewer-loc { font-size: 12px; color: #64748b; font-weight: 500; }
+        .review-quote { 
+            font-size: 60px; color: rgba(0, 140, 255, 0.05); 
+            position: absolute; top: 15px; right: 20px; z-index: 0; 
+        }
+
+    /* ==========================================
+       🔥 AI CHATBOT STYLES 🔥
+       ========================================== */
+    .ai-chat-container { position: fixed; bottom: 30px; right: 30px; z-index: 1050; font-family: 'Inter', sans-serif; }
+    .ai-chat-toggle {
+        background: linear-gradient(135deg, var(--brand-accent), #e64600); color: white !important;
+        border: none; width: 60px; height: 60px; border-radius: 50%; font-size: 28px;
+        display: flex; align-items: center; justify-content: center; cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 10px 25px rgba(255, 78, 0, 0.4);
+    }
+    .ai-chat-toggle:hover { transform: scale(1.1); box-shadow: 0 15px 30px rgba(255, 78, 0, 0.5); }
+
+    .ai-chat-window {
+        position: absolute; bottom: 80px; right: 0; width: 350px; height: 500px;
+        background: #ffffff; border-radius: 20px; display: none; flex-direction: column; overflow: hidden;
+        border: 1px solid rgba(0,0,0,0.1); transform-origin: bottom right;
+        animation: chatPopUp 0.3s ease forwards; box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        color: #0A2239 !important; text-align: left !important;
+    }
+    
+    @keyframes chatPopUp { 0% { opacity: 0; transform: scale(0.5); } 100% { opacity: 1; transform: scale(1); } }
+
+    .ai-chat-header { background: #0A2239; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+    .ai-avatar {
+        background: rgba(255,255,255,0.2); width: 40px; height: 40px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 24px;
+    }
+    .chat-title-text { margin: 0; color: #ffffff !important; font-weight: 700; font-size: 16px; }
+    .chat-status-text { color: rgba(255,255,255,0.8) !important; font-size: 11px; }
+    .btn-close-chat { background: transparent; border: none; color: #ffffff; font-size: 24px; cursor: pointer; opacity: 0.7; transition: 0.2s; }
+    .btn-close-chat:hover { opacity: 1; transform: rotate(90deg); }
+
+    .ai-chat-body {
+        flex: 1; padding: 20px; overflow-y: auto; background: #f8fafc;
+        display: flex; flex-direction: column; gap: 15px; scrollbar-width: thin;
+    }
+    .ai-chat-body::-webkit-scrollbar { width: 5px; }
+    .ai-chat-body::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 5px; }
+
+    .chat-message { display: flex; flex-direction: column; max-width: 85%; }
+    .msg-bubble { padding: 12px 16px; border-radius: 15px; font-size: 13.5px; line-height: 1.5; font-weight: 500; }
+    
+    .ai-message { align-self: flex-start; }
+    .ai-message .msg-bubble { 
+        background: #ffffff !important; color: #0A2239 !important; border: 1px solid #e2e8f0; 
+        border-bottom-left-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    .user-message { align-self: flex-end; }
+    .user-message .msg-bubble { 
+        background: #0A2239 !important; color: #ffffff !important; border-bottom-right-radius: 4px; 
+        box-shadow: 0 2px 5px rgba(10,34,57,0.2);
+    }
+
+    .ai-chat-footer { padding: 15px; background: #ffffff; border-top: 1px solid #f1f5f9; display: flex; gap: 10px; align-items: center; }
+    .ai-chat-footer input {
+        flex: 1; border: none; background: #f1f5f9; padding: 12px 15px; border-radius: 20px; 
+        font-size: 14px; outline: none; transition: 0.2s; color: #0A2239 !important; font-weight: 500;
+    }
+    .ai-chat-footer input::placeholder { color: #64748b !important; font-weight: 400; }
+    .ai-chat-footer input:focus { box-shadow: inset 0 0 0 1px #0A2239; }
+    
+    .btn-send {
+        background: #FF4E00; color: white !important; border: none; width: 40px; height: 40px; border-radius: 50%; 
+        display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; font-size: 18px;
+    }
+    .btn-send:hover { transform: scale(1.1); }
+
+    @media (max-width: 768px) { .ai-chat-window { width: 90vw; height: 75vh; right: -15px; bottom: 70px; } }
 </style>
 
 <div class="modal fade" id="welcomeModal" data-bs-backdrop="static" tabindex="-1">
@@ -212,7 +795,6 @@
     <div class="hero-overlay"></div>
 
     <div class="mmt-widget-container">
-        
         <div class="mmt-tabs-wrapper" id="mmtTabs">
             <div class="mmt-tab active" data-type="flight"><i class='bx bxs-plane-alt'></i> <span>Flights</span></div>
             <div class="mmt-tab" data-type="hotel"><i class='bx bxs-building-house'></i> <span>Hotels</span></div>
@@ -230,7 +812,6 @@
 
         <div class="mmt-widget-body">
             <form action="{{ route('bus.search') }}" method="GET">
-                
                 <div class="mmt-radios">
                     <label class="mmt-radio-item"><input type="radio" name="trip_type" checked> One Way</label>
                     <label class="mmt-radio-item"><input type="radio" name="trip_type"> Round Trip</label>
@@ -239,32 +820,26 @@
 
                 <div id="dynamicMmtInputs">
                     <div class="mmt-input-grid">
-                        
                         <div class="mmt-input-box box-large">
                             <span class="mmt-label">From</span>
                             <input type="text" class="mmt-value-input" value="Delhi" name="from">
                             <span class="mmt-sub-label">DEL, Delhi Airport India</span>
                         </div>
-
                         <div class="swap-icon"><i class='bx bx-transfer-alt'></i></div>
-
                         <div class="mmt-input-box box-large" style="padding-left: 40px;">
                             <span class="mmt-label">To</span>
                             <input type="text" class="mmt-value-input" value="Bengaluru" name="to">
                             <span class="mmt-sub-label">BLR, Bengaluru International Airport...</span>
                         </div>
-
                         <div class="mmt-input-box box-medium">
                             <span class="mmt-label">Departure <i class='bx bx-chevron-down text-primary'></i></span>
                             <input type="text" class="mmt-value-input" value="25 Mar'26" readonly>
                             <span class="mmt-sub-label">Wednesday</span>
                         </div>
-
                         <div class="mmt-input-box box-medium">
                             <span class="mmt-label">Return <i class='bx bx-chevron-down text-primary'></i></span>
                             <span class="mmt-sub-label" style="margin-top: 10px;">Tap to add a return date for bigger discounts</span>
                         </div>
-
                         <div class="mmt-input-box box-medium">
                             <span class="mmt-label">Travellers & Class <i class='bx bx-chevron-down text-primary'></i></span>
                             <input type="text" class="mmt-value-input" value="1 Traveller" readonly>
@@ -282,8 +857,7 @@
                 </div>
 
                 <div class="mmt-search-btn-wrapper">
-                    <button type="submit" class="mmt-search-btn">SEARCH</button>
-                </div>
+                    <button type="button" class="mmt-search-btn">SEARCH</button> </div>
             </form>
         </div>
 
@@ -293,70 +867,593 @@
     </div>
 </section>
 
-<section class="container" style="padding-top: 60px; padding-bottom: 60px;">
-    <div class="d-flex justify-content-between align-items-end mb-4">
-        <div>
-            <h2 class="section-title">Offers</h2>
-            <div class="d-flex gap-4 mt-2" style="font-size: 14px; font-weight: 600; color: #4a4a4a;">
-                <span class="text-primary border-bottom border-primary border-2 pb-1">All Offers</span>
-                <span>Bank Offers</span>
-                <span>Flights</span>
-                <span>Hotels</span>
-                <span>Holidays</span>
+<section class="offers-section-bg">
+    <div class="container">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-3">
+            <div>
+                <h2 class="section-heading mb-3" style="color: #0A2239;">EXCLUSIVE OFFERS</h2>
+                <ul class="nav nav-pills offer-tabs" id="offerPills" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="all-offers-tab" data-bs-toggle="pill" data-bs-target="#all-offers" type="button" role="tab">All Offers</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="bank-offers-tab" data-bs-toggle="pill" data-bs-target="#bank-offers" type="button" role="tab">Bank Offers</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="flights-tab" data-bs-toggle="pill" data-bs-target="#flights" type="button" role="tab">Flights</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="hotels-tab" data-bs-toggle="pill" data-bs-target="#hotels" type="button" role="tab">Hotels & Stays</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="holidays-tab" data-bs-toggle="pill" data-bs-target="#holidays" type="button" role="tab">Holidays</button>
+                    </li>
+                </ul>
             </div>
         </div>
-    </div>
-    
-    <div class="row g-4">
-        <div class="col-md-6">
-            <div class="card border border-light shadow-sm rounded-3">
-                <div class="row g-0">
-                    <div class="col-4">
-                        <img src="https://loremflickr.com/400/400/beach,vacation" class="img-fluid rounded-start h-100" style="object-fit: cover;">
+
+        <div class="tab-content" id="offerPillsContent">
+            <div class="tab-pane fade show active" id="all-offers" role="tabpanel">
+                <div class="row g-4">
+                    <div class="col-lg-6">
+                        <div class="offer-card">
+                            <div class="row g-0 h-100">
+                                <div class="col-4 col-md-4">
+                                    <div class="offer-img-box">
+                                        <img src="https://loremflickr.com/400/400/beach,vacation" alt="Vacation Offer">
+                                    </div>
+                                </div>
+                                <div class="col-8 col-md-8 p-4 d-flex flex-column justify-content-center">
+                                    <p class="small text-muted mb-2 text-end fw-bold" style="font-size: 11px; letter-spacing: 1px;">T&C's APPLY</p>
+                                    <h4 class="offer-title">Up to 40% OFF* on Flights, Stays & More.</h4>
+                                    <p class="small text-muted border-bottom pb-3 mb-3">Pause your routine & get travel-ready for the ultimate summer vacation.</p>
+                                    <div class="text-end mt-auto">
+                                        <a href="#" class="offer-btn">BOOK NOW <i class='bx bx-right-arrow-circle'></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-8 p-3">
-                        <p class="small text-muted mb-1 text-end">T&C's APPLY</p>
-                        <h6 class="fw-bold mb-2">Up to 40% OFF* on Flights, Stays & More.</h6>
-                        <p class="small text-muted border-bottom pb-2">Pause your routine & get travel-ready.</p>
-                        <div class="text-end"><a href="#" class="fw-bold text-primary text-decoration-none small">BOOK NOW</a></div>
+                    <div class="col-lg-6">
+                        <div class="offer-card">
+                            <div class="row g-0 h-100">
+                                <div class="col-4 col-md-4">
+                                    <div class="offer-img-box">
+                                        <img src="https://loremflickr.com/400/400/card,payment" alt="Forex Offer">
+                                    </div>
+                                </div>
+                                <div class="col-8 col-md-8 p-4 d-flex flex-column justify-content-center">
+                                    <p class="small text-muted mb-2 text-end fw-bold" style="font-size: 11px; letter-spacing: 1px;">T&C's APPLY</p>
+                                    <h4 class="offer-title">NEW: Zero Markup Currency Forex Card</h4>
+                                    <p class="small text-muted border-bottom pb-3 mb-3">Zero cross-currency fees | FREE ATM withdrawals anywhere in the world.</p>
+                                    <div class="text-end mt-auto">
+                                        <a href="#" class="offer-btn">EXPLORE NOW <i class='bx bx-right-arrow-circle'></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="offer-card">
+                            <div class="row g-0 h-100">
+                                <div class="col-4 col-md-4">
+                                    <div class="offer-img-box">
+                                        <img src="https://loremflickr.com/400/400/bus,travel" alt="Bus Offer">
+                                    </div>
+                                </div>
+                                <div class="col-8 col-md-8 p-4 d-flex flex-column justify-content-center">
+                                    <p class="small text-muted mb-2 text-end fw-bold" style="font-size: 11px; letter-spacing: 1px;">VALID TILL 30 MAR</p>
+                                    <h4 class="offer-title">Flat ₹300 OFF on Volvo Premium Buses</h4>
+                                    <p class="small text-muted border-bottom pb-3 mb-3">Travel comfortably across Bihar with Sangam exclusive bus fleet.</p>
+                                    <div class="text-end mt-auto">
+                                        <a href="#" class="offer-btn">BOOK BUS <i class='bx bx-right-arrow-circle'></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="offer-card">
+                            <div class="row g-0 h-100">
+                                <div class="col-4 col-md-4">
+                                    <div class="offer-img-box">
+                                        <img src="https://loremflickr.com/400/400/hotel,luxury" alt="Hotel Offer">
+                                    </div>
+                                </div>
+                                <div class="col-8 col-md-8 p-4 d-flex flex-column justify-content-center">
+                                    <p class="small text-muted mb-2 text-end fw-bold" style="font-size: 11px; letter-spacing: 1px;">APP EXCLUSIVE</p>
+                                    <h4 class="offer-title">Get Extra 15% OFF on 5-Star Hotels</h4>
+                                    <p class="small text-muted border-bottom pb-3 mb-3">Use code SANGAM15 at checkout. Valid on select premium properties.</p>
+                                    <div class="text-end mt-auto">
+                                        <a href="#" class="offer-btn">VIEW HOTELS <i class='bx bx-right-arrow-circle'></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card border border-light shadow-sm rounded-3">
-                <div class="row g-0">
-                    <div class="col-4">
-                        <img src="https://loremflickr.com/400/400/card,payment" class="img-fluid rounded-start h-100" style="object-fit: cover;">
-                    </div>
-                    <div class="col-8 p-3">
-                        <p class="small text-muted mb-1 text-end">T&C's APPLY</p>
-                        <h6 class="fw-bold mb-2">NEW: Zero Markup Currency Forex Card</h6>
-                        <p class="small text-muted border-bottom pb-2">Zero cross-currency fees | FREE ATM withdrawals</p>
-                        <div class="text-end"><a href="#" class="fw-bold text-primary text-decoration-none small">EXPLORE NOW</a></div>
-                    </div>
+            <div class="tab-pane fade" id="bank-offers" role="tabpanel">
+                <div class="text-center py-5">
+                    <i class='bx bx-credit-card' style="font-size: 50px; color: #ccc;"></i>
+                    <h5 class="mt-3 text-muted">Bank specific offers will appear here.</h5>
                 </div>
             </div>
+            <div class="tab-pane fade" id="flights" role="tabpanel"><p class="text-muted text-center py-4">Loading flight offers...</p></div>
+            <div class="tab-pane fade" id="hotels" role="tabpanel"><p class="text-muted text-center py-4">Loading hotel deals...</p></div>
+            <div class="tab-pane fade" id="holidays" role="tabpanel"><p class="text-muted text-center py-4">Loading holiday packages...</p></div>
         </div>
     </div>
 </section>
+
+<section class="py-5" style="background-color: #f8f9fa;">
+    <div class="container bg-white p-4 p-md-5 shadow-sm" style="border-radius: 20px;">
+        <div class="text-center mb-5">
+            <h2 class="section-heading mb-2" style="color: #d35400;">BOOK YOUR IDEAL STAY</h2>
+            <p class="text-muted fs-5">Choose from a vast selection of accommodations across Bihar & Beyond.</p>
+        </div>
+
+        <ul class="nav nav-tabs custom-stay-tabs justify-content-lg-center" id="stayTabs" role="tablist">
+            <li class="nav-item" role="presentation"><button class="nav-link active" id="hotels-tab" data-bs-toggle="tab" data-bs-target="#hotels" type="button" role="tab"><i class='bx bx-building-house'></i> Hotels</button></li>
+            <li class="nav-item" role="presentation"><button class="nav-link" id="villas-tab" data-bs-toggle="tab" data-bs-target="#villas" type="button" role="tab"><i class='bx bx-home-alt'></i> Villas</button></li>
+            <li class="nav-item" role="presentation"><button class="nav-link" id="motels-tab" data-bs-toggle="tab" data-bs-target="#motels" type="button" role="tab"><i class='bx bx-car'></i> Motels</button></li>
+            <li class="nav-item" role="presentation"><button class="nav-link" id="resorts-tab" data-bs-toggle="tab" data-bs-target="#resorts" type="button" role="tab"><i class='bx bx-water'></i> Resorts</button></li>
+            <li class="nav-item" role="presentation"><button class="nav-link" id="homestays-tab" data-bs-toggle="tab" data-bs-target="#homestays" type="button" role="tab"><i class='bx bx-group'></i> Homestays</button></li>
+            <li class="nav-item" role="presentation"><button class="nav-link" id="guesthouses-tab" data-bs-toggle="tab" data-bs-target="#guesthouses" type="button" role="tab"><i class='bx bx-bed'></i> Guest Houses</button></li>
+        </ul>
+
+        <div class="tab-content mt-4" id="stayTabsContent">
+            <div class="tab-pane fade show active" id="hotels" role="tabpanel" aria-labelledby="hotels-tab">
+                <div class="row g-4">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card stay-card border-0 shadow-sm h-100 p-2">
+                            <img src="https://loremflickr.com/500/300/hotel,building" class="card-img-top stay-card-img rounded-4" alt="Hotel">
+                            <div class="card-body px-2 pb-0">
+                                <div class="star-rating mb-1"><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i></div>
+                                <h5 class="card-title fw-bold mb-1">GRAND NIRVANA BODHGAYA</h5>
+                                <p class="text-muted small">Central location, Pool, Spa, Free Wifi</p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-end px-2 pb-3">
+                                <div><span class="d-block small fw-bold text-muted" style="line-height: 1;">FROM</span><span class="fw-bold fs-5">₹2500<span class="small text-muted fs-6 fw-normal">/NIGHT</span></span></div>
+                                <a href="#" class="btn btn-view-details text-decoration-none">VIEW DETAILS</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card stay-card border-0 shadow-sm h-100 p-2">
+                            <img src="https://loremflickr.com/500/300/resort,pool" class="card-img-top stay-card-img rounded-4" alt="Hotel">
+                            <div class="card-body px-2 pb-0">
+                                <div class="star-rating mb-1"><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star-half'></i></div>
+                                <h5 class="card-title fw-bold mb-1">BODHI TREE RETREAT Gaya</h5>
+                                <p class="text-muted small">Central location, Pool, Spa, Free Wifi</p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-end px-2 pb-3">
+                                <div><span class="d-block small fw-bold text-muted" style="line-height: 1;">FROM</span><span class="fw-bold fs-5">₹3200<span class="small text-muted fs-6 fw-normal">/NIGHT</span></span></div>
+                                <a href="#" class="btn btn-view-details text-decoration-none">VIEW DETAILS</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card stay-card border-0 shadow-sm h-100 p-2">
+                            <img src="https://loremflickr.com/500/300/hotel,lobby" class="card-img-top stay-card-img rounded-4" alt="Hotel">
+                            <div class="card-body px-2 pb-0">
+                                <div class="star-rating mb-1"><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bx-star'></i></div>
+                                <h5 class="card-title fw-bold mb-1">PATNA MAURYA HOTEL</h5>
+                                <p class="text-muted small">City Center, Business Lounge, Free Breakfast</p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-end px-2 pb-3">
+                                <div><span class="d-block small fw-bold text-muted" style="line-height: 1;">FROM</span><span class="fw-bold fs-5">₹4500<span class="small text-muted fs-6 fw-normal">/NIGHT</span></span></div>
+                                <a href="#" class="btn btn-view-details text-decoration-none">VIEW DETAILS</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="villas" role="tabpanel" aria-labelledby="villas-tab">
+                <div class="row g-4">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card stay-card border-0 shadow-sm h-100 p-2">
+                            <img src="https://loremflickr.com/500/300/villa" class="card-img-top stay-card-img rounded-4" alt="Villa">
+                            <div class="card-body px-2 pb-0">
+                                <div class="star-rating mb-1"><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i></div>
+                                <h5 class="card-title fw-bold mb-1">LUXURY GANGES VILLA</h5>
+                                <p class="text-muted small">Private Pool, 4 Bedrooms, River View</p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-end px-2 pb-3">
+                                <div><span class="d-block small fw-bold text-muted" style="line-height: 1;">FROM</span><span class="fw-bold fs-5">₹12000<span class="small text-muted fs-6 fw-normal">/NIGHT</span></span></div>
+                                <a href="#" class="btn btn-view-details text-decoration-none">VIEW DETAILS</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="motels" role="tabpanel"><p class="text-center mt-5 text-muted">Motels coming soon...</p></div>
+            <div class="tab-pane fade" id="resorts" role="tabpanel"><p class="text-center mt-5 text-muted">Resorts coming soon...</p></div>
+            <div class="tab-pane fade" id="homestays" role="tabpanel"><p class="text-center mt-5 text-muted">Homestays coming soon...</p></div>
+            <div class="tab-pane fade" id="guesthouses" role="tabpanel"><p class="text-center mt-5 text-muted">Guest Houses coming soon...</p></div>
+        </div>
+    </div>
+</section>
+
+<section class="food-section-bg">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-end mb-4">
+            <div>
+                <h2 class="section-heading mb-1" style="color: #0A2239;">FAMOUS EATERIES NEAR YOU</h2>
+                <p class="text-muted fs-5 mb-0">Discover top-rated restaurants, cafes, and local flavors.</p>
+            </div>
+            <a href="#" class="text-decoration-none fw-bold d-none d-md-block" style="color: #FF4E00;">View All <i class='bx bx-right-arrow-alt'></i></a>
+        </div>
+
+        <ul class="nav nav-tabs custom-stay-tabs justify-content-lg-start mb-5" id="foodTabs" role="tablist">
+            <li class="nav-item" role="presentation"><button class="nav-link active" id="all-food-tab" data-bs-toggle="tab" data-bs-target="#all-food" type="button" role="tab"><i class='bx bx-restaurant'></i> Top Rated</button></li>
+            <li class="nav-item" role="presentation"><button class="nav-link" id="cafes-tab" data-bs-toggle="tab" data-bs-target="#cafes" type="button" role="tab"><i class='bx bx-coffee-togo'></i> Cafes & Bakery</button></li>
+            <li class="nav-item" role="presentation"><button class="nav-link" id="fine-dining-tab" data-bs-toggle="tab" data-bs-target="#fine-dining" type="button" role="tab"><i class='bx bx-dish'></i> Fine Dining</button></li>
+            <li class="nav-item" role="presentation"><button class="nav-link" id="street-food-tab" data-bs-toggle="tab" data-bs-target="#street-food" type="button" role="tab"><i class='bx bx-bowl-hot'></i> Local / Street</button></li>
+        </ul>
+
+        <div class="tab-content" id="foodTabsContent">
+            <div class="tab-pane fade show active" id="all-food" role="tabpanel" aria-labelledby="all-food-tab">
+                <div class="row g-4">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="food-card h-100 d-flex flex-column">
+                            <div class="food-img-wrapper">
+                                <span class="food-badge badge-top">Top Rated</span>
+                                <img src="https://loremflickr.com/500/300/restaurant,biryani?random=1" alt="Barkaas Patna">
+                                <div class="food-distance"><i class='bx bx-map'></i> 850m</div>
+                            </div>
+                            <div class="card-body p-4 flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="text-muted small fw-bold">ARABIAN / MUGHLAI</span>
+                                    <div class="food-rating"><i class='bx bxs-star'></i><span>4.7</span></div>
+                                </div>
+                                <h5 class="fw-bold mb-2">Barkaas Patna</h5>
+                                <p class="text-muted small mb-0">Experience authentic Arabian flavors and the famous Mandi biryani.</p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 p-4 pt-0">
+                                <a href="#" class="btn btn-reserve text-decoration-none">View Menu</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="food-card h-100 d-flex flex-column">
+                            <div class="food-img-wrapper">
+                                <span class="food-badge badge-famous">Famous Rooftop</span>
+                                <img src="https://loremflickr.com/500/300/restaurant,dinner?random=2" alt="Foresto Paradise">
+                                <div class="food-distance"><i class='bx bx-map'></i> 950m</div>
+                            </div>
+                            <div class="card-body p-4 flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="text-muted small fw-bold">NORTH INDIAN / CHINESE</span>
+                                    <div class="food-rating"><i class='bx bxs-star'></i><span>4.2</span></div>
+                                </div>
+                                <h5 class="fw-bold mb-2">Foresto Paradise</h5>
+                                <p class="text-muted small mb-0">Beautiful rooftop restaurant offering a great city view with delicious food.</p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 p-4 pt-0">
+                                <a href="#" class="btn btn-reserve text-decoration-none">Book Table</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="food-card h-100 d-flex flex-column">
+                            <div class="food-img-wrapper">
+                                <span class="food-badge badge-top">Highest Rated</span>
+                                <img src="https://loremflickr.com/500/300/cafe,coffee?random=3" alt="Hello Cafe">
+                                <div class="food-distance"><i class='bx bx-map'></i> 1.2 km</div>
+                            </div>
+                            <div class="card-body p-4 flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="text-muted small fw-bold">CAFE / FAST FOOD</span>
+                                    <div class="food-rating"><i class='bx bxs-star'></i><span>4.8</span></div>
+                                </div>
+                                <h5 class="fw-bold mb-2">Hello Restaurant & Cafe</h5>
+                                <p class="text-muted small mb-0">A highly-rated pocket-friendly cafe. Perfect for evening snacks.</p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 p-4 pt-0">
+                                <a href="#" class="btn btn-reserve text-decoration-none">View Menu</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="food-card h-100 d-flex flex-column">
+                            <div class="food-img-wrapper">
+                                <span class="food-badge badge-nearby">Village Theme</span>
+                                <img src="https://loremflickr.com/500/300/dining,restaurant?random=4" alt="Swaddesh">
+                                <div class="food-distance"><i class='bx bx-map'></i> 1.9 km</div>
+                            </div>
+                            <div class="card-body p-4 flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="text-muted small fw-bold">DESI / TRADITIONAL</span>
+                                    <div class="food-rating"><i class='bx bxs-star'></i><span>4.1</span></div>
+                                </div>
+                                <h5 class="fw-bold mb-2">Swaddesh Restaurant</h5>
+                                <p class="text-muted small mb-0">Experience the charm of a village theme setup with authentic desi food.</p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 p-4 pt-0">
+                                <a href="#" class="btn btn-reserve text-decoration-none">Reserve Table</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="cafes" role="tabpanel" aria-labelledby="cafes-tab">
+                <div class="row g-4">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="food-card h-100 d-flex flex-column">
+                            <div class="food-img-wrapper">
+                                <span class="food-badge badge-top">Must Try</span>
+                                <img src="https://loremflickr.com/500/300/bakery,cake?random=5" alt="Barista">
+                                <div class="food-distance"><i class='bx bx-map'></i> 500m</div>
+                            </div>
+                            <div class="card-body p-4 flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="text-muted small fw-bold">COFFEE / DESSERTS</span>
+                                    <div class="food-rating"><i class='bx bxs-star'></i><span>4.5</span></div>
+                                </div>
+                                <h5 class="fw-bold mb-2">The Chocolate Room</h5>
+                                <p class="text-muted small mb-0">Best place for chocolate lovers, premium shakes, and fresh bakes.</p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 p-4 pt-0">
+                                <a href="#" class="btn btn-reserve text-decoration-none">View Menu</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="fine-dining" role="tabpanel" aria-labelledby="fine-dining-tab"><p class="text-muted mt-4"><i class='bx bx-info-circle'></i> Premium Fine Dining options loading soon...</p></div>
+            <div class="tab-pane fade" id="street-food" role="tabpanel" aria-labelledby="street-food-tab"><p class="text-muted mt-4"><i class='bx bx-info-circle'></i> Famous street food stalls and local joints loading soon...</p></div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5" style="background-color: #ffffff;">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-end mb-5">
+                <div>
+                    <h2 class="section-heading mb-1" style="color: #0A2239;">PREMIUM CAB RENTALS</h2>
+                    <p class="text-muted fs-5 mb-0">Book clean, sanitized, and reliable cabs for your journey.</p>
+                </div>
+                <a href="#" class="text-decoration-none fw-bold d-none d-md-block" style="color: #FF4E00;">View All Cabs <i class='bx bx-right-arrow-alt'></i></a>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="car-card">
+                        <div class="car-img-wrapper">
+                            <img src="https://loremflickr.com/500/300/hatchback,car?random=11" alt="Hatchback">
+                        </div>
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-1">Hatchback</h5>
+                            <p class="text-muted small mb-3">Swift, Baleno or similar</p>
+                            <div class="car-features">
+                                <span><i class='bx bx-user'></i> 4 Seats</span>
+                                <span><i class='bx bx-briefcase'></i> 2 Bags</span>
+                                <span><i class='bx bx-wind'></i> A/C</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-4 border-top pt-3">
+                                <div>
+                                    <span class="d-block small text-muted" style="line-height: 1;">Starting at</span>
+                                    <span class="fw-bold fs-5 text-dark">₹11<span class="small text-muted fs-6 fw-normal">/km</span></span>
+                                </div>
+                                <a href="#" class="btn btn-reserve px-3 py-1" style="width: auto;">Book</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="car-card">
+                        <div class="car-img-wrapper">
+                            <img src="https://loremflickr.com/500/300/sedan,car?random=12" alt="Sedan">
+                        </div>
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-1">Sedan</h5>
+                            <p class="text-muted small mb-3">Dzire, Etios or similar</p>
+                            <div class="car-features">
+                                <span><i class='bx bx-user'></i> 4 Seats</span>
+                                <span><i class='bx bx-briefcase'></i> 3 Bags</span>
+                                <span><i class='bx bx-wind'></i> A/C</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-4 border-top pt-3">
+                                <div>
+                                    <span class="d-block small text-muted" style="line-height: 1;">Starting at</span>
+                                    <span class="fw-bold fs-5 text-dark">₹13<span class="small text-muted fs-6 fw-normal">/km</span></span>
+                                </div>
+                                <a href="#" class="btn btn-reserve px-3 py-1" style="width: auto;">Book</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="car-card">
+                        <div class="car-img-wrapper">
+                            <img src="https://loremflickr.com/500/300/suv,car?random=13" alt="SUV">
+                        </div>
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-1">SUV</h5>
+                            <p class="text-muted small mb-3">Innova, Ertiga or similar</p>
+                            <div class="car-features">
+                                <span><i class='bx bx-user'></i> 6 Seats</span>
+                                <span><i class='bx bx-briefcase'></i> 4 Bags</span>
+                                <span><i class='bx bx-wind'></i> A/C</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-4 border-top pt-3">
+                                <div>
+                                    <span class="d-block small text-muted" style="line-height: 1;">Starting at</span>
+                                    <span class="fw-bold fs-5 text-dark">₹18<span class="small text-muted fs-6 fw-normal">/km</span></span>
+                                </div>
+                                <a href="#" class="btn btn-reserve px-3 py-1" style="width: auto;">Book</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="car-card">
+                        <div class="car-img-wrapper">
+                            <img src="https://loremflickr.com/500/300/luxury,car?random=14" alt="Luxury">
+                        </div>
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-1">Luxury Class</h5>
+                            <p class="text-muted small mb-3">BMW, Mercedes or similar</p>
+                            <div class="car-features">
+                                <span><i class='bx bx-user'></i> 4 Seats</span>
+                                <span><i class='bx bx-briefcase'></i> 3 Bags</span>
+                                <span><i class='bx bx-wind'></i> A/C</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-4 border-top pt-3">
+                                <div>
+                                    <span class="d-block small text-muted" style="line-height: 1;">Starting at</span>
+                                    <span class="fw-bold fs-5 text-dark">₹35<span class="small text-muted fs-6 fw-normal">/km</span></span>
+                                </div>
+                                <a href="#" class="btn btn-reserve px-3 py-1" style="width: auto;">Book</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section" id="statsSection">
+        <div class="container">
+            <div class="row g-4 text-center">
+                <div class="col-lg-3 col-6 stat-item">
+                    <i class='bx bx-happy-beaming stat-icon'></i>
+                    <div class="stat-number"><span class="counter" data-target="50">0</span>K+</div>
+                    <div class="stat-text">Happy Travelers</div>
+                </div>
+                <div class="col-lg-3 col-6 stat-item">
+                    <i class='bx bx-map-pin stat-icon'></i>
+                    <div class="stat-number"><span class="counter" data-target="120">0</span>+</div>
+                    <div class="stat-text">Cities Covered</div>
+                </div>
+                <div class="col-lg-3 col-6 stat-item">
+                    <i class='bx bxs-bus stat-icon'></i>
+                    <div class="stat-number"><span class="counter" data-target="850">0</span>+</div>
+                    <div class="stat-text">Premium Fleet</div>
+                </div>
+                <div class="col-lg-3 col-6 stat-item">
+                    <i class='bx bxs-star stat-icon'></i>
+                    <div class="stat-number"><span class="counter" data-target="4.8">0</span>/5</div>
+                    <div class="stat-text">Average User Rating</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5" style="background-color: #f8fafc;">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <h2 class="section-heading mb-1" style="color: #0A2239;">WHAT OUR TRAVELERS SAY</h2>
+                <p class="text-muted fs-5 mb-0">Real experiences from our lovely customers across the country.</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="review-card">
+                        <i class='bx bxs-quote-right review-quote'></i>
+                        <div class="star-rating mb-3">
+                            <i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i>
+                        </div>
+                        <p class="review-text">"Sangam Tours made our Bihar Darshan absolutely seamless. The buses were on time, extremely clean, and the staff was very polite. Will definitely book my next trip with them!"</p>
+                        <div class="reviewer-info border-top pt-3 mt-auto">
+                            <img src="https://loremflickr.com/100/100/face,man?random=21" alt="User" class="reviewer-img">
+                            <div>
+                                <h6 class="reviewer-name">Rahul Sharma</h6>
+                                <span class="reviewer-loc">Delhi, India</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="review-card">
+                        <i class='bx bxs-quote-right review-quote'></i>
+                        <div class="star-rating mb-3">
+                            <i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star-half'></i>
+                        </div>
+                        <p class="review-text">"I booked a luxury SUV for my family trip from Patna to Bodhgaya. The driver was highly professional and acted like a guide too. Amazing service and very transparent pricing."</p>
+                        <div class="reviewer-info border-top pt-3 mt-auto">
+                            <img src="https://loremflickr.com/100/100/face,woman?random=22" alt="User" class="reviewer-img">
+                            <div>
+                                <h6 class="reviewer-name">Priya Singh</h6>
+                                <span class="reviewer-loc">Bengaluru, India</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="review-card">
+                        <i class='bx bxs-quote-right review-quote'></i>
+                        <div class="star-rating mb-3">
+                            <i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i>
+                        </div>
+                        <p class="review-text">"Using Sangam Tours for our hotel bookings saved us a lot of money. Their 'App Exclusive' offers are genuine. Customer support is also very quick via their AI Chatbot!"</p>
+                        <div class="reviewer-info border-top pt-3 mt-auto">
+                            <img src="https://loremflickr.com/100/100/face,man?random=23" alt="User" class="reviewer-img">
+                            <div>
+                                <h6 class="reviewer-name">Amit Verma</h6>
+                                <span class="reviewer-loc">Mumbai, India</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<div class="ai-chat-container">
+    <div class="ai-chat-window" id="aiChatWindow">
+        <div class="ai-chat-header">
+            <div class="d-flex align-items-center gap-2">
+                <div class="ai-avatar"><i class='bx bx-bot'></i></div>
+                <div>
+                    <h6 class="chat-title-text">Sangam AI</h6>
+                    <span class="chat-status-text"><i class='bx bxs-circle text-success' style="font-size: 8px; margin-right: 3px;"></i> Online & Ready</span>
+                </div>
+            </div>
+            <button class="btn-close-chat" onclick="toggleChat()"><i class='bx bx-x'></i></button>
+        </div>
+
+        <div class="ai-chat-body" id="chatBody">
+            <div class="chat-message ai-message">
+                <div class="msg-bubble">Namaste! 🙏 Main Sangam AI hoon. Kya main aapki Bus, Hotel ya Tour book karne mein madad karun?</div>
+            </div>
+        </div>
+
+        <div class="ai-chat-footer">
+            <input type="text" id="chatInput" placeholder="Ask me anything..." autocomplete="off" onkeypress="handleEnter(event)">
+            <button class="btn-send" onclick="sendDummyMessage()"><i class='bx bxs-send'></i></button>
+        </div>
+    </div>
+
+    <button class="ai-chat-toggle" id="aiChatToggleBtn" onclick="toggleChat()">
+        <i class='bx bx-message-rounded-dots'></i>
+    </button>
+</div>
 
 @endsection
 
 @push('scripts')
 <script>
     $(document).ready(function() {
-        setTimeout(function() { $('#welcomeModal').modal('show'); }, 600);
+        setTimeout(function() {
+            $('#welcomeModal').modal('show');
+        }, 600);
 
         // MMT Tab Switching
         $('.mmt-tab').on('click', function() {
             $('.mmt-tab').removeClass('active');
             $(this).addClass('active');
             let type = $(this).data('type');
-            
+
             let html = '';
-            
-            if(type === 'flight' || type === 'bus' || type === 'train' || type === 'car') {
+
+            if (type === 'flight' || type === 'bus' || type === 'train' || type === 'car') {
                 html = `
                     <div class="mmt-input-grid">
                         <div class="mmt-input-box box-large">
@@ -380,7 +1477,7 @@
                             <input type="text" class="mmt-value-input" value="1 Adult" readonly>
                         </div>
                     </div>`;
-            } else if(type === 'hotel' || type === 'homestay') {
+            } else if (type === 'hotel' || type === 'homestay') {
                 html = `
                     <div class="mmt-input-grid">
                         <div class="mmt-input-box box-large">
@@ -402,7 +1499,7 @@
                         </div>
                     </div>`;
             } else {
-                 html = `
+                html = `
                     <div class="mmt-input-grid">
                         <div class="mmt-input-box box-large">
                             <span class="mmt-label">Search</span>
@@ -410,13 +1507,106 @@
                         </div>
                     </div>`;
             }
-           
 
-            
             $('#dynamicMmtInputs').fadeOut(100, function() {
                 $(this).html(html).fadeIn(200);
             });
         });
+
+
+
+
+        // ==========================================
+        // 🔥 COUNTER ANIMATION LOGIC 🔥
+        // ==========================================
+        const counters = document.querySelectorAll('.counter');
+        const speed = 50; // Speed control: Number jitna bada, ginti utni slow hogi
+
+        const animateCounters = () => {
+            counters.forEach(counter => {
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+
+                    // Increment step
+                    const inc = target / speed;
+
+                    if (count < target) {
+                        // Agar number mein decimal (.) hai (jaise 4.8)
+                        if (target % 1 !== 0) {
+                            counter.innerText = (count + inc).toFixed(1);
+                        } else {
+                            counter.innerText = Math.ceil(count + inc);
+                        }
+                        // 20ms delay ke baad wapas run karega
+                        setTimeout(updateCount, 20);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+                updateCount();
+            });
+        }
+
+        // Ye check karega ki user scroll karke wahan pahuncha ya nahi
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target); // Ek baar chalne ke baad ruk jayega
+                }
+            });
+        }, { threshold: 0.5 }); // Jab 50% section screen par dikhega tab trigger hoga
+
+        const statsSection = document.getElementById('statsSection');
+        if (statsSection) {
+            observer.observe(statsSection);
+        }
     });
+
+    // --- AI CHATBOT LOGIC (UI LEVEL) ---
+    function toggleChat() {
+        const chatWindow = document.getElementById('aiChatWindow');
+        const toggleBtnIcon = document.querySelector('#aiChatToggleBtn i');
+        
+        if (chatWindow.style.display === 'none' || chatWindow.style.display === '') {
+            chatWindow.style.display = 'flex';
+            toggleBtnIcon.classList.remove('bx-message-rounded-dots');
+            toggleBtnIcon.classList.add('bx-x');
+        } else {
+            chatWindow.style.display = 'none';
+            toggleBtnIcon.classList.remove('bx-x');
+            toggleBtnIcon.classList.add('bx-message-rounded-dots');
+        }
+    }
+
+    function handleEnter(e) {
+        if(e.key === 'Enter') { sendDummyMessage(); }
+    }
+
+    function sendDummyMessage() {
+        const input = document.getElementById('chatInput');
+        const message = input.value.trim();
+        const chatBody = document.getElementById('chatBody');
+
+        if(message !== "") {
+            chatBody.innerHTML += `
+                <div class="chat-message user-message">
+                    <div class="msg-bubble">${message}</div>
+                </div>
+            `;
+            input.value = '';
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            setTimeout(() => {
+                chatBody.innerHTML += `
+                    <div class="chat-message ai-message">
+                        <div class="msg-bubble">Main abhi backend se connect nahi hoon, par jaldi hi aapke saare travel sawalon ke jawab dunga! 🚀</div>
+                    </div>
+                `;
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 1000);
+        }
+    }
 </script>
 @endpush

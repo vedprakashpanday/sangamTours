@@ -10,7 +10,7 @@ return new class extends Migration
     Schema::create('vendors', function (Blueprint $table) {
         $table->id();
         $table->string('name');
-        $table->enum('type', ['Airline', 'Bus Operator', 'Train Dept', 'Hotel Partner']);
+       
         $table->string('phone')->unique();
         $table->string('email')->nullable();
         $table->boolean('is_api')->default(0); // 1: API Integrated, 0: Manual
