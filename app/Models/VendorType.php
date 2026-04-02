@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class VendorType extends Model
 {
-   protected $fillable = ['name', 'status'];
+   protected $fillable = ['name', 'status', 'icon'];
 }

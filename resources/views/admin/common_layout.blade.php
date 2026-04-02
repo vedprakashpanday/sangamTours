@@ -57,7 +57,7 @@
         </a>
     </li>
 
-    <li class="nav-label mt-3 smalluppercase" style="color: #0dcaf0;">Masters</li>
+    <li class="nav-label mt-3 small uppercase" style="color: #0dcaf0;">Masters</li>
     
     <li class="{{ Request::is('admin/packages*') ? 'active' : '' }}">
         <a href="{{ route('admin.packages.index') }}">
@@ -65,10 +65,21 @@
         </a>
     </li>
 
-    <li class="{{ Request::is('admin/accommodations*') ? 'active' : '' }}">
-        <a href="{{ route('admin.accommodations.index') }}">
+    <li class="{{ Request::is('admin/accommodation*') ? 'active' : '' }}">
+        <a href="#accSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
             <i class='bx bx-hotel'></i> <span>Accommodations</span>
         </a>
+        <ul class="collapse list-unstyled {{ Request::is('admin/accommodation*') ? 'show' : '' }}" id="accSubmenu">
+            <li class="{{ Request::is('admin/accommodations') ? 'active' : '' }}">
+                <a href="{{ route('admin.accommodations.index') }}">Manage Hotels</a>
+            </li>
+            <li class="{{ Request::is('admin/accommodation-types*') ? 'active' : '' }}">
+                <a href="{{ route('admin.accommodation-types.index') }}">Accommodation Types</a>
+            </li>
+            <li class="{{ Request::is('admin/amenities*') ? 'active' : '' }}">
+            <a href="{{ route('admin.amenities.index') }}">Hotel Amenities</a>
+        </li>
+        </ul>
     </li>
 
     <li class="{{ Request::is('admin/locations*') ? 'active' : '' }}">
@@ -91,19 +102,21 @@
         </a>
     </li>
 
-    <li class="{{ Request::is('admin/vendor-types*') ? 'active' : '' }}">
-    <a href="{{ route('admin.vendor-types.index') }}">
-        <i class='bx bx-list-ul'></i> <span>Vendor Types</span>
-    </a>
-</li>
+    <li class="{{ Request::is('admin/vendor*') ? 'active' : '' }}">
+        <a href="#vendorSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            <i class='bx bx-store-alt'></i> <span>Vendors</span>
+        </a>
+        <ul class="collapse list-unstyled {{ Request::is('admin/vendor*') ? 'show' : '' }}" id="vendorSubmenu">
+            <li class="{{ Request::is('admin/vendors') ? 'active' : '' }}">
+                <a href="{{ route('admin.vendors.index') }}">Vendor Management</a>
+            </li>
+            <li class="{{ Request::is('admin/vendor-types*') ? 'active' : '' }}">
+                <a href="{{ route('admin.vendor-types.index') }}">Vendor Types</a>
+            </li>
+        </ul>
+    </li>
 
-<li class="{{ Request::is('admin/vendors*') ? 'active' : '' }}">
-    <a href="{{ route('admin.vendors.index') }}">
-        <i class='bx bx-store-alt'></i> <span>Vendor Management</span>
-    </a>
-</li>
-
-    <li class="nav-label mt-3 small  uppercase" style="color: #0dcaf0;">People</li>
+    <li class="nav-label mt-3 small uppercase" style="color: #0dcaf0;">People</li>
     
     <li class="{{ Request::is('admin/customers*') ? 'active' : '' }}">
         <a href="{{ route('admin.customers.index') }}">

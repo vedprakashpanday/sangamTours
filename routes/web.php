@@ -2,24 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 
-// Controllers ko group karke import karne se spelling mistake pakdi jati hai
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\TourPackageController;
-use App\Http\Controllers\LocationController;
-use App\Http\Controllers\AccommodationController;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\VendorController;
-use App\Http\Controllers\VehicleController;
-use App\Http\Controllers\RouteController;
-use App\Http\Controllers\BookingController;
-use App\Http\Controllers\OfferController;
-use App\Http\Controllers\ScheduleController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ForgotPasswordController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ChatController;
-use App\Http\Controllers\VendorTypeController; // 🔥 Ye ensure karo ki ye file exists karti hai
-
+// Controllers Import
+use App\Http\Controllers\{
+    DashboardController, TourPackageController, LocationController, 
+    AccommodationController, CustomerController, VendorController, 
+    VehicleController, RouteController, BookingController, 
+    OfferController, ScheduleController, AuthController, 
+    ForgotPasswordController, HomeController, ChatController,
+    VendorTypeController, AccommodationTypeController, AmenityController
+};
+use App\Http\Controllers\Auth\LoginController;
 /*
 |--------------------------------------------------------------------------
 | 1. PUBLIC / USER PANEL ROUTES
@@ -27,13 +19,25 @@ use App\Http\Controllers\VendorTypeController; // 🔥 Ye ensure karo ki ye file
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
+Route::get('/about-us', [HomeController::class, 'about'])->name('about');
 Route::prefix('tours')->name('tours.')->group(function () {
     Route::get('/', [HomeController::class, 'allPackages'])->name('index');
     Route::get('/{slug}', [HomeController::class, 'packageDetail'])->name('detail');
 });
 
 Route::get('/search-bus', [HomeController::class, 'searchBus'])->name('bus.search');
+
+// Login & Register Routes
+Route::post('/login', [LoginController::class, 'login'])->name('login');
+Route::post('/register', [LoginController::class, 'register'])->name('register');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+// Forgot Password Flow
+Route::post('/forgot-password/send-otp', [LoginController::class, 'sendOtp'])->name('password.sendOtp');
+Route::post('/forgot-password/verify-otp', [LoginController::class, 'verifyOtp'])->name('password.verifyOtp');
+Route::get('/reset-password/{email}', [LoginController::class, 'showResetPage'])->name('password.resetPage');
+Route::post('/reset-password/update', [LoginController::class, 'updatePassword'])->name('password.update');
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -80,12 +84,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Locations
         Route::resource('locations', LocationController::class)->except(['create', 'show']);
 
-        // Accommodations
+        // Accommodations & Accommodation Types
         Route::get('accommodations/restore-all', [AccommodationController::class, 'restoreAll']);
         Route::delete('accommodations/empty-trash', [AccommodationController::class, 'emptyTrash']);
         Route::get('accommodations/restore/{id}', [AccommodationController::class, 'restore']);
         Route::delete('accommodations/force-delete/{id}', [AccommodationController::class, 'forceDelete']);
         Route::resource('accommodations', AccommodationController::class);
+        
+        // 🔥 Moved inside Admin/Auth Group
+        Route::resource('accommodation-types', AccommodationTypeController::class)->except(['create', 'show', 'edit']);
 
         // Customers
         Route::get('customers/restore-all', [CustomerController::class, 'restoreAll']);
@@ -95,14 +102,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('customers/update-status', [CustomerController::class, 'updateStatus']); 
         Route::resource('customers', CustomerController::class);
 
-        // Vendors
+        // Vendors & Vendor Types
         Route::get('vendors/restore-all', [VendorController::class, 'restoreAll']);
         Route::delete('vendors/empty-trash', [VendorController::class, 'emptyTrash']);
         Route::get('vendors/restore/{id}', [VendorController::class, 'restore']);
         Route::delete('vendors/force-delete/{id}', [VendorController::class, 'forceDelete']);
         Route::resource('vendors', VendorController::class);
 
-        // 🔥 Vendor Type (Simple Entry)
         Route::get('vendor-types', [VendorTypeController::class, 'index'])->name('vendor-types.index');
         Route::post('vendor-types', [VendorTypeController::class, 'store'])->name('vendor-types.store');
         Route::put('vendor-types/{id}', [VendorTypeController::class, 'update'])->name('vendor-types.update');
@@ -134,8 +140,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Schedules
         Route::resource('schedules', ScheduleController::class);
+
+        // 🔥 Naya Amenity Route
+Route::resource('amenities', AmenityController::class)->except(['create', 'show', 'edit']);
     });
 });
 
 // Chatbot Route
 Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('chat.send');
+
+// // routes/web.php ke ekdum niche dekhiye
+// require __DIR__.'/auth.php';

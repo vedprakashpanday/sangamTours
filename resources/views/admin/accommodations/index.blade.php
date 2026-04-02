@@ -1,4 +1,41 @@
 @extends('admin.common_layout')
+@push('styles')
+<style>
+    /* Hidden actual checkbox */
+    .amenity-checkbox {
+        display: none;
+    }
+    
+    /* The clickable card design */
+    .amenity-card {
+        border: 2px solid #dee2e6;
+        border-radius: 8px;
+        padding: 10px 12px;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        background-color: #fff;
+        user-select: none; /* Text selection rokne ke liye */
+    }
+    
+    /* Hover effect */
+    .amenity-card:hover { 
+        border-color: #a5c8fd; 
+        background-color: #f8f9fa; 
+    }
+    
+    /* Magic: Jab hidden checkbox checked ho, tab uske theek aage wale .amenity-card ka design badal do */
+    .amenity-checkbox:checked + .amenity-card {
+        border-color: #0d6efd;
+        background-color: #e7f1ff;
+        color: #0d6efd;
+    }
+
+    /* Icon color change on check */
+    .amenity-checkbox:checked + .amenity-card i {
+        color: #0d6efd !important;
+    }
+</style>
+@endpush
 
 @section('admin_content')
 <div class="card border-0 shadow-sm mb-4">
@@ -10,7 +47,7 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table id="accTable" class="table table-hover">
+            <table id="accTable" class="table table-hover align-middle">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -36,7 +73,8 @@
                                 <img src="{{ $imagePath }}" class="rounded me-2" style="width: 45px; height: 45px; object-fit: cover;">
                                 <div>
                                     <span class="fw-bold d-block">{{ $acc->name }}</span>
-                                    <small class="badge bg-light text-dark border">{{ $acc->hotel_type }}</small>
+                                    {{-- 🔥 Dynamic Type Name --}}
+                                    <small class="badge bg-light text-dark border">{{ $acc->accommodationType->name ?? 'N/A' }}</small>
                                 </div>
                             </div>
                         </td>
@@ -61,6 +99,7 @@
     </div>
 </div>
 
+{{-- Trashed Table Section --}}
 <div class="card border-0 shadow-sm border-top border-danger border-3">
     <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
         <h5 class="m-0 fw-bold text-danger">Trash / Deleted Hotels</h5>
@@ -84,7 +123,10 @@
                     @foreach($trashedAccommodations as $tacc)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $tacc->name }} <br><small class="text-muted">{{ $tacc->hotel_type }}</small></td>
+                        <td>
+                            {{ $tacc->name }} <br>
+                            <small class="text-muted">{{ $tacc->accommodationType->name ?? 'N/A' }}</small>
+                        </td>
                         <td>₹{{ number_format($tacc->price_per_night) }}</td>
                         <td>
                             <div class="btn-group">
@@ -100,8 +142,9 @@
     </div>
 </div>
 
+{{-- MODAL --}}
 <div class="modal fade" id="accModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-xl modal-dialog-centered"> 
         <div class="modal-content border-0 shadow">
             <div class="modal-header">
                 <h5 class="modal-title fw-bold" id="accModalTitle">Add New Accommodation</h5>
@@ -116,25 +159,40 @@
                             <label class="form-label fw-semibold">Hotel Name</label>
                             <input type="text" class="form-control" name="name" required placeholder="e.g. Hotel Sangam Grand">
                         </div>
-                        <div class="col-md-4">
-                            <label class="form-label fw-semibold">Hotel Type/Rating</label>
-                            <select class="form-select" name="hotel_type" required>
-                                <option value="">Select Type</option>
-                                <option value="5 Star">5 Star</option>
-                                <option value="4 Star">4 Star</option>
-                                <option value="3 Star">3 Star</option>
-                                <option value="Resort">Resort</option>
-                                <option value="Guest House">Guest House</option>
-                            </select>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Accommodation Category</label>
+                                <select class="form-select" name="accommodation_type_id" required>
+                                    <option value="">Select Category</option>
+                                    @foreach($types as $type)
+                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Star Rating</label>
+                                <select class="form-select" name="star_rating" required>
+                                    <option value="">Select Rating</option>
+                                    <option value="5 Star">5 Star</option>
+                                    <option value="4 Star">4 Star</option>
+                                    <option value="3 Star">3 Star</option>
+                                    <option value="2 Star">2 Star</option>
+                                    <option value="1 Star">1 Star</option>
+                                    <option value="Budget / No Star">Budget / No Star</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-md-6">
+                        
+                        <div class="col-md-4">
                             <label class="form-label fw-semibold">Price Per Night</label>
                             <div class="input-group">
                                 <span class="input-group-text">₹</span>
                                 <input type="number" class="form-control" name="price" required placeholder="0.00">
                             </div>
                         </div>
-                        <div class="col-md-6">
+
+                        <div class="col-md-4">
                             <label class="form-label fw-semibold">Status</label>
                             <div class="form-check form-switch mt-2">
                                 <input class="form-check-input" type="checkbox" name="status" id="accStatus" checked>
@@ -142,6 +200,7 @@
                             </div>
                         </div>
                         
+                        {{-- Location Fields --}}
                         <div class="col-md-4">
                             <label class="form-label fw-semibold">Country</label>
                             <select class="form-select" id="country_select" name="country_name" required>
@@ -164,9 +223,30 @@
                             </select>
                         </div>
 
-                        <div class="col-md-12">
+                   {{-- 🔥 FIXED: AMENITIES SECTION --}}
+                        <div class="col-md-12 border-top pt-3 mt-3">
+                            <label class="form-label fw-bold mb-3">Select Hotel Amenities</label>
+                            <div class="row g-2">
+                                @foreach($amenities as $am)
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    {{-- 'for' attribute ID se match karna zaroori hai click work karne ke liye --}}
+                                    <label for="amenity_{{ $am->id }}" class="w-100 m-0 d-flex align-items-center gap-2">
+                                        <input type="checkbox" name="amenities[]" value="{{ $am->id }}" class="amenity-checkbox" id="amenity_{{ $am->id }}">
+                                        
+                                        {{-- Ye div input ke theek baad hona chahiye taaki CSS (+) selector kaam kare --}}
+                                        <div class="amenity-card d-flex align-items-center shadow-sm">
+                                            <i class='bx {{ $am->icon ?? "bx-check-circle" }} fs-4 me-2 text-secondary'></i> 
+                                            <span class="fw-semibold" style="font-size: 14px;">{{ $am->name }}</span>
+                                        </div>
+                                    </label>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 border-top pt-3 mt-3">
                             <label class="form-label fw-semibold">Description</label>
-                            <textarea class="form-control" name="description" rows="3" placeholder="Hotel amenities, rules, etc."></textarea>
+                            <textarea class="form-control" name="description" rows="3" placeholder="Hotel rules, overview, etc."></textarea>
                         </div>
 
                         <div class="col-md-6">
@@ -190,6 +270,7 @@
     </div>
 </div>
 @endsection
+
 @push('scripts')
 <script>
 $(document).ready(function() {
@@ -269,7 +350,7 @@ $(document).ready(function() {
         }
     });
 
-    // --- NEW: Local File Selection Preview Logic ---
+    // --- Local File Selection Preview Logic ---
     $('#main_image_input').on('change', function() {
         $('#main_image_preview').empty();
         const file = this.files[0];
@@ -289,26 +370,39 @@ $(document).ready(function() {
         });
     });
 
-    // 3. Add & Edit Actions
+    // 🔥 Add Action Fix
     $('#addAccBtn').click(function() {
         $('#accForm')[0].reset();
         $('#acc_db_id').val('');
         $('#main_image_preview, #gallery_preview').empty();
+        $('.amenity-checkbox').prop('checked', false); // 🔥 Uncheck all amenities on new
         $('#accModalTitle').text('Add New Accommodation');
         $('#accModal').modal('show');
     });
 
+    // 🔥 Edit Action Fix
     $(document).on('click', '.edit-acc', function() {
         let id = $(this).data('id');
         $.get("{{ url('admin/accommodations') }}/" + id + "/edit", function(p) {
             $('#acc_db_id').val(p.id);
             $('input[name="name"]').val(p.name);
-            $('select[name="hotel_type"]').val(p.hotel_type);
+            $('select[name="accommodation_type_id"]').val(p.accommodation_type_id); 
+            $('select[name="star_rating"]').val(p.star_rating);
             $('input[name="price"]').val(p.price_per_night);
             $('textarea[name="description"]').val(p.description);
             $('#accStatus').prop('checked', p.status == 1);
             $('#accModalTitle').text('Edit Accommodation');
 
+            // 🔥 Amenities Auto-check logic
+            $('.amenity-checkbox').prop('checked', false); // Clear all first
+            if(p.amenities && p.amenities.length > 0) {
+                // Loop through the amenities returned from DB and check them
+                p.amenities.forEach(function(am) {
+                    $('#amenity_' + am.id).prop('checked', true);
+                });
+            }
+
+            // Image handling...
             $('#main_image_preview, #gallery_preview').empty();
             if(p.images) {
                 p.images.forEach(img => {
@@ -339,88 +433,49 @@ $(document).ready(function() {
         }
     });
 
-    // --- 4.1 Bulk Trash Actions (Missing Logic) ---
+    // Restore All Logic
+    $('#restoreAllAcc').on('click', function() {
+        if (trashedTable.rows().count() === 0) {
+            alert('Trash is already empty. Nothing to restore!');
+            return false;
+        }
 
-// // 1. Restore All Hotels
-// $('#restoreAllAcc').on('click', function() {
-//     if (confirm('Are you sure you want to restore all hotels from trash?')) {
-//         $.get("{{ url('admin/accommodations/restore-all') }}", function(res) {
-//             if(res.status === 'success') {
-//                 alert(res.message);
-//                 location.reload();
-//             }
-//         }).fail(function() {
-//             alert('Restore all failed!');
-//         });
-//     }
-// });
-
-// // 2. Empty Trash (Permanent Delete All)
-// $('#emptyAccTrash').on('click', function() {
-//     if (confirm('CRITICAL: This will permanently delete ALL hotels in trash. This cannot be undone. Continue?')) {
-//         $.ajax({
-//             url: "{{ url('admin/accommodations/empty-trash') }}",
-//             method: 'DELETE',
-//             headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-//             success: function(res) {
-//                 if(res.status === 'success') {
-//                     alert(res.message);
-//                     location.reload();
-//                 }
-//             },
-//             error: function() {
-//                 alert('Empty trash failed!');
-//             }
-//         });
-//     }
-// });
-
-
-    // --- 4.1 Restore All Logic (With Blank Check) ---
-$('#restoreAllAcc').on('click', function() {
-    // 🔥 Check if table is empty
-    if (trashedTable.rows().count() === 0) {
-        alert('Trash is already empty. Nothing to restore!');
-        return false;
-    }
-
-    if(confirm('Are you sure you want to restore ALL customers from trash?')) {
-        $.get("{{ url('admin/accommodations/restore-all') }}", function(res) {
-            if(res.status === 'success') {
-                alert(res.message);
-                location.reload();
-            }
-        }).fail(function() {
-            alert('Something went wrong while restoring!');
-        });
-    }
-});
-
-// --- 4.2 Empty Trash Logic (With Blank Check) ---
-$('#emptyAccTrash').on('click', function() {
-    // 🔥 Check if table is empty
-    if (trashedTable.rows().count() === 0) {
-        alert('Trash is already empty!');
-        return false;
-    }
-
-    if(confirm('CRITICAL: Permanently delete ALL items in trash? This cannot be undone!')) {
-        $.ajax({
-            url: "{{ url('admin/accommodations/empty-trash') }}",
-            method: 'DELETE',
-            headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-            success: function(res) {
+        if(confirm('Are you sure you want to restore ALL customers from trash?')) {
+            $.get("{{ url('admin/accommodations/restore-all') }}", function(res) {
                 if(res.status === 'success') {
                     alert(res.message);
                     location.reload();
                 }
-            },
-            error: function() {
-                alert('Failed to clear trash!');
-            }
-        });
-    }
-});
+            }).fail(function() {
+                alert('Something went wrong while restoring!');
+            });
+        }
+    });
+
+    // Empty Trash Logic
+    $('#emptyAccTrash').on('click', function() {
+        if (trashedTable.rows().count() === 0) {
+            alert('Trash is already empty!');
+            return false;
+        }
+
+        if(confirm('CRITICAL: Permanently delete ALL items in trash? This cannot be undone!')) {
+            $.ajax({
+                url: "{{ url('admin/accommodations/empty-trash') }}",
+                method: 'DELETE',
+                headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                success: function(res) {
+                    if(res.status === 'success') {
+                        alert(res.message);
+                        location.reload();
+                    }
+                },
+                error: function() {
+                    alert('Failed to clear trash!');
+                }
+            });
+        }
+    });
 
     $(document).on('click', '.restore-acc', function() {
         if(confirm('Restore this record?')) {
@@ -466,14 +521,13 @@ $('#emptyAccTrash').on('click', function() {
         let id = $('#acc_db_id').val();
         let formData = new FormData(this);
         
-        // Laravel specific method spoofing for update
         if(id) formData.append('_method', 'PUT');
 
         let ajaxUrl = id ? "{{ url('admin/accommodations') }}/" + id : "{{ route('admin.accommodations.store') }}";
 
         $.ajax({
             url: ajaxUrl,
-            method: "POST", // POST hi rakhein, _method PUT handle kar lega
+            method: "POST",
             data: formData,
             contentType: false, 
             processData: false,
@@ -487,7 +541,6 @@ $('#emptyAccTrash').on('click', function() {
                 }
             },
             error: function(xhr) { 
-                // Detailed error for debugging
                 let errorMsg = 'Operation failed!';
                 if(xhr.responseJSON && xhr.responseJSON.message) {
                     errorMsg = xhr.responseJSON.message;

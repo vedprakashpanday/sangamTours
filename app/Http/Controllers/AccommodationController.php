@@ -3,52 +3,74 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Accommodation; // Accommodation Model
+use App\Models\Accommodation;
 use App\Models\CommonImage;
 use App\Models\Location;
+use App\Models\AccommodationType;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use App\Models\Amenity; 
 
 class AccommodationController extends Controller
 {
-    // 1. Display List (Active aur Trashed dono)
+    // 1. Display List
     public function index()
     {
-        $accommodations = Accommodation::with(['location', 'images'])->orderBy('id', 'desc')->get();
+        $accommodations = Accommodation::with(['location', 'images', 'accommodationType'])->orderBy('id', 'desc')->get();
         
-        // Trashed (Deleted) hotels ke liye
-        $trashedAccommodations = Accommodation::onlyTrashed()->with(['location', 'images'])->orderBy('id', 'desc')->get();
+        $trashedAccommodations = Accommodation::onlyTrashed()->with(['location', 'images', 'accommodationType'])->orderBy('id', 'desc')->get();
         
-        // Dropdown ke liye countries
         $countries = Location::select('country_name')->distinct()->get();
         
-        return view('admin.accommodations.index', compact('accommodations', 'trashedAccommodations', 'countries'));
+        $types = AccommodationType::where('status', 1)->get();
+        $amenities = Amenity::where('status', 1)->get(); 
+        
+        return view('admin.accommodations.index', compact('accommodations', 'trashedAccommodations', 'countries', 'types', 'amenities'));
+    }
+
+    public function create() 
+    {
+        $types = AccommodationType::where('status', 1)->get();
+        $countries = Location::select('country_name')->distinct()->get();
+        return view('admin.accommodations.create', compact('types', 'countries'));
     }
 
     // 2. Store Logic
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'accommodation_type_id' => 'required|exists:accommodation_types,id',
+            'star_rating' => 'required',
+            'price' => 'required|numeric',
+            'state_id' => 'required|exists:locations,id',
+            'main_image' => 'required|image|max:2048'
+        ]);
+
         DB::beginTransaction();
         try {
-            // Unique ID for Accommodation
             $customId = 'ACC-' . date('Y') . '-' . rand(1000, 9999);
 
             $accommodation = new Accommodation();
-            $accommodation->accommodation_id = $customId; // Agar aapne table mein rakha hai
+            $accommodation->accommodation_id = $customId;
             $accommodation->name = $request->name;
-            $accommodation->hotel_type = $request->hotel_type; // e.g. 3 Star, Resort
+            $accommodation->accommodation_type_id = $request->accommodation_type_id; 
+            $accommodation->star_rating = $request->star_rating;
             $accommodation->price_per_night = $request->price;
             $accommodation->description = $request->description;
-            $accommodation->location_id = $request->state_id; // state_id hi location_id hai
+            $accommodation->location_id = $request->state_id;
             $accommodation->status = $request->has('status') ? 1 : 0;
             $accommodation->save();
 
-            // Main Image Save
+            // 🔥 NEW: Save Amenities using sync
+            if ($request->has('amenities')) {
+                $accommodation->amenities()->sync($request->amenities);
+            }
+
             if ($request->hasFile('main_image')) {
                 $this->uploadImage($request->file('main_image'), $accommodation, 'main');
             }
 
-            // Gallery Images Save
             if ($request->hasFile('gallery_images')) {
                 foreach ($request->file('gallery_images') as $img) {
                     $this->uploadImage($img, $accommodation, 'gallery');
@@ -66,27 +88,43 @@ class AccommodationController extends Controller
     // 3. Edit Logic
     public function edit($id)
     {
-        $accommodation = Accommodation::with(['images', 'location'])->findOrFail($id);
+        // 🔥 NEW: 'amenities' ko bhi load kiya gaya hai taaki frontend par check ho sake
+        $accommodation = Accommodation::with(['images', 'location', 'accommodationType', 'amenities'])->findOrFail($id);
         return response()->json($accommodation);
     }
 
     // 4. Update Logic
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required',
+            'accommodation_type_id' => 'required|exists:accommodation_types,id',
+            'price' => 'required|numeric',
+            'state_id' => 'required|exists:locations,id',
+        ]);
+
         DB::beginTransaction();
         try {
             $accommodation = Accommodation::findOrFail($id);
             
             $accommodation->update([
                 'name' => $request->name,
-                'hotel_type' => $request->hotel_type,
+                'accommodation_type_id' => $request->accommodation_type_id,
                 'price_per_night' => $request->price,
                 'description' => $request->description,
                 'location_id' => $request->state_id,
                 'status' => $request->has('status') ? 1 : 0,
             ]);
 
-            // Deleted Images handling
+            // 🔥 NEW: Update Amenities (sync ensures old ones are removed and new ones are added)
+            if ($request->has('amenities')) {
+                $accommodation->amenities()->sync($request->amenities);
+            } else {
+                // Agar user ne saare checkboxes uncheck kar diye
+                $accommodation->amenities()->detach();
+            }
+
+            // Delete selected images
             if ($request->has('deleted_images')) {
                 foreach ($request->deleted_images as $imgId) {
                     $img = CommonImage::find($imgId);
@@ -125,23 +163,18 @@ class AccommodationController extends Controller
         }
     }
 
-    // 5. Soft Delete (Move to Trash)
     public function destroy($id)
     {
-        $accommodation = Accommodation::findOrFail($id);
-        $accommodation->delete(); 
+        Accommodation::findOrFail($id)->delete(); 
         return response()->json(['status' => 'success', 'message' => 'Accommodation moved to trash.']);
     }
 
-    // 6. Restore Logic
     public function restore($id)
     {
-        $accommodation = Accommodation::withTrashed()->findOrFail($id);
-        $accommodation->restore();
+        Accommodation::withTrashed()->findOrFail($id)->restore();
         return response()->json(['status' => 'success', 'message' => 'Accommodation restored successfully!']);
     }
 
-    // 7. Force Delete (Permanent + Unlink)
     public function forceDelete($id)
     {
         DB::beginTransaction();
@@ -155,6 +188,9 @@ class AccommodationController extends Controller
             }
 
             $accommodation->images()->delete();
+            
+            // Note: Pivot table records (amenities link) automatically delete ho jayenge 
+            // kyunki humne migration mein `onDelete('cascade')` lagaya tha.
             $accommodation->forceDelete(); 
 
             DB::commit();
@@ -165,7 +201,6 @@ class AccommodationController extends Controller
         }
     }
 
-    // 8. Bulk Actions
     public function restoreAll()
     {
         Accommodation::onlyTrashed()->restore();
@@ -181,7 +216,6 @@ class AccommodationController extends Controller
         return response()->json(['status' => 'success', 'message' => 'Trash cleared.']);
     }
 
-    // --- Private Helpers ---
     private function uploadImage($file, $model, $type)
     {
         $folder = $type == 'main' ? 'accommodations' : 'accommodations/gallery';
@@ -194,7 +228,6 @@ class AccommodationController extends Controller
         ]);
     }
 
-    // --- Dropdowns (Same as Package) ---
     public function getStatesByCountry($countryName)
     {
         $states = Location::where('country_name', $countryName)->select('state_name')->distinct()->get();

@@ -634,28 +634,33 @@
     /* =========================================
            🔥 CAB / CAR RENTAL SECTION 🔥
            ========================================= */
-        .car-card { 
-            border-radius: 16px; overflow: hidden; background: #fff; 
-            border: 1px solid #f0f0f0; transition: all 0.3s ease; height: 100%;
-        }
-        .car-card:hover { 
-            transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,0,0,0.08); 
-            border-color: #FF4E00; 
-        }
-        .car-img-wrapper { 
-            height: 180px; padding: 20px; background: #f8fafc; 
-            display: flex; align-items: center; justify-content: center; overflow: hidden;
-        }
-        .car-img-wrapper img { 
-            max-width: 100%; max-height: 100%; object-fit: cover; 
-            transition: transform 0.5s ease; mix-blend-mode: multiply; 
-        }
-        .car-card:hover .car-img-wrapper img { transform: scale(1.1); }
-        .car-features { 
-            display: flex; gap: 15px; font-size: 13px; color: #64748b; margin-bottom: 15px; 
-        }
-        .car-features i { color: #0A2239; font-size: 16px; margin-right: 4px; vertical-align: middle; }
-
+        /* Update this in your <style> section */
+.car-card { 
+    border-radius: 16px; 
+    overflow: hidden; 
+    background: #fff; 
+    border: 1px solid #f0f0f0; 
+    transition: all 0.3s ease; 
+    height: 100%;
+    display: flex; /* 🔥 Ye add karna zaroori hai */
+    flex-direction: column; /* 🔥 Isse content vertically align hoga */
+}
+.car-card:hover { 
+    transform: translateY(-8px); 
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08); 
+    border-color: #FF4E00; 
+}
+.car-img-wrapper { 
+    height: 200px; /* 🔥 Height fix ki taaki image standard rahe */
+    width: 100%;
+    overflow: hidden;
+}
+.car-img-wrapper img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    transition: transform 0.5s ease; 
+}
         /* =========================================
            🔥 STATS / DATA COUNTER SECTION 🔥
            ========================================= */
@@ -767,6 +772,139 @@
     .btn-send:hover { transform: scale(1.1); }
 
     @media (max-width: 768px) { .ai-chat-window { width: 90vw; height: 75vh; right: -15px; bottom: 70px; } }
+
+    /* =========================================
+   🔥 TOUR PACKAGES SECTION STYLES 🔥
+   ========================================= */
+.tour-section-bg {
+    background-color: #ffffff;
+    padding: 80px 0;
+    position: relative;
+}
+
+.tour-card {
+    border-radius: 16px;
+    border: 1px solid #f0f0f0;
+    background: #ffffff;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.tour-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+    border-color: #FF4E00;
+}
+
+.tour-img-wrapper {
+    height: 220px;
+    overflow: hidden;
+    position: relative;
+}
+
+.tour-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.tour-card:hover .tour-img-wrapper img {
+    transform: scale(1.08);
+}
+
+.tour-duration-badge {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 700;
+    backdrop-filter: blur(5px);
+    z-index: 2;
+}
+
+.tour-discount-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #FF4E00;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 800;
+    z-index: 2;
+    box-shadow: 0 4px 10px rgba(255, 78, 0, 0.3);
+}
+
+.tour-body {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.tour-location {
+    font-size: 12px;
+    color: #0A2239;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.tour-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #000;
+    margin-bottom: 12px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.tour-price-section {
+    margin-top: auto;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: #888;
+    font-size: 13px;
+    display: block;
+    line-height: 1;
+}
+
+.final-price {
+    font-size: 22px;
+    font-weight: 900;
+    color: #0A2239;
+    line-height: 1.2;
+}
+
+.per-person {
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 500;
+}
 </style>
 
 <div class="modal fade" id="welcomeModal" data-bs-backdrop="static" tabindex="-1">
@@ -867,122 +1005,213 @@
     </div>
 </section>
 
-<section class="offers-section-bg">
+{{-- HERO SECTION (Aapka Same MMT Header) --}}
+<section class="offers-section-bg" style="padding: 100px 0 60px 0; background-color: #f8fafc;">
     <div class="container">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-3">
             <div>
                 <h2 class="section-heading mb-3" style="color: #0A2239;">EXCLUSIVE OFFERS</h2>
+                
+                {{-- Dynamic Offer Tabs --}}
+                @php
+                    // Offer table se unique 'apply_to' (Categories) nikalna
+                    $offerCategories = $offers->pluck('apply_to')->unique()->filter();
+                @endphp
                 <ul class="nav nav-pills offer-tabs" id="offerPills" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="all-offers-tab" data-bs-toggle="pill" data-bs-target="#all-offers" type="button" role="tab">All Offers</button>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="bank-offers-tab" data-bs-toggle="pill" data-bs-target="#bank-offers" type="button" role="tab">Bank Offers</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="flights-tab" data-bs-toggle="pill" data-bs-target="#flights" type="button" role="tab">Flights</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="hotels-tab" data-bs-toggle="pill" data-bs-target="#hotels" type="button" role="tab">Hotels & Stays</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="holidays-tab" data-bs-toggle="pill" data-bs-target="#holidays" type="button" role="tab">Holidays</button>
-                    </li>
+                    @foreach($offerCategories as $category)
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="cat-{{ Str::slug($category) }}-tab" data-bs-toggle="pill" data-bs-target="#cat-{{ Str::slug($category) }}" type="button" role="tab">{{ $category }}</button>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
         </div>
 
         <div class="tab-content" id="offerPillsContent">
+            {{-- All Offers Tab --}}
             <div class="tab-pane fade show active" id="all-offers" role="tabpanel">
                 <div class="row g-4">
-                    <div class="col-lg-6">
-                        <div class="offer-card">
-                            <div class="row g-0 h-100">
-                                <div class="col-4 col-md-4">
-                                    <div class="offer-img-box">
-                                        <img src="https://loremflickr.com/400/400/beach,vacation" alt="Vacation Offer">
+                    @forelse($offers as $offer)
+                        <div class="col-lg-6">
+                            <div class="offer-card">
+                                <div class="row g-0 h-100">
+                                    <div class="col-4 col-md-4">
+                                        <div class="offer-img-box">
+                                            {{-- Default image kyunki Offer table mein image column nahi tha --}}
+                                            <img src="https://loremflickr.com/400/400/discount,travel?random={{ $offer->id }}" alt="Offer Image">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-8 col-md-8 p-4 d-flex flex-column justify-content-center">
-                                    <p class="small text-muted mb-2 text-end fw-bold" style="font-size: 11px; letter-spacing: 1px;">T&C's APPLY</p>
-                                    <h4 class="offer-title">Up to 40% OFF* on Flights, Stays & More.</h4>
-                                    <p class="small text-muted border-bottom pb-3 mb-3">Pause your routine & get travel-ready for the ultimate summer vacation.</p>
-                                    <div class="text-end mt-auto">
-                                        <a href="#" class="offer-btn">BOOK NOW <i class='bx bx-right-arrow-circle'></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="offer-card">
-                            <div class="row g-0 h-100">
-                                <div class="col-4 col-md-4">
-                                    <div class="offer-img-box">
-                                        <img src="https://loremflickr.com/400/400/card,payment" alt="Forex Offer">
-                                    </div>
-                                </div>
-                                <div class="col-8 col-md-8 p-4 d-flex flex-column justify-content-center">
-                                    <p class="small text-muted mb-2 text-end fw-bold" style="font-size: 11px; letter-spacing: 1px;">T&C's APPLY</p>
-                                    <h4 class="offer-title">NEW: Zero Markup Currency Forex Card</h4>
-                                    <p class="small text-muted border-bottom pb-3 mb-3">Zero cross-currency fees | FREE ATM withdrawals anywhere in the world.</p>
-                                    <div class="text-end mt-auto">
-                                        <a href="#" class="offer-btn">EXPLORE NOW <i class='bx bx-right-arrow-circle'></i></a>
+                                    <div class="col-8 col-md-8 p-4 d-flex flex-column justify-content-center">
+                                        <p class="small text-muted mb-2 text-end fw-bold" style="font-size: 11px; letter-spacing: 1px;">
+                                            VALID TILL {{ \Carbon\Carbon::parse($offer->valid_until)->format('d M') }}
+                                        </p>
+                                        <h4 class="offer-title">{{ $offer->offer_name }}</h4>
+                                        <p class="small text-muted border-bottom pb-3 mb-3">
+                                            @if($offer->discount_type == 'Percentage')
+                                                Get {{ (int)$offer->discount_value }}% OFF. 
+                                            @else
+                                                Flat ₹{{ (int)$offer->discount_value }} OFF. 
+                                            @endif
+                                            Min booking: ₹{{ (int)$offer->min_booking_amount }}.
+                                            <br><strong class="text-dark">Code: {{ $offer->offer_code }}</strong>
+                                        </p>
+                                        <div class="text-end mt-auto">
+                                            <a href="#" class="offer-btn">CLAIM OFFER <i class='bx bx-right-arrow-circle'></i></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="offer-card">
-                            <div class="row g-0 h-100">
-                                <div class="col-4 col-md-4">
-                                    <div class="offer-img-box">
-                                        <img src="https://loremflickr.com/400/400/bus,travel" alt="Bus Offer">
-                                    </div>
-                                </div>
-                                <div class="col-8 col-md-8 p-4 d-flex flex-column justify-content-center">
-                                    <p class="small text-muted mb-2 text-end fw-bold" style="font-size: 11px; letter-spacing: 1px;">VALID TILL 30 MAR</p>
-                                    <h4 class="offer-title">Flat ₹300 OFF on Volvo Premium Buses</h4>
-                                    <p class="small text-muted border-bottom pb-3 mb-3">Travel comfortably across Bihar with Sangam exclusive bus fleet.</p>
-                                    <div class="text-end mt-auto">
-                                        <a href="#" class="offer-btn">BOOK BUS <i class='bx bx-right-arrow-circle'></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="offer-card">
-                            <div class="row g-0 h-100">
-                                <div class="col-4 col-md-4">
-                                    <div class="offer-img-box">
-                                        <img src="https://loremflickr.com/400/400/hotel,luxury" alt="Hotel Offer">
-                                    </div>
-                                </div>
-                                <div class="col-8 col-md-8 p-4 d-flex flex-column justify-content-center">
-                                    <p class="small text-muted mb-2 text-end fw-bold" style="font-size: 11px; letter-spacing: 1px;">APP EXCLUSIVE</p>
-                                    <h4 class="offer-title">Get Extra 15% OFF on 5-Star Hotels</h4>
-                                    <p class="small text-muted border-bottom pb-3 mb-3">Use code SANGAM15 at checkout. Valid on select premium properties.</p>
-                                    <div class="text-end mt-auto">
-                                        <a href="#" class="offer-btn">VIEW HOTELS <i class='bx bx-right-arrow-circle'></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @empty
+                        <p class="text-muted text-center py-4"><i class='bx bx-info-circle'></i> No active offers at the moment.</p>
+                    @endforelse
                 </div>
             </div>
-            <div class="tab-pane fade" id="bank-offers" role="tabpanel">
-                <div class="text-center py-5">
-                    <i class='bx bx-credit-card' style="font-size: 50px; color: #ccc;"></i>
-                    <h5 class="mt-3 text-muted">Bank specific offers will appear here.</h5>
+
+            {{-- Category Specific Tabs --}}
+            @foreach($offerCategories as $category)
+                <div class="tab-pane fade" id="cat-{{ Str::slug($category) }}" role="tabpanel">
+                    <div class="row g-4">
+                        @forelse($offers->where('apply_to', $category) as $offer)
+                            <div class="col-lg-6">
+                                <div class="offer-card">
+                                    <div class="row g-0 h-100">
+                                        <div class="col-4 col-md-4">
+                                            <div class="offer-img-box">
+                                                <img src="https://loremflickr.com/400/400/{{ Str::slug($category) }},travel?random={{ $offer->id }}" alt="Offer Image">
+                                            </div>
+                                        </div>
+                                        <div class="col-8 col-md-8 p-4 d-flex flex-column justify-content-center">
+                                            <p class="small text-muted mb-2 text-end fw-bold" style="font-size: 11px; letter-spacing: 1px;">CODE: {{ $offer->offer_code }}</p>
+                                            <h4 class="offer-title">{{ $offer->offer_name }}</h4>
+                                            <p class="small text-muted border-bottom pb-3 mb-3">
+                                                @if($offer->discount_type == 'Percentage')
+                                                    Enjoy {{ (int)$offer->discount_value }}% savings on your next {{ $category }} booking.
+                                                @else
+                                                    Save ₹{{ (int)$offer->discount_value }} instantly.
+                                                @endif
+                                            </p>
+                                            <div class="text-end mt-auto">
+                                                <a href="#" class="offer-btn">BOOK NOW <i class='bx bx-right-arrow-circle'></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @empty
+                            <p class="text-muted text-center py-4">No offers available for {{ $category }}.</p>
+                        @endforelse
+                    </div>
                 </div>
-            </div>
-            <div class="tab-pane fade" id="flights" role="tabpanel"><p class="text-muted text-center py-4">Loading flight offers...</p></div>
-            <div class="tab-pane fade" id="hotels" role="tabpanel"><p class="text-muted text-center py-4">Loading hotel deals...</p></div>
-            <div class="tab-pane fade" id="holidays" role="tabpanel"><p class="text-muted text-center py-4">Loading holiday packages...</p></div>
+            @endforeach
         </div>
+    </div>
+</section>
+
+<section class="tour-section-bg">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-end mb-5">
+            <div>
+                <h2 class="section-heading mb-1" style="color: #0A2239;">BEST SELLING HOLIDAYS</h2>
+                <p class="text-muted fs-5 mb-0">Curated packages for your perfect getaway.</p>
+            </div>
+            <a href="{{ route('tours.index') }}" class="text-decoration-none fw-bold d-none d-md-flex align-items-center gap-1" style="color: #FF4E00;">
+                View All Packages <i class='bx bx-right-arrow-alt fs-5'></i>
+            </a>
+        </div>
+
+        <div class="row g-4">
+            @forelse($tourPackages as $package)
+                @php
+                    // Main Image Setup
+                    $mainImg = $package->images->where('image_type', 'main')->first();
+                    $imagePath = ($mainImg && file_exists(public_path('uploads/packages/'.$mainImg->filename))) 
+                                 ? asset('uploads/packages/'.$mainImg->filename) 
+                                 : asset('no-image.png'); // Fallback image
+
+                    // Duration Calculation from stays
+                    $totalDays = $package->stays->sum('days');
+                    $totalNights = $package->stays->sum('nights');
+                    $durationText = ($totalDays > 0 || $totalNights > 0) 
+                                    ? "{$totalDays}D / {$totalNights}N" 
+                                    : "Custom Duration";
+
+                    // Discount Calculation
+                    $hasDiscount = !empty($package->discount_price) && $package->discount_price < $package->price;
+                    if($hasDiscount) {
+                        $discountPercentage = round((($package->price - $package->discount_price) / $package->price) * 100);
+                    }
+                @endphp
+
+                <div class="col-lg-4 col-md-6">
+                    <a href="{{ route('tours.detail', $package->package_id) }}" class="text-decoration-none">
+                        <div class="tour-card shadow-sm">
+                            
+                            {{-- Image & Badges --}}
+                            <div class="tour-img-wrapper">
+                                @if($hasDiscount)
+                                    <span class="tour-discount-badge">{{ $discountPercentage }}% OFF</span>
+                                @endif
+                                
+                                <img src="{{ $imagePath }}" alt="{{ $package->title }}">
+                                
+                                <span class="tour-duration-badge">
+                                    <i class='bx bx-time-five me-1'></i>{{ $durationText }}
+                                </span>
+                            </div>
+
+                            {{-- Card Body --}}
+                            <div class="tour-body">
+                                <div class="tour-location">
+                                    <i class='bx bxs-map text-primary fs-6'></i> 
+                                    {{ $package->location->state_name ?? 'India' }}, {{ $package->location->country_name ?? '' }}
+                                </div>
+                                
+                                <h3 class="tour-title">{{ $package->title }}</h3>
+                                
+                                <p class="text-muted small mb-0 line-clamp-2">
+                                    {{ Str::limit(strip_tags($package->details), 80, '...') ?: 'Experience the best of this destination with our exclusive package.' }}
+                                </p>
+
+                                {{-- Price Section --}}
+                                <div class="tour-price-section mt-4">
+                                    <div>
+                                        <span class="per-person d-block mb-1">Starting price per adult</span>
+                                        @if($hasDiscount)
+                                            <span class="original-price">₹{{ number_format($package->price) }}</span>
+                                            <span class="final-price">₹{{ number_format($package->discount_price) }}</span>
+                                        @else
+                                            <span class="final-price">₹{{ number_format($package->price) }}</span>
+                                        @endif
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-outline-primary btn-sm rounded-pill fw-bold px-3 py-1">View Details</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </a>
+                </div>
+            @empty
+                <div class="col-12 text-center py-5 text-muted">
+                    <i class='bx bx-briefcase-alt-2 fs-1 mb-3'></i>
+                    <h4>No Packages Available</h4>
+                    <p>We are currently updating our holiday packages. Check back soon!</p>
+                </div>
+            @endforelse
+        </div>
+        
+        {{-- Mobile View All Button --}}
+        <div class="text-center mt-4 d-block d-md-none">
+            <a href="{{ route('tours.index') }}" class="btn btn-outline-primary rounded-pill fw-bold px-4 py-2">
+                View All Packages
+            </a>
+        </div>
+
     </div>
 </section>
 
@@ -993,84 +1222,83 @@
             <p class="text-muted fs-5">Choose from a vast selection of accommodations across Bihar & Beyond.</p>
         </div>
 
+        {{-- Dynamic Accommodation Type Tabs --}}
         <ul class="nav nav-tabs custom-stay-tabs justify-content-lg-center" id="stayTabs" role="tablist">
-            <li class="nav-item" role="presentation"><button class="nav-link active" id="hotels-tab" data-bs-toggle="tab" data-bs-target="#hotels" type="button" role="tab"><i class='bx bx-building-house'></i> Hotels</button></li>
-            <li class="nav-item" role="presentation"><button class="nav-link" id="villas-tab" data-bs-toggle="tab" data-bs-target="#villas" type="button" role="tab"><i class='bx bx-home-alt'></i> Villas</button></li>
-            <li class="nav-item" role="presentation"><button class="nav-link" id="motels-tab" data-bs-toggle="tab" data-bs-target="#motels" type="button" role="tab"><i class='bx bx-car'></i> Motels</button></li>
-            <li class="nav-item" role="presentation"><button class="nav-link" id="resorts-tab" data-bs-toggle="tab" data-bs-target="#resorts" type="button" role="tab"><i class='bx bx-water'></i> Resorts</button></li>
-            <li class="nav-item" role="presentation"><button class="nav-link" id="homestays-tab" data-bs-toggle="tab" data-bs-target="#homestays" type="button" role="tab"><i class='bx bx-group'></i> Homestays</button></li>
-            <li class="nav-item" role="presentation"><button class="nav-link" id="guesthouses-tab" data-bs-toggle="tab" data-bs-target="#guesthouses" type="button" role="tab"><i class='bx bx-bed'></i> Guest Houses</button></li>
+            @foreach($accommodationTypes as $index => $type)
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link {{ $index == 0 ? 'active' : '' }}" id="type-{{ $type->id }}-tab" data-bs-toggle="tab" data-bs-target="#type-{{ $type->id }}" type="button" role="tab">
+                        <i class='bx {{ $type->icon ?? "bx-building-house" }}'></i> {{ $type->name }}
+                    </button>
+                </li>
+            @endforeach
         </ul>
 
+        {{-- Dynamic Tab Content for Accommodations --}}
         <div class="tab-content mt-4" id="stayTabsContent">
-            <div class="tab-pane fade show active" id="hotels" role="tabpanel" aria-labelledby="hotels-tab">
-                <div class="row g-4">
-                    <div class="col-lg-4 col-md-6">
-                        <div class="card stay-card border-0 shadow-sm h-100 p-2">
-                            <img src="https://loremflickr.com/500/300/hotel,building" class="card-img-top stay-card-img rounded-4" alt="Hotel">
-                            <div class="card-body px-2 pb-0">
-                                <div class="star-rating mb-1"><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i></div>
-                                <h5 class="card-title fw-bold mb-1">GRAND NIRVANA BODHGAYA</h5>
-                                <p class="text-muted small">Central location, Pool, Spa, Free Wifi</p>
-                            </div>
-                            <div class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-end px-2 pb-3">
-                                <div><span class="d-block small fw-bold text-muted" style="line-height: 1;">FROM</span><span class="fw-bold fs-5">₹2500<span class="small text-muted fs-6 fw-normal">/NIGHT</span></span></div>
-                                <a href="#" class="btn btn-view-details text-decoration-none">VIEW DETAILS</a>
-                            </div>
+            @foreach($accommodationTypes as $index => $type)
+                <div class="tab-pane fade {{ $index == 0 ? 'show active' : '' }}" id="type-{{ $type->id }}" role="tabpanel">
+                    
+                    @php
+                        // Is specific type ke hotels filter karna
+                        $filteredAccs = $accommodations->where('accommodation_type_id', $type->id);
+                    @endphp
+
+                    @if($filteredAccs->count() > 0)
+                        <div class="row g-4">
+                            @foreach($filteredAccs as $acc)
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="card stay-card border-0 shadow-sm h-100 p-2">
+                                        {{-- Image Logic --}}
+                                        @php
+                                            $mainImg = $acc->images->where('image_type', 'main')->first();
+                                            $imagePath = ($mainImg && file_exists(public_path('uploads/accommodations/'.$mainImg->filename))) 
+                                                         ? asset('uploads/accommodations/'.$mainImg->filename) 
+                                                         : asset('no-image.png'); // Add a default no-image in public folder
+                                        @endphp
+                                        <img src="{{ $imagePath }}" class="card-img-top stay-card-img rounded-4" alt="{{ $acc->name }}">
+                                        
+                                        <div class="card-body px-2 pb-0">
+                                            {{-- Star Rating Render Logic --}}
+                                            @php
+                                                $starCount = (int) filter_var($acc->star_rating, FILTER_SANITIZE_NUMBER_INT);
+                                                $starCount = $starCount > 5 ? 5 : ($starCount < 0 ? 0 : $starCount);
+                                            @endphp
+                                            <div class="star-rating mb-1">
+                                                @if($starCount > 0)
+                                                    @for($i = 1; $i <= 5; $i++)
+                                                        @if($i <= $starCount)
+                                                            <i class='bx bxs-star text-warning'></i>
+                                                        @else
+                                                            <i class='bx bx-star text-muted'></i>
+                                                        @endif
+                                                    @endfor
+                                                @else
+                                                    <span class="badge bg-secondary" style="font-size:10px;">Budget Stay</span>
+                                                @endif
+                                            </div>
+
+                                            <h5 class="card-title fw-bold mb-1 text-truncate" title="{{ $acc->name }}">{{ $acc->name }}</h5>
+                                            <p class="text-muted small mb-2"><i class='bx bx-map'></i> {{ $acc->location->city_location ?? 'N/A' }}, {{ $acc->location->state_name ?? 'N/A' }}</p>
+                                        </div>
+                                        <div class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-end px-2 pb-3 mt-auto">
+                                            <div>
+                                                <span class="d-block small fw-bold text-muted" style="line-height: 1;">FROM</span>
+                                                <span class="fw-bold fs-5">₹{{ number_format($acc->price_per_night) }}<span class="small text-muted fs-6 fw-normal">/NIGHT</span></span>
+                                            </div>
+                                            <a href="#" class="btn btn-view-details text-decoration-none">VIEW DETAILS</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="card stay-card border-0 shadow-sm h-100 p-2">
-                            <img src="https://loremflickr.com/500/300/resort,pool" class="card-img-top stay-card-img rounded-4" alt="Hotel">
-                            <div class="card-body px-2 pb-0">
-                                <div class="star-rating mb-1"><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star-half'></i></div>
-                                <h5 class="card-title fw-bold mb-1">BODHI TREE RETREAT Gaya</h5>
-                                <p class="text-muted small">Central location, Pool, Spa, Free Wifi</p>
-                            </div>
-                            <div class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-end px-2 pb-3">
-                                <div><span class="d-block small fw-bold text-muted" style="line-height: 1;">FROM</span><span class="fw-bold fs-5">₹3200<span class="small text-muted fs-6 fw-normal">/NIGHT</span></span></div>
-                                <a href="#" class="btn btn-view-details text-decoration-none">VIEW DETAILS</a>
-                            </div>
+                    @else
+                        <div class="text-center mt-5 text-muted">
+                            <i class='bx bx-ghost fs-1 mb-2'></i>
+                            <p>No {{ $type->name }} available at the moment. Coming soon!</p>
                         </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="card stay-card border-0 shadow-sm h-100 p-2">
-                            <img src="https://loremflickr.com/500/300/hotel,lobby" class="card-img-top stay-card-img rounded-4" alt="Hotel">
-                            <div class="card-body px-2 pb-0">
-                                <div class="star-rating mb-1"><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bx-star'></i></div>
-                                <h5 class="card-title fw-bold mb-1">PATNA MAURYA HOTEL</h5>
-                                <p class="text-muted small">City Center, Business Lounge, Free Breakfast</p>
-                            </div>
-                            <div class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-end px-2 pb-3">
-                                <div><span class="d-block small fw-bold text-muted" style="line-height: 1;">FROM</span><span class="fw-bold fs-5">₹4500<span class="small text-muted fs-6 fw-normal">/NIGHT</span></span></div>
-                                <a href="#" class="btn btn-view-details text-decoration-none">VIEW DETAILS</a>
-                            </div>
-                        </div>
-                    </div>
+                    @endif
                 </div>
-            </div>
-            <div class="tab-pane fade" id="villas" role="tabpanel" aria-labelledby="villas-tab">
-                <div class="row g-4">
-                    <div class="col-lg-4 col-md-6">
-                        <div class="card stay-card border-0 shadow-sm h-100 p-2">
-                            <img src="https://loremflickr.com/500/300/villa" class="card-img-top stay-card-img rounded-4" alt="Villa">
-                            <div class="card-body px-2 pb-0">
-                                <div class="star-rating mb-1"><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i></div>
-                                <h5 class="card-title fw-bold mb-1">LUXURY GANGES VILLA</h5>
-                                <p class="text-muted small">Private Pool, 4 Bedrooms, River View</p>
-                            </div>
-                            <div class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-end px-2 pb-3">
-                                <div><span class="d-block small fw-bold text-muted" style="line-height: 1;">FROM</span><span class="fw-bold fs-5">₹12000<span class="small text-muted fs-6 fw-normal">/NIGHT</span></span></div>
-                                <a href="#" class="btn btn-view-details text-decoration-none">VIEW DETAILS</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="motels" role="tabpanel"><p class="text-center mt-5 text-muted">Motels coming soon...</p></div>
-            <div class="tab-pane fade" id="resorts" role="tabpanel"><p class="text-center mt-5 text-muted">Resorts coming soon...</p></div>
-            <div class="tab-pane fade" id="homestays" role="tabpanel"><p class="text-center mt-5 text-muted">Homestays coming soon...</p></div>
-            <div class="tab-pane fade" id="guesthouses" role="tabpanel"><p class="text-center mt-5 text-muted">Guest Houses coming soon...</p></div>
+            @endforeach
         </div>
     </div>
 </section>
@@ -1207,115 +1435,78 @@
     </div>
 </section>
 
+
 <section class="py-5" style="background-color: #ffffff;">
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-end mb-5">
-                <div>
-                    <h2 class="section-heading mb-1" style="color: #0A2239;">PREMIUM CAB RENTALS</h2>
-                    <p class="text-muted fs-5 mb-0">Book clean, sanitized, and reliable cabs for your journey.</p>
-                </div>
-                <a href="#" class="text-decoration-none fw-bold d-none d-md-block" style="color: #FF4E00;">View All Cabs <i class='bx bx-right-arrow-alt'></i></a>
+    <div class="container">
+        
+        {{-- Section Header & Tabs --}}
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4">
+            <div>
+                <h2 class="section-heading mb-2" style="color: #0A2239;">BOOK A RIDE</h2>
+                <p class="text-muted fs-5 mb-0">From premium cabs to budget-friendly bikes.</p>
             </div>
-
-            <div class="row g-4">
-                <div class="col-lg-3 col-md-6">
-                    <div class="car-card">
-                        <div class="car-img-wrapper">
-                            <img src="https://loremflickr.com/500/300/hatchback,car?random=11" alt="Hatchback">
-                        </div>
-                        <div class="card-body p-4">
-                            <h5 class="fw-bold mb-1">Hatchback</h5>
-                            <p class="text-muted small mb-3">Swift, Baleno or similar</p>
-                            <div class="car-features">
-                                <span><i class='bx bx-user'></i> 4 Seats</span>
-                                <span><i class='bx bx-briefcase'></i> 2 Bags</span>
-                                <span><i class='bx bx-wind'></i> A/C</span>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center mt-4 border-top pt-3">
-                                <div>
-                                    <span class="d-block small text-muted" style="line-height: 1;">Starting at</span>
-                                    <span class="fw-bold fs-5 text-dark">₹11<span class="small text-muted fs-6 fw-normal">/km</span></span>
-                                </div>
-                                <a href="#" class="btn btn-reserve px-3 py-1" style="width: auto;">Book</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="car-card">
-                        <div class="car-img-wrapper">
-                            <img src="https://loremflickr.com/500/300/sedan,car?random=12" alt="Sedan">
-                        </div>
-                        <div class="card-body p-4">
-                            <h5 class="fw-bold mb-1">Sedan</h5>
-                            <p class="text-muted small mb-3">Dzire, Etios or similar</p>
-                            <div class="car-features">
-                                <span><i class='bx bx-user'></i> 4 Seats</span>
-                                <span><i class='bx bx-briefcase'></i> 3 Bags</span>
-                                <span><i class='bx bx-wind'></i> A/C</span>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center mt-4 border-top pt-3">
-                                <div>
-                                    <span class="d-block small text-muted" style="line-height: 1;">Starting at</span>
-                                    <span class="fw-bold fs-5 text-dark">₹13<span class="small text-muted fs-6 fw-normal">/km</span></span>
-                                </div>
-                                <a href="#" class="btn btn-reserve px-3 py-1" style="width: auto;">Book</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="car-card">
-                        <div class="car-img-wrapper">
-                            <img src="https://loremflickr.com/500/300/suv,car?random=13" alt="SUV">
-                        </div>
-                        <div class="card-body p-4">
-                            <h5 class="fw-bold mb-1">SUV</h5>
-                            <p class="text-muted small mb-3">Innova, Ertiga or similar</p>
-                            <div class="car-features">
-                                <span><i class='bx bx-user'></i> 6 Seats</span>
-                                <span><i class='bx bx-briefcase'></i> 4 Bags</span>
-                                <span><i class='bx bx-wind'></i> A/C</span>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center mt-4 border-top pt-3">
-                                <div>
-                                    <span class="d-block small text-muted" style="line-height: 1;">Starting at</span>
-                                    <span class="fw-bold fs-5 text-dark">₹18<span class="small text-muted fs-6 fw-normal">/km</span></span>
-                                </div>
-                                <a href="#" class="btn btn-reserve px-3 py-1" style="width: auto;">Book</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="car-card">
-                        <div class="car-img-wrapper">
-                            <img src="https://loremflickr.com/500/300/luxury,car?random=14" alt="Luxury">
-                        </div>
-                        <div class="card-body p-4">
-                            <h5 class="fw-bold mb-1">Luxury Class</h5>
-                            <p class="text-muted small mb-3">BMW, Mercedes or similar</p>
-                            <div class="car-features">
-                                <span><i class='bx bx-user'></i> 4 Seats</span>
-                                <span><i class='bx bx-briefcase'></i> 3 Bags</span>
-                                <span><i class='bx bx-wind'></i> A/C</span>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center mt-4 border-top pt-3">
-                                <div>
-                                    <span class="d-block small text-muted" style="line-height: 1;">Starting at</span>
-                                    <span class="fw-bold fs-5 text-dark">₹35<span class="small text-muted fs-6 fw-normal">/km</span></span>
-                                </div>
-                                <a href="#" class="btn btn-reserve px-3 py-1" style="width: auto;">Book</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
+            {{-- 🔥 The Navigation Tabs --}}
+            <ul class="nav nav-pills offer-tabs mt-3 mt-md-0" id="rideTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="cabs-tab" data-bs-toggle="pill" data-bs-target="#cabs-content" type="button" role="tab">
+                        <i class='bx bxs-car me-1'></i> Cabs
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="auto-tab" data-bs-toggle="pill" data-bs-target="#auto-content" type="button" role="tab">
+                        <i class='bx bxs-taxi me-1'></i> Auto
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="erickshaw-tab" data-bs-toggle="pill" data-bs-target="#erickshaw-content" type="button" role="tab">
+                        <i class='bx bx-bus me-1'></i> E-Rickshaw
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="bike-tab" data-bs-toggle="pill" data-bs-target="#bike-content" type="button" role="tab">
+                        <i class='bx bx-cycling me-1'></i> Bikes
+                    </button>
+                </li>
+            </ul>
         </div>
-    </section>
+
+        {{-- Tab Contents --}}
+        <div class="tab-content" id="rideTabsContent">
+            
+            {{-- 🔥 1. CABS TAB --}}
+            <div class="tab-pane fade show active" id="cabs-content" role="tabpanel">
+                <div class="row g-4">
+                    @include('partials.ride_cards', ['rides' => $cabs, 'emptyMsg' => 'No cabs available right now.'])
+                </div>
+            </div>
+
+            {{-- 🔥 2. AUTO TAB --}}
+            <div class="tab-pane fade" id="auto-content" role="tabpanel">
+                <div class="row g-4">
+                    @include('partials.ride_cards', ['rides' => $autos, 'emptyMsg' => 'No auto rickshaws available right now.'])
+                </div>
+            </div>
+
+            {{-- 🔥 3. E-RICKSHAW TAB --}}
+            <div class="tab-pane fade" id="erickshaw-content" role="tabpanel">
+                <div class="row g-4">
+                    @include('partials.ride_cards', ['rides' => $eRickshaws, 'emptyMsg' => 'No E-Rickshaws available right now.'])
+                </div>
+            </div>
+
+            {{-- 🔥 4. BIKES TAB --}}
+            <div class="tab-pane fade" id="bike-content" role="tabpanel">
+                <div class="row g-4">
+                    @include('partials.ride_cards', ['rides' => $bikes, 'emptyMsg' => 'No bikes available right now.'])
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
 
     <section class="stats-section" id="statsSection">
         <div class="container">

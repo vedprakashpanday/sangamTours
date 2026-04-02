@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 26, 2026 at 02:29 PM
+-- Generation Time: Apr 02, 2026 at 03:06 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -31,7 +31,8 @@ CREATE TABLE `accommodations` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `accommodation_id` varchar(255) DEFAULT NULL,
   `name` varchar(255) NOT NULL,
-  `hotel_type` varchar(255) NOT NULL,
+  `accommodation_type_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `star_rating` varchar(255) DEFAULT NULL,
   `location_id` bigint(20) UNSIGNED NOT NULL,
   `price_per_night` decimal(10,2) NOT NULL,
   `description` text DEFAULT NULL,
@@ -40,6 +41,62 @@ CREATE TABLE `accommodations` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `accommodations`
+--
+
+INSERT INTO `accommodations` (`id`, `accommodation_id`, `name`, `accommodation_type_id`, `star_rating`, `location_id`, `price_per_night`, `description`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 'ACC-2026-7634', 'Windsor', 3, '3 Star', 1, 449.00, 'We are testing this panel', 1, NULL, '2026-04-02 02:47:05', '2026-04-02 02:47:05');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `accommodation_amenity`
+--
+
+CREATE TABLE `accommodation_amenity` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `accommodation_id` bigint(20) UNSIGNED NOT NULL,
+  `amenity_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `accommodation_amenity`
+--
+
+INSERT INTO `accommodation_amenity` (`id`, `accommodation_id`, `amenity_id`) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 1, 3),
+(4, 1, 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `accommodation_types`
+--
+
+CREATE TABLE `accommodation_types` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `icon` varchar(255) DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `accommodation_types`
+--
+
+INSERT INTO `accommodation_types` (`id`, `name`, `icon`, `status`, `created_at`, `updated_at`) VALUES
+(2, 'Villas', 'bx-hotel', 1, '2026-04-02 01:36:20', '2026-04-02 02:01:33'),
+(3, 'Motels', 'bx-bed', 1, '2026-04-02 01:36:25', '2026-04-02 02:01:17'),
+(4, 'Resorts', 'bx-hotel', 1, '2026-04-02 01:36:37', '2026-04-02 02:47:42'),
+(5, 'HomeStays', 'bx-building', 1, '2026-04-02 01:36:44', '2026-04-02 02:00:51'),
+(6, 'PG', 'bx-home', 1, '2026-04-02 01:36:51', '2026-04-02 02:00:41'),
+(7, 'Hostels', 'bx-hotel', 1, '2026-04-02 01:36:58', '2026-04-02 02:00:33');
 
 -- --------------------------------------------------------
 
@@ -51,6 +108,7 @@ CREATE TABLE `amenities` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `icon` varchar(255) DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -59,17 +117,11 @@ CREATE TABLE `amenities` (
 -- Dumping data for table `amenities`
 --
 
-INSERT INTO `amenities` (`id`, `name`, `icon`, `created_at`, `updated_at`) VALUES
-(1, 'WiFi', 'bx bx-wifi', '2026-03-24 02:03:51', '2026-03-24 02:03:51'),
-(2, 'Air Conditioned (AC)', 'bx bx-wind', '2026-03-24 02:03:51', '2026-03-24 02:03:51'),
-(3, 'Complimentary Meal', 'bx bx-restaurant', '2026-03-24 02:03:51', '2026-03-24 02:03:51'),
-(4, 'Water Bottle', 'bx bx-water', '2026-03-24 02:03:51', '2026-03-24 02:03:51'),
-(5, 'Charging Point', 'bx bx-battery-charging', '2026-03-24 02:03:51', '2026-03-24 02:03:51'),
-(6, 'Blankets & Pillow', 'bx bx-bed', '2026-03-24 02:03:51', '2026-03-24 02:03:51'),
-(7, 'Recliner Seats', 'bx bx-chair', '2026-03-24 02:03:51', '2026-03-24 02:03:51'),
-(8, 'GPS Tracking', 'bx bx-map-pin', '2026-03-24 02:03:51', '2026-03-24 02:03:51'),
-(9, 'Entertainment (TV)', 'bx bx-tv', '2026-03-24 02:03:51', '2026-03-24 02:03:51'),
-(10, 'Emergency Exit', 'bx bx-exit', '2026-03-24 02:03:51', '2026-03-24 02:03:51');
+INSERT INTO `amenities` (`id`, `name`, `icon`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Free Wifi', 'bx-wifi', 1, '2026-04-02 02:13:12', '2026-04-02 02:13:12'),
+(2, 'Charging Slots', 'bx-plug', 1, '2026-04-02 02:13:30', '2026-04-02 02:13:30'),
+(3, 'CCTV', 'bx-cctv', 1, '2026-04-02 02:13:53', '2026-04-02 02:13:53'),
+(4, 'Coffee', 'bx-coffee', 1, '2026-04-02 02:35:28', '2026-04-02 02:35:28');
 
 -- --------------------------------------------------------
 
@@ -88,9 +140,15 @@ CREATE TABLE `amenity_vehicle` (
 --
 
 INSERT INTO `amenity_vehicle` (`id`, `vehicle_id`, `amenity_id`) VALUES
-(1, 1, 8),
-(2, 1, 10),
-(3, 2, 10);
+(4, 2, 1),
+(5, 2, 2),
+(6, 2, 3),
+(7, 1, 1),
+(8, 1, 2),
+(9, 1, 3),
+(10, 1, 4),
+(11, 3, 1),
+(12, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -170,6 +228,48 @@ CREATE TABLE `common_images` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `common_images`
+--
+
+INSERT INTO `common_images` (`id`, `filename`, `image_type`, `imageable_id`, `imageable_type`, `created_at`, `updated_at`) VALUES
+(1, '8171775117825.webp', 'main', 1, 'App\\Models\\Accommodation', '2026-04-02 02:47:05', '2026-04-02 02:47:05'),
+(2, '2451775117825.webp', 'gallery', 1, 'App\\Models\\Accommodation', '2026-04-02 02:47:05', '2026-04-02 02:47:05'),
+(3, '2831775117825.jpg', 'gallery', 1, 'App\\Models\\Accommodation', '2026-04-02 02:47:05', '2026-04-02 02:47:05'),
+(4, '4311775117825.jpeg', 'gallery', 1, 'App\\Models\\Accommodation', '2026-04-02 02:47:05', '2026-04-02 02:47:05'),
+(5, '6991775121998.webp', 'main', 1, 'App\\Models\\TourPackage', '2026-04-02 03:56:38', '2026-04-02 03:56:38'),
+(6, '7911775121998.jpeg', 'gallery', 1, 'App\\Models\\TourPackage', '2026-04-02 03:56:38', '2026-04-02 03:56:38'),
+(7, '2211775121998.jpeg', 'gallery', 1, 'App\\Models\\TourPackage', '2026-04-02 03:56:38', '2026-04-02 03:56:38'),
+(8, '2841775121998.jpeg', 'gallery', 1, 'App\\Models\\TourPackage', '2026-04-02 03:56:38', '2026-04-02 03:56:38'),
+(9, '4291775121998.jpeg', 'gallery', 1, 'App\\Models\\TourPackage', '2026-04-02 03:56:38', '2026-04-02 03:56:38'),
+(10, '1691775121998.png', 'gallery', 1, 'App\\Models\\TourPackage', '2026-04-02 03:56:38', '2026-04-02 03:56:38'),
+(11, '5681775121998.jpeg', 'gallery', 1, 'App\\Models\\TourPackage', '2026-04-02 03:56:38', '2026-04-02 03:56:38'),
+(12, '8571775121998.jpeg', 'gallery', 1, 'App\\Models\\TourPackage', '2026-04-02 03:56:38', '2026-04-02 03:56:38'),
+(13, '5281775121998.jpeg', 'gallery', 1, 'App\\Models\\TourPackage', '2026-04-02 03:56:38', '2026-04-02 03:56:38'),
+(14, '3341775121998.gif', 'gallery', 1, 'App\\Models\\TourPackage', '2026-04-02 03:56:38', '2026-04-02 03:56:38'),
+(15, '6291775121998.gif', 'gallery', 1, 'App\\Models\\TourPackage', '2026-04-02 03:56:38', '2026-04-02 03:56:38'),
+(16, '6941775121998.jpeg', 'gallery', 1, 'App\\Models\\TourPackage', '2026-04-02 03:56:38', '2026-04-02 03:56:38'),
+(17, '9371775121998.jpeg', 'gallery', 1, 'App\\Models\\TourPackage', '2026-04-02 03:56:38', '2026-04-02 03:56:38'),
+(18, '4861775121998.jpeg', 'gallery', 1, 'App\\Models\\TourPackage', '2026-04-02 03:56:38', '2026-04-02 03:56:38'),
+(19, '5211775121998.jpeg', 'gallery', 1, 'App\\Models\\TourPackage', '2026-04-02 03:56:38', '2026-04-02 03:56:38'),
+(20, '7081775121998.jpeg', 'gallery', 1, 'App\\Models\\TourPackage', '2026-04-02 03:56:38', '2026-04-02 03:56:38'),
+(21, '6681775121998.png', 'gallery', 1, 'App\\Models\\TourPackage', '2026-04-02 03:56:38', '2026-04-02 03:56:38'),
+(22, '3431775121998.webp', 'gallery', 1, 'App\\Models\\TourPackage', '2026-04-02 03:56:38', '2026-04-02 03:56:38'),
+(23, '4691775121998.webp', 'gallery', 1, 'App\\Models\\TourPackage', '2026-04-02 03:56:38', '2026-04-02 03:56:38'),
+(24, '92501775124639.webp', 'main', 2, 'App\\Models\\Vehicle', '2026-04-02 04:40:39', '2026-04-02 04:40:39'),
+(25, '66171775124639.jpg', 'gallery', 2, 'App\\Models\\Vehicle', '2026-04-02 04:40:39', '2026-04-02 04:40:39'),
+(26, '20061775124639.jpg', 'gallery', 2, 'App\\Models\\Vehicle', '2026-04-02 04:40:39', '2026-04-02 04:40:39'),
+(27, '53371775124691.png', 'main', 1, 'App\\Models\\Vehicle', '2026-04-02 04:41:31', '2026-04-02 04:41:31'),
+(28, '70231775124691.png', 'gallery', 1, 'App\\Models\\Vehicle', '2026-04-02 04:41:31', '2026-04-02 04:41:31'),
+(29, '52171775124691.webp', 'gallery', 1, 'App\\Models\\Vehicle', '2026-04-02 04:41:31', '2026-04-02 04:41:31'),
+(30, '61221775124842.jpg', 'main', 3, 'App\\Models\\Vehicle', '2026-04-02 04:44:02', '2026-04-02 04:44:02'),
+(31, '38771775124842.jpg', 'gallery', 3, 'App\\Models\\Vehicle', '2026-04-02 04:44:02', '2026-04-02 04:44:02'),
+(32, '92641775124842.jpg', 'gallery', 3, 'App\\Models\\Vehicle', '2026-04-02 04:44:02', '2026-04-02 04:44:02'),
+(33, '57551775124842.webp', 'gallery', 3, 'App\\Models\\Vehicle', '2026-04-02 04:44:02', '2026-04-02 04:44:02'),
+(34, '12921775127772.png', 'main', 4, 'App\\Models\\Vehicle', '2026-04-02 05:32:52', '2026-04-02 05:32:52'),
+(35, '42801775129016.jpg', 'main', 5, 'App\\Models\\Vehicle', '2026-04-02 05:53:36', '2026-04-02 05:53:36'),
+(36, '98251775129156.png', 'main', 6, 'App\\Models\\Vehicle', '2026-04-02 05:55:56', '2026-04-02 05:55:56');
 
 -- --------------------------------------------------------
 
@@ -338,7 +438,18 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (27, '2026_03_23_080305_rename_base_fare_in_vehicles', 1),
 (28, '2026_03_23_082220_add_distance_to_routes_table', 1),
 (29, '2026_03_24_053740_add_role_to_users_table', 1),
-(30, '2026_03_24_081249_create_passengers_table', 2);
+(30, '2026_03_24_081249_create_passengers_table', 2),
+(31, '2026_04_01_124328_create_vendor_types_table', 3),
+(32, '2026_04_01_132427_add_vendor_type_id_to_vendors_table', 4),
+(33, '2026_04_02_063635_create_accommodation_types_table', 5),
+(34, '2026_04_02_065739_update_accommodations_table_for_types_and_stars', 6),
+(35, '2026_04_02_071344_add_icon_to_types_tables', 7),
+(36, '2026_04_02_074105_create_amenities_table', 8),
+(37, '2026_04_02_074924_create_accommodation_amenity_table', 9),
+(38, '2026_04_02_093824_add_image_to_vendors_table', 10),
+(39, '2026_04_02_102000_alter_type_column_in_vehicles_table', 11),
+(40, '2026_04_02_103105_add_model_and_luggage_to_vehicles_table', 12),
+(41, '2026_04_02_124420_create_otps_table', 13);
 
 -- --------------------------------------------------------
 
@@ -362,6 +473,28 @@ CREATE TABLE `offers` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `offers`
+--
+
+INSERT INTO `offers` (`id`, `offer_name`, `offer_code`, `apply_to`, `content_id`, `discount_type`, `discount_value`, `min_booking_amount`, `valid_until`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'April Monsoon', 'April500', 'All', NULL, 'Fixed', 500.00, 1500.00, '2026-04-30', 1, '2026-04-02 02:48:59', '2026-04-02 02:48:59', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `otps`
+--
+
+CREATE TABLE `otps` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `otp` varchar(255) NOT NULL,
+  `expires_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- --------------------------------------------------------
 
 --
@@ -377,6 +510,14 @@ CREATE TABLE `package_stays` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `package_stays`
+--
+
+INSERT INTO `package_stays` (`id`, `tour_package_id`, `days`, `nights`, `place_description`, `created_at`, `updated_at`) VALUES
+(1, 1, 3, 2, 'gopalganj', '2026-04-02 03:56:38', '2026-04-02 03:56:38'),
+(2, 1, 4, 3, 'thawe', '2026-04-02 03:56:38', '2026-04-02 03:56:38');
 
 -- --------------------------------------------------------
 
@@ -521,7 +662,11 @@ CREATE TABLE `seat_categories` (
 --
 
 INSERT INTO `seat_categories` (`id`, `vendor_id`, `category_name`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Seater(Non-AC)', '2026-03-24 02:07:05', '2026-03-24 02:07:05');
+(1, 1, 'Seater(Non-AC)', '2026-03-24 02:07:05', '2026-03-24 02:07:05'),
+(3, 3, 'Seater (AC)', '2026-04-02 04:44:02', '2026-04-02 04:44:02'),
+(4, 4, 'Seater(Non-AC)', '2026-04-02 05:32:52', '2026-04-02 05:32:52'),
+(5, 5, 'Seater(Non-AC)', '2026-04-02 05:53:36', '2026-04-02 05:53:36'),
+(6, 6, 'Seater(Non-AC)', '2026-04-02 05:55:56', '2026-04-02 05:55:56');
 
 -- --------------------------------------------------------
 
@@ -543,8 +688,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('hU6mX4FpNKHdkNq2wyvHhoDG27XW69QNk5pmSB0f', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiR0kxQmNZMGJ2cHN5Y1RRaDE0Z3FpWm00WXZOVVVOd29tQzhhQ1F5WCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czo0OiJob21lIjt9fQ==', 1774531740),
-('LnqyAPDb4jpcJrhzb3nHIXv1JmHtwFMHipVQ0Not', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiTDhtSmVZVGNkR2NDUlFna3Q0Q2FZTGdJeUxoM0NhUnhHOHFKOXowSyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6NDM6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9mb3Jnb3QtcGFzc3dvcmQiO3M6NToicm91dGUiO3M6MjI6ImFkbWluLnBhc3N3b3JkLnJlcXVlc3QiO319', 1774421549);
+('cp3X4hKBmylu0jLpF51N1TXNxUhIdmsfw56q8exn', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiYWowQzlEYXBpM0RVTXBHM3FTazB2YVppa0VySnR3eHM0U0J3SkFrSiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czo0OiJob21lIjt9fQ==', 1775135089);
 
 -- --------------------------------------------------------
 
@@ -565,6 +709,13 @@ CREATE TABLE `tour_packages` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tour_packages`
+--
+
+INSERT INTO `tour_packages` (`id`, `package_id`, `title`, `price`, `discount_price`, `details`, `location_id`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'PKG-2026-1467', 'Thawe Special', 20000.00, 12000.00, '7 days tour', 3, 1, '2026-04-02 03:56:38', '2026-04-02 03:56:38', NULL);
 
 -- --------------------------------------------------------
 
@@ -589,7 +740,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `role`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'vedprakash.infoera@gmail.com', NULL, '$2y$12$qJkpwaKOf0Hl9zRxZdSgo.jhkvK38od2vemLVBhzG11wZfN7.QQf.', 'admin', 'CC8acwFsWsvZeZx6WQoFdYjmZ5GG1KmY8SXHLMWr3loBg744NODyyotm4usJ', '2026-03-24 00:23:42', '2026-03-24 01:23:13');
+(1, 'Admin', 'vedprakash.infoera@gmail.com', NULL, '$2y$12$qJkpwaKOf0Hl9zRxZdSgo.jhkvK38od2vemLVBhzG11wZfN7.QQf.', 'admin', '5C2pMNLqP75ugmPAedAuwqO5xAdApG273qbpQPsMgUyhua4HcofZtyDhEgCW', '2026-03-24 00:23:42', '2026-03-24 01:23:13'),
+(2, 'rishikesh raj', 'akshayraj9123@gmail.com', NULL, '$2y$12$DsyYbT.dHYqSkAUtWjx1TuiJvpZfx6pnmBKH7ZQ7D1pW2AUANaSSe', 'admin', NULL, '2026-04-02 07:33:48', '2026-04-02 07:33:48');
 
 -- --------------------------------------------------------
 
@@ -600,11 +752,13 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `ro
 CREATE TABLE `vehicles` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `vendor_id` bigint(20) UNSIGNED NOT NULL,
-  `type` enum('Flight','Bus','Train') NOT NULL,
+  `type` varchar(255) NOT NULL,
   `vehicle_number` varchar(255) NOT NULL,
   `total_seats` int(11) NOT NULL,
   `charges_per_km` decimal(10,2) NOT NULL,
   `seat_type` varchar(255) DEFAULT NULL,
+  `model_name` varchar(255) DEFAULT NULL,
+  `luggage_allowed` varchar(255) DEFAULT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -615,9 +769,13 @@ CREATE TABLE `vehicles` (
 -- Dumping data for table `vehicles`
 --
 
-INSERT INTO `vehicles` (`id`, `vendor_id`, `type`, `vehicle_number`, `total_seats`, `charges_per_km`, `seat_type`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Bus', 'BR06AP7636', 60, 1.50, 'Seater(Non-AC)', 1, NULL, '2026-03-24 02:07:05', '2026-03-24 02:07:05'),
-(2, 1, 'Bus', 'BR06AP7635', 80, 1.00, 'Seater(Non-AC)', 1, NULL, '2026-03-24 02:12:30', '2026-03-24 02:12:30');
+INSERT INTO `vehicles` (`id`, `vendor_id`, `type`, `vehicle_number`, `total_seats`, `charges_per_km`, `seat_type`, `model_name`, `luggage_allowed`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Bus', 'BR06AP7636', 60, 1.50, 'Seater(Non-AC)', NULL, NULL, 1, NULL, '2026-03-24 02:07:05', '2026-03-24 02:07:05'),
+(2, 1, 'Bus', 'BR06AP7635', 80, 1.00, 'Seater(Non-AC)', NULL, NULL, 1, NULL, '2026-03-24 02:12:30', '2026-03-24 02:12:30'),
+(3, 3, 'Cab', 'BR06AP7642', 7, 5.00, 'Seater (AC)', 'Swift Dezire', '2Bags,1Trollery', 1, NULL, '2026-04-02 04:44:02', '2026-04-02 05:06:56'),
+(4, 4, 'Auto Rikshaw', 'BR06AP7645', 3, 2.50, 'Seater(Non-AC)', 'HawaHawai', '2bags', 1, NULL, '2026-04-02 05:32:52', '2026-04-02 05:32:52'),
+(5, 5, 'toto', 'BR06AP7689', 7, 1.00, 'Seater(Non-AC)', 'Mayuri', '7', 1, NULL, '2026-04-02 05:53:36', '2026-04-02 05:53:36'),
+(6, 6, 'bike', 'KA35S7222', 2, 6.00, 'Seater(Non-AC)', 'Yamaha FZ', '1bag,1trolley', 1, NULL, '2026-04-02 05:55:56', '2026-04-02 05:55:56');
 
 -- --------------------------------------------------------
 
@@ -628,9 +786,10 @@ INSERT INTO `vehicles` (`id`, `vendor_id`, `type`, `vehicle_number`, `total_seat
 CREATE TABLE `vendors` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
-  `type` enum('Airline','Bus Operator','Train Dept','Hotel Partner') NOT NULL,
+  `vendor_type_id` bigint(20) UNSIGNED DEFAULT NULL,
   `phone` varchar(255) NOT NULL,
   `email` varchar(255) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
   `is_api` tinyint(1) NOT NULL DEFAULT 0,
   `status` tinyint(4) NOT NULL DEFAULT 1,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -642,9 +801,39 @@ CREATE TABLE `vendors` (
 -- Dumping data for table `vendors`
 --
 
-INSERT INTO `vendors` (`id`, `name`, `type`, `phone`, `email`, `is_api`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'Jai Hanuman', 'Bus Operator', '73015 63232', NULL, 0, 1, NULL, '2026-03-24 01:43:10', '2026-03-24 01:43:10'),
-(2, 'Local Tour Travels', 'Bus Operator', '9089098789', 'local.g@gmail.com', 1, 1, NULL, '2026-03-24 06:07:21', '2026-03-24 06:07:21');
+INSERT INTO `vendors` (`id`, `name`, `vendor_type_id`, `phone`, `email`, `image`, `is_api`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 'Jai Hanuman', 2, '73015 63232', NULL, '1775123145_crain.jpeg', 0, 1, NULL, '2026-03-24 01:43:10', '2026-04-02 04:15:45'),
+(2, 'Local Tour Travels', 2, '9089098789', 'local.g@gmail.com', '1775123132_LNMU.webp', 1, 1, NULL, '2026-03-24 06:07:21', '2026-04-02 04:15:32'),
+(3, 'Indigi', 1, '73015 63233', 'adil@mail1.com', '1775123098_civilcourt.webp', 0, 1, NULL, '2026-04-01 07:59:07', '2026-04-02 04:15:16'),
+(4, 'Ramesh', 3, '123654789', NULL, '1775127721_front.jpeg', 0, 1, NULL, '2026-04-02 05:32:01', '2026-04-02 05:32:01'),
+(5, 'rishikesh', 4, '159876812', NULL, '1775128880_e-rick-Dark-Blue-6-scaled.jpg', 0, 1, NULL, '2026-04-02 05:51:20', '2026-04-02 05:51:20'),
+(6, 'Ashish', 5, '4657891230', NULL, '1775128957_Red-Motorcycle-PNG-HD-Quality-2892808416.png', 0, 1, NULL, '2026-04-02 05:52:37', '2026-04-02 05:52:37');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vendor_types`
+--
+
+CREATE TABLE `vendor_types` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `icon` varchar(255) DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `vendor_types`
+--
+
+INSERT INTO `vendor_types` (`id`, `name`, `icon`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Cab', 'bx-car', 1, '2026-04-01 07:38:32', '2026-04-02 04:21:51'),
+(2, 'Bus', 'bx-bus', 1, '2026-04-01 08:09:50', '2026-04-02 04:21:45'),
+(3, 'Auto Rikshaw', 'bx-taxi', 1, '2026-04-02 05:31:11', '2026-04-02 05:50:26'),
+(4, 'toto', 'bx-taxi', 1, '2026-04-02 05:46:11', '2026-04-02 05:50:20'),
+(5, 'bike', 'bx-cycling', 1, '2026-04-02 05:50:39', '2026-04-02 05:50:39');
 
 --
 -- Indexes for dumped tables
@@ -655,13 +844,30 @@ INSERT INTO `vendors` (`id`, `name`, `type`, `phone`, `email`, `is_api`, `status
 --
 ALTER TABLE `accommodations`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `accommodations_location_id_foreign` (`location_id`);
+  ADD KEY `accommodations_location_id_foreign` (`location_id`),
+  ADD KEY `accommodations_accommodation_type_id_foreign` (`accommodation_type_id`);
+
+--
+-- Indexes for table `accommodation_amenity`
+--
+ALTER TABLE `accommodation_amenity`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `accommodation_amenity_accommodation_id_foreign` (`accommodation_id`),
+  ADD KEY `accommodation_amenity_amenity_id_foreign` (`amenity_id`);
+
+--
+-- Indexes for table `accommodation_types`
+--
+ALTER TABLE `accommodation_types`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `accommodation_types_name_unique` (`name`);
 
 --
 -- Indexes for table `amenities`
 --
 ALTER TABLE `amenities`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `amenities_name_unique` (`name`);
 
 --
 -- Indexes for table `amenity_vehicle`
@@ -745,6 +951,12 @@ ALTER TABLE `migrations`
 ALTER TABLE `offers`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `offers_offer_code_unique` (`offer_code`);
+
+--
+-- Indexes for table `otps`
+--
+ALTER TABLE `otps`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `package_stays`
@@ -832,7 +1044,15 @@ ALTER TABLE `vehicles`
 --
 ALTER TABLE `vendors`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `vendors_phone_unique` (`phone`);
+  ADD UNIQUE KEY `vendors_phone_unique` (`phone`),
+  ADD KEY `vendors_vendor_type_id_foreign` (`vendor_type_id`);
+
+--
+-- Indexes for table `vendor_types`
+--
+ALTER TABLE `vendor_types`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `vendor_types_name_unique` (`name`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -842,19 +1062,31 @@ ALTER TABLE `vendors`
 -- AUTO_INCREMENT for table `accommodations`
 --
 ALTER TABLE `accommodations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `accommodation_amenity`
+--
+ALTER TABLE `accommodation_amenity`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `accommodation_types`
+--
+ALTER TABLE `accommodation_types`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `amenities`
 --
 ALTER TABLE `amenities`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `amenity_vehicle`
 --
 ALTER TABLE `amenity_vehicle`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `bookings`
@@ -866,7 +1098,7 @@ ALTER TABLE `bookings`
 -- AUTO_INCREMENT for table `common_images`
 --
 ALTER TABLE `common_images`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `customers`
@@ -896,19 +1128,25 @@ ALTER TABLE `locations`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `offers`
 --
 ALTER TABLE `offers`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `otps`
+--
+ALTER TABLE `otps`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `package_stays`
 --
 ALTER TABLE `package_stays`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `passengers`
@@ -938,31 +1176,37 @@ ALTER TABLE `schedule_stoppages`
 -- AUTO_INCREMENT for table `seat_categories`
 --
 ALTER TABLE `seat_categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tour_packages`
 --
 ALTER TABLE `tour_packages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `vehicles`
 --
 ALTER TABLE `vehicles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `vendors`
 --
 ALTER TABLE `vendors`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `vendor_types`
+--
+ALTER TABLE `vendor_types`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
@@ -972,7 +1216,15 @@ ALTER TABLE `vendors`
 -- Constraints for table `accommodations`
 --
 ALTER TABLE `accommodations`
+  ADD CONSTRAINT `accommodations_accommodation_type_id_foreign` FOREIGN KEY (`accommodation_type_id`) REFERENCES `accommodation_types` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `accommodations_location_id_foreign` FOREIGN KEY (`location_id`) REFERENCES `locations` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `accommodation_amenity`
+--
+ALTER TABLE `accommodation_amenity`
+  ADD CONSTRAINT `accommodation_amenity_accommodation_id_foreign` FOREIGN KEY (`accommodation_id`) REFERENCES `accommodations` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `accommodation_amenity_amenity_id_foreign` FOREIGN KEY (`amenity_id`) REFERENCES `amenities` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `amenity_vehicle`
@@ -1037,6 +1289,12 @@ ALTER TABLE `tour_packages`
 --
 ALTER TABLE `vehicles`
   ADD CONSTRAINT `vehicles_vendor_id_foreign` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `vendors`
+--
+ALTER TABLE `vendors`
+  ADD CONSTRAINT `vendors_vendor_type_id_foreign` FOREIGN KEY (`vendor_type_id`) REFERENCES `vendor_types` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
